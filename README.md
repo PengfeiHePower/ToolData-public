@@ -96,7 +96,7 @@ public_data/
 - 🛤️ **2,000 total parallel trajectories** with different depth: 5 trajectory per number of tools (from 3-10) for each task
 - 📝 **2,000 queries per difficulty**: one simple and one hard for each trajectory
 - 🔢 **4,000 total parallel trajectories**: simple (2,000) + hard (2,000)
-- 🛠️ Tool metadata: `public_data/v1/tools/*.json`
+- 🛠️ Tool metadata: `public_data/v2/tools/*.json`
 
 ### 🔄 Query/Trajectories Types
 
