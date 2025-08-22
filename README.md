@@ -7,7 +7,7 @@
 
 > A large-scale benchmark for evaluating tool-using language models with parallel and sequential tool-calling trajectories across practical domains.
 
-## 🚀 Quickstart (TL;DR)
+## 🚀 Quickstart (TL;DR) (to finish soon)
 
 ```bash
 git clone <repository-url>
@@ -204,7 +204,7 @@ cd ToolData-public
 pip install -r requirements.txt
 ```
 
-### 🧪 Running Evaluations (ongoing)
+### 🧪 Running Evaluations (to finish soon)
 
 ```bash
 # Simple query evaluation with direct prompting
