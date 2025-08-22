@@ -51,7 +51,7 @@ python evaluation/tool_evaluation_retrieve.py
 
 <sup>1</sup> **Trajectory structure**: Evaluates support for different tool-calling patterns, including parallel (independent tools) and sequential (dependent tool chains) execution strategies  
 <sup>2</sup> **Trajectory scaling**: Tests model performance across varying task complexity levels, from simple 3-tool scenarios to complex 10+ tool orchestration  
-<sup>3</sup> **Trajectory-aware metrics**: Provides comprehensive evaluation beyond final results, measuring the quality of the entire tool-calling trajectory
+<sup>3</sup> **Trajectory-aware metrics**: Provides comprehensive evaluation beyond final results, measuring the quality of the entire tool-calling trajectory  
 <sup>4</sup> **Tool-pool regimes**: Supports diverse evaluation strategies including whole toolset, domain-specific pools, retrieval-based selection, and fixed small-scale tool pools
 
 
