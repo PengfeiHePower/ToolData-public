@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 [![HF Dataset](https://img.shields.io/badge/HuggingFace-dataset-blue)](https://huggingface.co/datasets/bigboss24/tool_usage)
 
-> A large-scale benchmark for evaluating tool-using language models with parallel and sequential tool-calling trajectories across practical domains.
+> A comprehensive benchmark for evaluating tool-using language models with parallel and sequential tool-calling trajectories across practical domains.
 
 ## 🚀 Quickstart (TL;DR) (to finish soon)
 
@@ -53,9 +53,9 @@ python evaluation/tool_evaluation_retrieve.py
 
 ### 🔗 Quick Links
 
-- 📊 Dataset on Hugging Face: [`bigboss24/tool_usage`](https://huggingface.co/datasets/bigboss24/tool_usage)
-- 📁 Public data folder: `public_data/v1/`
-- 🧪 Evaluation scripts: `evaluation/tool_evaluation_model.py`, `evaluation/tool_evaluation_react.py`, `evaluation/tool_evaluation_retrieve.py` (ongoing)
+- 📊 Dataset on Hugging Face: [`bigboss24/tool_usage`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
+- 📁 Public data folder: `public_data/v2/`
+- 🧪 Evaluation scripts: `evaluation/tool_evaluation_model.py`, `evaluation/tool_evaluation_react.py`, `evaluation/tool_evaluation_retrieve.py` (to finish soon)
 
 ## 🏗️ Benchmark Structure
 
@@ -63,16 +63,16 @@ python evaluation/tool_evaluation_retrieve.py
 
 The benchmark covers 10 carefully selected domains that require external tools rather than internal model capabilities:
 
-- ✈️ **Travel**: Hotel booking, flight information, trip planning, transportation
-- 🌤️ **Weather**: Forecasts, meteorological data, climate information
-- 💰 **Finance**: Market data, trading platforms, cryptocurrency, banking
-- 🗺️ **Mapping**: Geocoding, routing, location services, geographic data
-- 🎵 **Music**: Streaming, lyrics, artist information, music metadata
-- 📰 **News & Media**: Current events, articles, multimedia content
-- 📚 **Education**: Learning resources, academic data, research tools
-- 📧 **Email**: Communication, automation, folder management
-- 🎮 **Gaming**: Game data, statistics, account management
-- 🛒 **eCommerce**: Online shopping, inventory, product information
+- ✈️ **Travel**: Hotel booking, flight information, trip planning, transportation, providing real-time information on hotel prices, airline itineraries, and destination recommendations.
+- 🌤️ **Weather**: Forecasts, meteorological data, climate information, essential for planning daily activities, agricultural decisions, travel arrangements, and more.
+- 💰 **Finance**: Market data, trading platforms, cryptocurrency, banking, also enable remote access to bank accounts for transactions.
+- 🗺️ **Mapping**: Provide location services, finding routes, planning shipping routes and offering location-based recommendations.
+- 🎵 **Music**: Streaming, lyrics, artist information, music metadata like song details and artist information.
+- 📰 **News & Media**: Provide access to a wide range of news articles, multimedia content (such as images and videos), headlines, and related information from various sources.
+- 📚 **Education**: Provide access to educational resources, power online classes, enable instant access to grades and assignments, and enhance research capabilities.
+- 📧 **Email**: Enable users to access and utilize the functionalities of email service providers, facilitating tasks like generating and sending emails, automating invoice sending, and managing folders.
+- 🎮 **Gaming**: Game data, statistics, account management, also facilitating third-party applications for altering game elements and aggregating global gaming statistics.
+- 🛒 **eCommerce**: Online shopping, inventory, product information, allowing businesses to sell products and services online.
 
 ### 📁 Data Organization
 
@@ -109,7 +109,7 @@ We take a trajectory->query strategy
 
 ### 📋 Query JSON Structure
 
-Each entry in `public_data/v1/parallel/<Domain>/*.json` follows this structure:
+Each entry in `public_data/v2/parallel/<Domain>/*.json` follows this structure:
 
 - **query**: Natural language instruction
 - **tool_list**: Tool-calling trajectory for solving the query
