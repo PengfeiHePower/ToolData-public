@@ -58,7 +58,7 @@ python evaluation/tool_evaluation_retrieve.py
 
 ### 🔗 Quick Links
 
-- 📊 Dataset on Hugging Face: [`bigboss24/tool_usage`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
+- 📊 Dataset on Hugging Face: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
 - 📁 Public data folder: `public_data/v2/`
 - 🧪 Evaluation scripts: `evaluation/tool_evaluation_model.py`, `evaluation/tool_evaluation_react.py`, `evaluation/tool_evaluation_retrieve.py` (to finish soon)
 
