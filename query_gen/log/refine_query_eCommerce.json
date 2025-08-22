@@ -1,0 +1,773 @@
+[
+    {
+        "query": "I'm looking for a new camera. Search for 'Sony Alpha a7 IV' on both Amazon and BestBuy. For the top result on Amazon, can you get me the full product details and the three most recent reviews? Finally, what's the sales tax if I ship it to zip code 90210?",
+        "tool list": [
+            {
+                "tool name": "Amazon Data Scraper API: Get Amazon Search Results",
+                "tool description": "Retrieves Amazon search results for a given product query. This tool is part of the 'Amazon Data Scraper API' service, designed to programmatically extract public data from Amazon product listings.",
+                "required parameters": [
+                    {
+                        "name": "searchQuery",
+                        "value": "Sony Alpha a7 IV"
+                    },
+                    {
+                        "name": "api_key",
+                        "value": "b2ffa4149da7cf2c4628d22edb54dd1b"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "BestBuy Product Data: BestBuyProductData",
+                "tool description": "Retrieves product data from BestBuy's database based on a keyword and pagination. This endpoint is part of the BestBuy Product Data API, which provides access to a comprehensive product database, allowing users to search for items like electronics, appliances, and more. The keyword parameter enables specific product searches (e.g., 'iphone', 'ps5'), while the page parameter facilitates navigation through results. Contact muktheeswaran.m@gmail.com for custom spiders or requests.",
+                "required parameters": [
+                    {
+                        "name": "keyword",
+                        "value": "Sony Alpha a7 IV"
+                    },
+                    {
+                        "name": "page",
+                        "value": 1
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Amazon Data Mojito: Get Product Full",
+                "tool description": "Retrieves detailed product information by querying a comprehensive database. This endpoint leverages the Amazon Data service, which is designed for speed, reliability, and cost-effectiveness, to deliver accurate product details such as pricing, descriptions, and availability. By utilizing Amazon's infrastructure, it ensures fast response times and real-time data updates, making it an efficient solution for applications requiring up-to-date product insights.",
+                "required parameters": [
+                    {
+                        "name": "countryCode",
+                        "value": "US"
+                    },
+                    {
+                        "name": "asin",
+                        "value": "{{ASIN from the top result of the Amazon search}}"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Amazon Data Scraper API: Get Product Reveiws",
+                "tool description": "Retrieves all reviews with headings, descriptions, and images in JSON format. This is part of a comprehensive reviews aggregation service that leverages a database of user-generated content to provide detailed insights, enabling users to access structured review data efficiently.",
+                "required parameters": [
+                    {
+                        "name": "api_key",
+                        "value": "b2ffa4149da7cf2c4628d22edb54dd1b"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{Product ID from the top result of the Amazon search}}"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Sales Tax Calculator: Tax Rate by Street Address",
+                "tool description": "Retrieves up-to-date local tax rates for a specific address, including shipping taxability. This endpoint leverages SalesTaxIQ.com's advanced data source retrieval to provide precise rooftop-compliant sales tax rates, surpassing the limitations of zip code-based systems. By integrating built-in address validation and error correction, it ensures accuracy even with complex or misspelled inputs, delivering reliable tax information tailored to the exact location.",
+                "required parameters": [
+                    {
+                        "name": "state",
+                        "value": "CA"
+                    },
+                    {
+                        "name": "street",
+                        "value": "USER_HAS_TO_PROVIDE_STREET_ADDRESS"
+                    },
+                    {
+                        "name": "zip",
+                        "value": "90210"
+                    },
+                    {
+                        "name": "city",
+                        "value": "Beverly Hills"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Find the 'Sony Alpha a7 IV' on both Amazon and BestBuy. For the top Amazon search result, please retrieve its complete product details along with all its reviews. Additionally, calculate the sales tax rate for an item shipped to 123 Main St, Beverly Hills, CA 90210.",
+        "query_hard_gemini-2.5-pro": "I'm thinking about buying a Sony Alpha a7 IV camera. Could you check for it on both Amazon and BestBuy for me? For the top listing you find on Amazon, I'd like to see all the product details and read through the user reviews. Also, I'll be shipping it to Beverly Hills, California, zip code 90210; can you tell me what the sales tax would be for that location?",
+        "query_simple_claude_v37": "I want to research the Sony Alpha a7 IV camera, compare prices between Amazon and Best Buy, get detailed product information and reviews from Amazon, and calculate the sales tax if I were to purchase it in Beverly Hills, CA.",
+        "query_hard_claude_v37": "I'm looking to buy a Sony Alpha a7 IV camera and want to compare prices between Amazon and Best Buy. Can you find the top listing on Amazon, get its detailed specs, and show me some reviews? I also need to know the sales tax I'd pay if I had it shipped to my place in Beverly Hills, CA, zip code 90210."
+    },
+    {
+        "query": "I need a report on a competing seller on Taobao. Their seller ID is 'TopGadgets123'. Can you retrieve their detailed seller information, including their ratings? Also, please pull a list of their entire product catalog so I can see what they're selling.",
+        "tool list": [
+            {
+                "tool name": "Taobao Tmall: Get Vendor",
+                "tool description": "Retrieves detailed information about a Taobao seller, including store details, product listings, and seller ratings, based on a provided seller ID or store name. This endpoint is part of a broader API designed to access data from the Taobao and Tmall marketplaces, offering developers a centralized way to retrieve e-commerce information. The API leverages real-time marketplace data to enable applications such as competitive analysis, product research, and seller verification, providing actionable insights for businesses and shoppers alike.",
+                "required parameters": [
+                    {
+                        "name": "vendorId",
+                        "value": "TopGadgets123"
+                    },
+                    {
+                        "name": "language",
+                        "value": "en"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Can you get me the details for the Taobao vendor 'TopGadgets123' in English?",
+        "query_hard_gemini-2.5-pro": "I came across a seller on Taobao called TopGadgets123. Could you find out more about them for me? I need the information presented in English.",
+        "query_simple_claude_v37": "Find detailed information about the Taobao seller with ID 'TopGadgets123', including their store details, product listings, and seller ratings. Please provide the information in English.",
+        "query_hard_claude_v37": "Can you tell me more about the Taobao seller TopGadgets123? I'd like to see their store details and ratings in English."
+    },
+    {
+        "query": "I need to add a new line of t-shirts to my integrated online store. First, create a new product category called 'Summer Tees'. Then, add a new product named 'Classic Crew Neck' to that category. Finally, add two product variants for this t-shirt: one in 'Blue', size 'Medium', and one in 'Red', size 'Large'.",
+        "tool list": [
+            {
+                "tool name": "API2Cart: addCategory",
+                "tool description": "Adds a new category to a store's product catalog. This endpoint enables seamless integration with shopping carts by leveraging API connectivity to update organizational structures, allowing merchants to streamline product management and enhance user experience through structured categorization.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Summer Tees"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "description",
+                        "value": "A collection of t-shirts for the summer season."
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "API2Cart: addProduct",
+                "tool description": "Adds a product to a store catalog using specified product details and a store identifier. This integrates with a broader platform designed to connect apps with shopping carts, leveraging API-driven synchronization to streamline product management and inventory updates across integrated systems.",
+                "required parameters": [
+                    {
+                        "name": "model",
+                        "value": "CCN-TEE"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "description",
+                        "value": "A comfortable and stylish classic crew neck t-shirt."
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck"
+                    },
+                    {
+                        "name": "price",
+                        "value": "19.99"
+                    },
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "shippingTemplateId",
+                        "value": "YOUR_SHIPPING_TEMPLATE_ID"
+                    },
+                    {
+                        "name": "attributeSetName",
+                        "value": "T-Shirt Attributes"
+                    },
+                    {
+                        "name": "listingDuration",
+                        "value": "GTC"
+                    },
+                    {
+                        "name": "condition",
+                        "value": "New"
+                    },
+                    {
+                        "name": "attributeName",
+                        "value": "Clothing"
+                    },
+                    {
+                        "name": "shippingDetails",
+                        "value": "YOUR_SHIPPING_DETAILS_ID"
+                    },
+                    {
+                        "name": "paypalEmail",
+                        "value": "your-paypal-email@example.com"
+                    },
+                    {
+                        "name": "returnAccepted",
+                        "value": "true"
+                    },
+                    {
+                        "name": "paymentMethods",
+                        "value": "PayPal,CreditCard"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "categoriesIds",
+                        "value": "{{id from the previous step}}"
+                    }
+                ]
+            },
+            {
+                "tool name": "API2Cart: addProductVariant",
+                "tool description": "Adds a product variant to a shopping cart via API, requiring product ID and variant attributes as inputs. This endpoint is part of a broader tool that connects apps with shopping cart systems, leveraging real-time inventory data and standardized e-commerce protocols to ensure seamless product management and accurate cart updates across platforms.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "model",
+                        "value": "CCN-TEE-BLU-M"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{id from the previous step}}"
+                    },
+                    {
+                        "name": "attributes",
+                        "value": "[{\"name\":\"Color\",\"value\":\"Blue\"},{\"name\":\"Size\",\"value\":\"Medium\"}]"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck - Blue / Medium"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "price",
+                        "value": "19.99"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "100"
+                    }
+                ]
+            },
+            {
+                "tool name": "API2Cart: addProductVariant",
+                "tool description": "Adds a product variant to a shopping cart via API, requiring product ID and variant attributes as inputs. This endpoint is part of a broader tool that connects apps with shopping cart systems, leveraging real-time inventory data and standardized e-commerce protocols to ensure seamless product management and accurate cart updates across platforms.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "model",
+                        "value": "CCN-TEE-RED-L"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{id from step 2}}"
+                    },
+                    {
+                        "name": "attributes",
+                        "value": "[{\"name\":\"Color\",\"value\":\"Red\"},{\"name\":\"Size\",\"value\":\"Large\"}]"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck - Red / Large"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "price",
+                        "value": "19.99"
+                    },
+                    {
+                        "name": "quantity",
+                        "value": "100"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "First, create a new product category named 'Summer Tees' with the description 'A collection of t-shirts for the summer season.'. After the category is created, add a new product named 'Classic Crew Neck' with the model 'CCN-TEE' and a price of 19.99 to this new category. The product's description should be 'A comfortable and stylish classic crew neck t-shirt.', and it should have the following settings: attribute set name 'T-Shirt Attributes', condition 'New', attribute name 'Clothing', listing duration 'GTC', return accepted set to true, payment methods 'PayPal,CreditCard', PayPal email 'your-paypal-email@example.com', shipping template ID 'YOUR_SHIPPING_TEMPLATE_ID', and shipping details ID 'YOUR_SHIPPING_DETAILS_ID'. Finally, add two variants to this 'Classic Crew Neck' product: the first variant should be Blue, Medium, with the model 'CCN-TEE-BLU-M' and named 'Classic Crew Neck - Blue / Medium'. The second variant should be Red, Large, with the model 'CCN-TEE-RED-L' and named 'Classic Crew Neck - Red / Large'.",
+        "query_hard_gemini-2.5-pro": "I need to add a new line of t-shirts to my store. First, could you create a new category called 'Summer Tees' with the description 'A collection of t-shirts for the summer season'? \n\nThen, within that new category, please add a new product named 'Classic Crew Neck', with the model number CCN-TEE. The description should be 'A comfortable and stylish classic crew neck t-shirt.' Let's set the price at $19.99. It's a new item and should be listed indefinitely. For its attributes, use the 'T-Shirt Attributes' set under the 'Clothing' name. We will accept returns, and customers should be able to pay with PayPal or a credit card, with our PayPal email being your-paypal-email@example.com.\n\nFinally, let's add two variations for that t-shirt, both priced at $19.99 with a stock of 100 units each. The first is a Blue, Medium size with the model number CCN-TEE-BLU-M and name 'Classic Crew Neck - Blue / Medium'. The second is a Red, Large size with model number CCN-TEE-RED-L and name 'Classic Crew Neck - Red / Large'.",
+        "query_simple_claude_v37": "Create a new 'Summer Tees' category in my e-commerce store, then add a 'Classic Crew Neck' t-shirt product priced at $19.99 to this category. After creating the base product, add two variants: a Blue Medium size and a Red Large size, both maintaining the same price point and with 100 units of inventory each.",
+        "query_hard_claude_v37": "I need to add a new Summer Tees category to my online store, then create a Classic Crew Neck t-shirt priced at $19.99 in that category. The shirt should have two variants - one in Blue/Medium and another in Red/Large, with 100 units of each in stock. The t-shirt model number is CCN-TEE, and I want to include all the standard shipping and payment options."
+    },
+    {
+        "query": "I'm looking for a new camera. Search for 'Sony Alpha a7 IV' on both Amazon and BestBuy. For the top result on Amazon, can you get me the full product details and the three most recent reviews? Finally, what's the sales tax if I ship it to zip code 90210?",
+        "tool list": [
+            {
+                "tool name": "Amazon Data Scraper API: Get Amazon Search Results",
+                "tool description": "Retrieves Amazon search results for a given product query. This tool is part of the 'Amazon Data Scraper API' service, designed to programmatically extract public data from Amazon product listings.",
+                "required parameters": [
+                    {
+                        "name": "searchQuery",
+                        "value": "Sony Alpha a7 IV"
+                    },
+                    {
+                        "name": "api_key",
+                        "value": "b2ffa4149da7cf2c4628d22edb54dd1b"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "BestBuy Product Data: BestBuyProductData",
+                "tool description": "Retrieves product data from BestBuy's database based on a keyword and pagination. This endpoint is part of the BestBuy Product Data API, which provides access to a comprehensive product database, allowing users to search for items like electronics, appliances, and more. The keyword parameter enables specific product searches (e.g., 'iphone', 'ps5'), while the page parameter facilitates navigation through results. Contact muktheeswaran.m@gmail.com for custom spiders or requests.",
+                "required parameters": [
+                    {
+                        "name": "keyword",
+                        "value": "Sony Alpha a7 IV"
+                    },
+                    {
+                        "name": "page",
+                        "value": 1
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Amazon Data Mojito: Get Product Full",
+                "tool description": "Retrieves detailed product information by querying a comprehensive database. This endpoint leverages the Amazon Data service, which is designed for speed, reliability, and cost-effectiveness, to deliver accurate product details such as pricing, descriptions, and availability. By utilizing Amazon's infrastructure, it ensures fast response times and real-time data updates, making it an efficient solution for applications requiring up-to-date product insights.",
+                "required parameters": [
+                    {
+                        "name": "countryCode",
+                        "value": "US"
+                    },
+                    {
+                        "name": "asin",
+                        "value": "{{ASIN of the top search result from the first tool}}"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Amazon Data Scraper API: Get Product Reveiws",
+                "tool description": "Retrieves all reviews with headings, descriptions, and images in JSON format. This is part of a comprehensive reviews aggregation service that leverages a database of user-generated content to provide detailed insights, enabling users to access structured review data efficiently.",
+                "required parameters": [
+                    {
+                        "name": "api_key",
+                        "value": "b2ffa4149da7cf2c4628d22edb54dd1b"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{productId of the top search result from the first tool}}"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Sales Tax Calculator: Tax Rate by Street Address",
+                "tool description": "Retrieves up-to-date local tax rates for a specific address, including shipping taxability. This endpoint leverages SalesTaxIQ.com's advanced data source retrieval to provide precise rooftop-compliant sales tax rates, surpassing the limitations of zip code-based systems. By integrating built-in address validation and error correction, it ensures accuracy even with complex or misspelled inputs, delivering reliable tax information tailored to the exact location.",
+                "required parameters": [
+                    {
+                        "name": "state",
+                        "value": "CA"
+                    },
+                    {
+                        "name": "street",
+                        "value": "1 Hacker Way"
+                    },
+                    {
+                        "name": "zip",
+                        "value": "90210"
+                    },
+                    {
+                        "name": "city",
+                        "value": "Beverly Hills"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What is the price and what are the reviews for the top search result of the Sony Alpha a7 IV on Amazon? Additionally, please calculate the sales tax for shipping to 1 Hacker Way, Beverly Hills, CA, 90210.",
+        "query_hard_gemini-2.5-pro": "I'm looking to buy a new Sony Alpha a7 IV camera and I want to compare my options. Could you please check for it on both Amazon and BestBuy? For the top US listing on Amazon, I'd like to see the full product details and get an idea of what customers are saying in the reviews. Finally, can you calculate the total cost with sales tax if I have it shipped to 1 Hacker Way, Beverly Hills, CA, 90210?",
+        "query_simple_claude_v37": "Find detailed information about the Sony Alpha a7 IV camera, including pricing from Amazon and Best Buy, product specifications, customer reviews, and calculate the sales tax if I were to purchase it in Beverly Hills, CA.",
+        "query_hard_claude_v37": "I'm looking to buy a Sony Alpha a7 IV camera and want to compare prices between Amazon and Best Buy. Could you find me detailed specs and customer reviews for the Amazon listing? Also, I live at 1 Hacker Way in Beverly Hills, California, zip code 90210 - how much sales tax would I need to pay if I order it?"
+    },
+    {
+        "query": "I need a report on a competing seller on Taobao. Their seller ID is 'TopGadgets123'. Can you retrieve their detailed seller information, including their ratings? Also, please pull a list of their entire product catalog so I can see what they're selling.",
+        "tool list": [
+            {
+                "tool name": "Taobao Tmall: Get Vendor",
+                "tool description": "Retrieves detailed information about a Taobao seller, including store details, product listings, and seller ratings, based on a provided seller ID or store name. This endpoint is part of a broader API designed to access data from the Taobao and Tmall marketplaces, offering developers a centralized way to retrieve e-commerce information. The API leverages real-time marketplace data to enable applications such as competitive analysis, product research, and seller verification, providing actionable insights for businesses and shoppers alike.",
+                "required parameters": [
+                    {
+                        "name": "vendorId",
+                        "value": "TopGadgets123"
+                    },
+                    {
+                        "name": "language",
+                        "value": "en"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Fetch the details of the Taobao Tmall vendor with the ID 'TopGadgets123', with the information provided in English.",
+        "query_hard_gemini-2.5-pro": "Can you look up the Taobao vendor 'TopGadgets123' and give me their details in English?",
+        "query_simple_claude_v37": "Find detailed information about the Taobao seller with ID 'TopGadgets123', including their store details, product listings, and seller ratings. Please provide the information in English.",
+        "query_hard_claude_v37": "Can you tell me more about the Taobao seller TopGadgets123? I'd like to see their store details and ratings in English."
+    },
+    {
+        "query": "I need to add a new line of t-shirts to my integrated online store. First, create a new product category called 'Summer Tees'. Then, add a new product named 'Classic Crew Neck' to that category. Finally, add two product variants for this t-shirt: one in 'Blue', size 'Medium', and one in 'Red', size 'Large'.",
+        "tool list": [
+            {
+                "tool name": "API2Cart: addCategory",
+                "tool description": "Adds a new category to a store's product catalog. This endpoint enables seamless integration with shopping carts by leveraging API connectivity to update organizational structures, allowing merchants to streamline product management and enhance user experience through structured categorization.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Summer Tees"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "description",
+                        "value": "A collection of summer t-shirts"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "API2Cart: addProduct",
+                "tool description": "Adds a product to a store catalog using specified product details and a store identifier. This integrates with a broader platform designed to connect apps with shopping carts, leveraging API-driven synchronization to streamline product management and inventory updates across integrated systems.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "model",
+                        "value": "crew-neck-tshirt"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "description",
+                        "value": "A classic crew neck t-shirt for summer."
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck"
+                    },
+                    {
+                        "name": "price",
+                        "value": "19.99"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "categoriesIds",
+                        "value": "[{{categoryId from the previous step}}]"
+                    }
+                ]
+            },
+            {
+                "tool name": "API2Cart: addProductVariant",
+                "tool description": "Adds a product variant to a shopping cart via API, requiring product ID and variant attributes as inputs. This endpoint is part of a broader tool that connects apps with shopping cart systems, leveraging real-time inventory data and standardized e-commerce protocols to ensure seamless product management and accurate cart updates across platforms.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "model",
+                        "value": "crew-neck-blue-m"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{productId from the previous step}}"
+                    },
+                    {
+                        "name": "attributes",
+                        "value": "[{\"name\": \"Color\", \"value\": \"Blue\"}, {\"name\": \"Size\", \"value\": \"Medium\"}]"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck - Blue/Medium"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "API2Cart: addProductVariant",
+                "tool description": "Adds a product variant to a shopping cart via API, requiring product ID and variant attributes as inputs. This endpoint is part of a broader tool that connects apps with shopping cart systems, leveraging real-time inventory data and standardized e-commerce protocols to ensure seamless product management and accurate cart updates across platforms.",
+                "required parameters": [
+                    {
+                        "name": "apiKey",
+                        "value": "YOUR_API_KEY"
+                    },
+                    {
+                        "name": "model",
+                        "value": "crew-neck-red-l"
+                    },
+                    {
+                        "name": "productId",
+                        "value": "{{productId from the previous step}}"
+                    },
+                    {
+                        "name": "attributes",
+                        "value": "[{\"name\": \"Color\", \"value\": \"Red\"}, {\"name\": \"Size\", \"value\": \"Large\"}]"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "YOUR_STORE_KEY"
+                    },
+                    {
+                        "name": "name",
+                        "value": "Classic Crew Neck - Red/Large"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Create a new 'Summer Tees' category with the description 'A collection of summer t-shirts.' Next, add a product named 'Classic Crew Neck' with the model 'crew-neck-tshirt', priced at $19.99, and described as 'A classic crew neck t-shirt for summer.' to the new category. For this product, please add two variants: the first, named 'Classic Crew Neck - Blue/Medium' with model 'crew-neck-blue-m', should have the attributes Color: Blue and Size: Medium. The second, named 'Classic Crew Neck - Red/Large' with model 'crew-neck-red-l', should have the attributes Color: Red and Size: Large.",
+        "query_hard_gemini-2.5-pro": "I need to add a new t-shirt to my store for the summer collection. First, please create a new category called 'Summer Tees' and for the description just put 'A collection of summer t-shirts'. Then, add the main product to this category, calling it the 'Classic Crew Neck' with the product code 'crew-neck-tshirt' and a price of $19.99. Use 'A classic crew neck t-shirt for summer.' for its description. This t-shirt will have two variations: a blue, medium one named 'Classic Crew Neck - Blue/Medium' with code 'crew-neck-blue-m', and a red, large one named 'Classic Crew Neck - Red/Large' with code 'crew-neck-red-l'.",
+        "query_simple_claude_v37": "Create a new 'Summer Tees' category in my e-commerce store, then add a 'Classic Crew Neck' t-shirt product priced at $19.99 to this category. After creating the main product, add two variants: a Blue Medium size and a Red Large size of the same t-shirt.",
+        "query_hard_claude_v37": "I need to set up a new summer t-shirt collection in my online store. Could you create a 'Summer Tees' category with a brief description, then add a Classic Crew Neck t-shirt priced at $19.99 to that category? The shirt should have two variants - one in Blue/Medium and another in Red/Large. Each shirt needs its own model code and description."
+    },
+    {
+        "query": "I saw someone wearing a cool jacket and took a picture of it. Can you use this image to search for the product on AliExpress? If you find it, I've uploaded a photo of myself; please show me what that jacket would look like on me.",
+        "tool list": [
+            {
+                "tool name": "Aliexpress DataHub: Aliexpress - Item Search [by Image]",
+                "tool description": "Searches products using an Aliexpress image URL. This endpoint leverages the #1 real-time product data API, which eliminates the need for manual rules or web-scraper maintenance, providing efficient and accurate product searches directly from Aliexpress.",
+                "required_parameters": [
+                    {
+                        "name": "imgUrl",
+                        "value": "[Image URL of the jacket]"
+                    }
+                ],
+                "optional_parameters": []
+            },
+            {
+                "tool name": "Virtual Try On: Virtual Try On",
+                "tool description": "Generates an augmented reality (AR) image by overlaying a clothing item onto a person's image. This uses AI-powered visual synthesis to create a realistic representation of how a wearable product would look on a user, leveraging real-time rendering technology to simulate try-on experiences. The tool integrates a database of product visuals and user-provided imagery to deliver personalized visualizations, enabling customers to assess fit and appearance before purchasing online.",
+                "required_parameters": [
+                    {
+                        "name": "personImage",
+                        "value": "[User's uploaded photo]"
+                    },
+                    {
+                        "name": "clothImage",
+                        "value": "{{Image of the found jacket from the previous step}}"
+                    }
+                ],
+                "optional_parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I have an image of a jacket. Please find it on Aliexpress and then show me a virtual try-on of it on the person in this photo.",
+        "query_hard_gemini-2.5-pro": "I really like this jacket. Could you find it for me and show me how it would look in this photo of me?",
+        "query_simple_claude_v37": "I want to find a jacket similar to one I saw online. I have the image URL of the jacket. After finding similar jackets on Aliexpress, I'd like to virtually try on the jacket using my photo to see how it would look on me before purchasing.",
+        "query_hard_claude_v37": "I found this jacket online and I'm wondering how it would look on me before I buy it. Can you help me see if it suits me? Here's a link to the jacket image and I've attached a photo of myself."
+    },
+    {
+        "query": "I want to buy the video game 'Elden Ring' for PC, but only when it's on sale. Can you check the historical price data for it on Amazon to see its lowest price ever? Then, please set a price alert for me on CheapShark so I get notified if the price drops below $30.",
+        "tool list": [
+            {
+                "tool name": "Amazon Data Scraper API: Get Amazon Search Results",
+                "tool description": "Retrieves Amazon search results for a given product query. This tool is part of the 'Amazon Data Scraper API' service, designed to programmatically extract public data from Amazon product listings.",
+                "required parameters": [
+                    {
+                        "name": "searchQuery",
+                        "value": "Elden Ring PC"
+                    },
+                    {
+                        "name": "api_key",
+                        "value": "b2ffa4149da7cf2c4628d22edb54dd1b"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Amazon historical price: Get historical price",
+                "tool description": "Retrieves historical price data for an Amazon product using its item URL. This endpoint is part of a service that tracks Amazon product price trends, offering insights into highest, current, and lowest prices. Leveraging a database of Amazon product listings, it provides detailed historical pricing to help users analyze trends and make informed decisions.",
+                "required parameters": [
+                    {
+                        "name": "item_url",
+                        "value": "{{URL of the product from the previous step}}"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Search for 'Elden Ring PC' on Amazon and then find the historical price for the first item in the search results.",
+        "query_hard_gemini-2.5-pro": "I'm curious about the price trends for the PC version of Elden Ring. Can you find it and show me how its price has changed over time?",
+        "query_simple_claude_v37": "Search for Elden Ring PC on Amazon and then get the historical price data for one of the search results",
+        "query_hard_claude_v37": "I'm thinking about buying Elden Ring for PC. Could you find it on Amazon and tell me how the price has changed over time? I want to know if it's a good time to buy it now."
+    },
+    {
+        "query": "I just packed up order #ABC-987 from my Shopify store. I need you to update the system. First, add a shipment to the order with the tracking number '1Z98765'. Then, update the main order status to 'Shipped'.",
+        "tool list": [
+            {
+                "tool name": "API2Cart: addOrderShipment",
+                "tool description": "Adds a shipment to an order by connecting with shopping cart systems via API, ensuring real-time tracking and efficient logistics. This capability is part of a tool that links apps with shopping carts, streamlining e-commerce operations through seamless integration and automated order management.",
+                "required parameters": [
+                    {
+                        "name": "orderId",
+                        "value": "ABC-987"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "{{storeKey for the Shopify store}}"
+                    },
+                    {
+                        "name": "apiKey",
+                        "value": "{{apiKey for API2Cart}}"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "API2Cart: updateOrderShipment",
+                "tool description": "Updates a shipment's status or details within an order by synchronizing with connected shopping cart systems. This API endpoint integrates with the broader tool that connects apps to shopping carts, leveraging real-time data from order management systems to ensure accurate tracking and streamline order fulfillment processes.",
+                "required parameters": [
+                    {
+                        "name": "orderId",
+                        "value": "ABC-987"
+                    },
+                    {
+                        "name": "shipmentId",
+                        "value": "{{shipmentId from the previous step}}"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "{{storeKey for the Shopify store}}"
+                    },
+                    {
+                        "name": "apiKey",
+                        "value": "{{apiKey for API2Cart}}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "trackingNumbers",
+                        "value": "1Z98765"
+                    }
+                ]
+            },
+            {
+                "tool name": "API2Cart: updateOrder",
+                "tool description": "Updates an existing order by modifying its details such as items, quantities, or status. This endpoint leverages the parent tool's ability to connect your app with shopping carts, allowing seamless integration with various e-commerce platforms. Through a unified API, it accesses and updates order data stored in the connected shopping cart systems, ensuring accurate and up-to-date order information to streamline fulfillment processes.",
+                "required parameters": [
+                    {
+                        "name": "orderId",
+                        "value": "ABC-987"
+                    },
+                    {
+                        "name": "storeKey",
+                        "value": "{{storeKey for the Shopify store}}"
+                    },
+                    {
+                        "name": "apiKey",
+                        "value": "{{apiKey for API2Cart}}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "orderStatus",
+                        "value": "Shipped"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "For order ABC-987 in the Shopify store, add a new shipment. Then, update this new shipment with the tracking number 1Z98765. Finally, update the status for order ABC-987 to 'Shipped', using the API2Cart API key.",
+        "query_hard_gemini-2.5-pro": "I'm ready to ship order ABC-987 from my Shopify store. Can you create a new shipment for it, add the tracking number 1Z98765, and then update the order's status to 'Shipped'?",
+        "query_simple_claude_v37": "Add a shipment to order ABC-987 in a Shopify store using API2Cart, then update the shipment with tracking number 1Z98765, and finally update the order status to 'Shipped'",
+        "query_hard_claude_v37": "I need to add a shipment to order ABC-987 in my Shopify store, then update that shipment with tracking number 1Z98765, and finally mark the entire order as shipped."
+    },
+    {
+        "query": "I'm thinking of buying a 'DJI Mini 4 Pro' drone from a seller on Taobao called 'DroneWorld'. Before I commit, can you vet them for me?\n1.First, can you find their shop on the platform?\n2.If you find it, get their detailed seller information and ratings.\n3.Then, check their product catalog to see if they actually sell the 'DJI Mini 4 Pro'.\n4.If they do, please get the most recent reviews for that specific drone from their store.",
+        "tool list": [
+            {
+                "tool name": "Taobao Tmall: Get Vendor",
+                "tool description": "Retrieves detailed information about a Taobao seller, including store details, product listings, and seller ratings, based on a provided seller ID or store name. This endpoint is part of a broader API designed to access data from the Taobao and Tmall marketplaces, offering developers a centralized way to retrieve e-commerce information. The API leverages real-time marketplace data to enable applications such as competitive analysis, product research, and seller verification, providing actionable insights for businesses and shoppers alike.",
+                "required parameters": [
+                    {
+                        "name": "vendorId",
+                        "value": "DroneWorld"
+                    },
+                    {
+                        "name": "language",
+                        "value": "en"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Taobao Tmall: Search for items",
+                "tool description": "Searches Taobao and Tmall products by title, price, image, and order volume. This endpoint is part of an API that accesses data from Taobao and Tmall marketplaces, providing detailed product information to facilitate accurate and efficient product searches.",
+                "required parameters": [
+                    {
+                        "name": "framePosition",
+                        "value": "0"
+                    },
+                    {
+                        "name": "language",
+                        "value": "en"
+                    },
+                    {
+                        "name": "frameSize",
+                        "value": "50"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "VendorName",
+                        "value": "DroneWorld"
+                    },
+                    {
+                        "name": "ItemTitle",
+                        "value": "DJI Mini 4 Pro"
+                    }
+                ]
+            },
+            {
+                "tool name": "Taobao Tmall: Get Item Review",
+                "tool description": "Retrieves product reviews from Taobao and Tmall marketplaces based on product identifiers. This endpoint leverages the Taobao and Tmall API integration to fetch review data directly from the platforms' databases, providing users with detailed feedback and ratings to inform purchasing decisions. The tool simplifies access to e-commerce data by centralizing review retrieval through a unified API, eliminating the need for direct platform interactions.",
+                "required parameters": [
+                    {
+                        "name": "ItemId",
+                        "value": "{{ItemId from the previous step}}"
+                    },
+                    {
+                        "name": "framePosition",
+                        "value": "0"
+                    },
+                    {
+                        "name": "frameSize",
+                        "value": "50"
+                    },
+                    {
+                        "name": "language",
+                        "value": "en"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Find the first 50 English reviews for the 'DJI Mini 4 Pro' from the vendor 'DroneWorld'.",
+        "query_hard_gemini-2.5-pro": "I'm interested in the DJI Mini 4 Pro drone. Could you find it in the DroneWorld store and show me what customers are saying about it?",
+        "query_simple_claude_v37": "Find information about the seller DroneWorld on Taobao, search for DJI Mini 4 Pro products from this seller, and then retrieve customer reviews for one of these products",
+        "query_hard_claude_v37": "Can you check if DroneWorld on Taobao sells the DJI Mini 4 Pro drone and show me some customer reviews for it? I'd prefer information in English."
+    }
+]

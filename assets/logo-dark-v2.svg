@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="360" viewBox="0 0 1400 360" role="img" aria-labelledby="title desc">
+  <title id="title">TRAJECT-Bench Logo (Dark v2)</title>
+  <desc id="desc">A premium wordmark with a dynamic trajectory/DAG emblem showing parallel and sequential flows, purple-to-cyan accents, and soft glow on a dark background.</desc>
+
+  <defs>
+    <!-- Palettes -->
+    <linearGradient id="gradPrimaryDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4b5fd"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="gradNodeDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="gradTitleDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+
+    <!-- Effects -->
+    <filter id="softGlowDark" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="nodeShadowDark" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#7c3aed" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Arrowheads -->
+    <marker id="arrowHeadDark" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#c4b5fd"/>
+    </marker>
+    <marker id="arrowHeadCyanDark" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="360" fill="#0b0f1a"/>
+
+  <!-- Emblem: dynamic trajectory (left) -->
+  <g transform="translate(110,40)">
+    <!-- Outer halo ring -->
+    <circle cx="170" cy="140" r="118" fill="none" stroke="#312e81" stroke-width="2"/>
+
+    <!-- Nodes -->
+    <circle cx="70" cy="140" r="22" fill="url(#gradNodeDark)" stroke="#c4b5fd" stroke-width="3" filter="url(#nodeShadowDark)"/>
+    <circle cx="170" cy="80" r="18" fill="#0f172a" stroke="#c4b5fd" stroke-width="3" filter="url(#nodeShadowDark)"/>
+    <circle cx="170" cy="200" r="18" fill="#0f172a" stroke="#c4b5fd" stroke-width="3" filter="url(#nodeShadowDark)"/>
+    <circle cx="270" cy="140" r="22" fill="url(#gradNodeDark)" stroke="#22d3ee" stroke-width="3" filter="url(#nodeShadowDark)"/>
+
+    <!-- Parallel branches (purple) -->
+    <path d="M92,128 C120,110 140,95 156,88" fill="none" stroke="url(#gradPrimaryDark)" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowHeadDark)" filter="url(#softGlowDark)"/>
+    <path d="M92,152 C120,170 140,185 156,192" fill="none" stroke="url(#gradPrimaryDark)" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowHeadDark)" filter="url(#softGlowDark)"/>
+
+    <!-- Sequential merge (cyan) -->
+    <path d="M186,80 C212,100 234,116 252,124" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowHeadCyanDark)" filter="url(#softGlowDark)"/>
+    <path d="M186,200 C212,180 234,164 252,156" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowHeadCyanDark)" filter="url(#softGlowDark)"/>
+
+    <!-- Stylized "A" trajectory ribbon across center -->
+    <path d="M70,140 C130,10 240,10 270,140" fill="none" stroke="url(#gradPrimaryDark)" stroke-opacity="0.25" stroke-width="14" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark (right) -->
+  <g transform="translate(460,92)">
+    <text x="0" y="72" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="0.6" fill="url(#gradTitleDark)">TRAJECT</text>
+    <text x="340" y="72" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="0.2" fill="#e5e7eb">-Bench</text>
+    <text x="2" y="112" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22" fill="#9ca3af">Trajectory-Aware Tool-Use Evaluation for Agents</text>
+  </g>
+</svg>
+
+

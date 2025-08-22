@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">TRAJECT-Bench Logo (Light)</title>
+  <desc id="desc">A minimal DAG/trajectory icon with parallel and sequential arrows next to the wordmark TRAJECT-Bench.</desc>
+  <defs>
+    <linearGradient id="gradPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Icon group -->
+  <g transform="translate(80,30)">
+    <!-- Nodes -->
+    <circle cx="80" cy="120" r="18" fill="url(#gradPurple)"/>
+    <circle cx="180" cy="70" r="14" fill="#7c3aed" opacity="0.9"/>
+    <circle cx="180" cy="170" r="14" fill="#7c3aed" opacity="0.9"/>
+    <circle cx="280" cy="120" r="18" fill="url(#gradPurple)"/>
+
+    <!-- Parallel edges from left node -->
+    <path d="M98,112 C120,100 145,85 166,76" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrowPurple)"/>
+    <path d="M98,128 C120,140 145,155 166,164" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrowPurple)"/>
+
+    <!-- Sequential edge merging to right node -->
+    <path d="M194,70 C220,90 240,105 262,114" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrowPurple)"/>
+    <path d="M194,170 C220,150 240,135 262,126" fill="none" stroke="#7c3aed" stroke-width="4" marker-end="url(#arrowPurple)"/>
+
+    <!-- Subtle background ring -->
+    <circle cx="180" cy="120" r="110" fill="none" stroke="#e9d5ff" stroke-width="2"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(420,70)" fill="#111827">
+    <text x="0" y="70" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="56" font-weight="700" letter-spacing="0.5">
+      TRAJECT	-Bench
+    </text>
+    <text x="3" y="112" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20" fill="#374151">
+      Trajectory-Aware Tool-Use Evaluation for Agents
+    </text>
+  </g>
+</svg>
+
+

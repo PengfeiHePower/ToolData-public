@@ -1,0 +1,237 @@
+[
+    {
+        "query": "I'm planning a hiking trip near Boulder, Colorado, for this upcoming Saturday. Can you give me the daily forecast for that day? I'm also concerned about air quality, so please get the current AQI for that area. Finally, what time is sunset on Saturday so I know when to be off the trail?",
+        "tool list": [
+            {
+                "tool name": "AI Weather by Meteosource: daily",
+                "tool description": "Generates a 21-day weather forecast for a specified location using GPS coordinates or a `place_id` from Location endpoints. This endpoint leverages AI technology powered by advanced machine learning models to deliver hyper-local weather predictions, integrating global data and real-time updates. It provides accurate historical weather insights, current conditions, and detailed statistics, all tailored to specific geographic points for personalized planning.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "lat",
+                        "value": "40.0150"
+                    },
+                    {
+                        "name": "lon",
+                        "value": "-105.2705"
+                    },
+                    {
+                        "name": "units",
+                        "value": "us"
+                    }
+                ]
+            },
+            {
+                "tool name": "Air Quality: Air Quality Forecast",
+                "tool description": "Generates a 3-day air quality forecast for any global location based on latitude and longitude. This leverages the parent tool's comprehensive capabilities, which provide current, forecasted, and historical air quality data worldwide, utilizing real-time environmental sensors and predictive analytics to ensure accurate and actionable insights for users.",
+                "required parameters": [
+                    {
+                        "name": "lat",
+                        "value": 40.015
+                    },
+                    {
+                        "name": "lon",
+                        "value": -105.2705
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "AI Weather by Meteosource: astro",
+                "tool description": "Retrieves global sun and moon data (sunrise/sunset, moonrise/moonset, moon phase) for the next 30 days based on GPS coordinates or place_id from location endpoints. This leverages the parent tool's hyper-local weather forecasting capabilities, powered by machine learning models and real-time data updates, to deliver accurate astronomical insights tailored to specific locations.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "lat",
+                        "value": "40.0150"
+                    },
+                    {
+                        "name": "lon",
+                        "value": "-105.2705"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What is the weather forecast, air quality, and sunrise/sunset times for the next 3 days at latitude 40.0150 and longitude -105.2705?",
+        "query_hard_gemini-2.5-pro": "I'm planning a trip to Boulder, Colorado for the next few weeks. Can you give me the full weather forecast in Fahrenheit, an update on the air quality, and also the times for sunrise and moonrise while I'm there?",
+        "query_simple_claude_v37": "Get a comprehensive weather forecast, air quality prediction, and astronomical data for Boulder, Colorado (coordinates: 40.0150\u00b0N, 105.2705\u00b0W) using US measurement units. This includes a 21-day weather forecast, 3-day air quality forecast, and 30-day sun and moon data (sunrise/sunset times, moonrise/moonset times, and moon phases).",
+        "query_hard_claude_v37": "I'm planning outdoor activities in Boulder, Colorado next week. Could you tell me the weather forecast for the next few weeks, the air quality outlook for the next few days, and when sunrise and sunset will be? I prefer temperatures in Fahrenheit."
+    },
+    {
+        "query": "For an insurance claim, I need to know what the weather was like in Houston, Texas, on August 29, 2021, during Hurricane Ida. Specifically, can you retrieve the hourly weather observations for that entire day, including wind speed and precipitation?",
+        "tool list": [
+            {
+                "tool name": "Visual Crossing Weather: Historical weather record",
+                "tool description": "Retrieves hourly or daily historical weather records. This endpoint is part of the Visual Crossing Weather API, which provides instant access to both historical weather data and weather forecasts. It leverages the API's extensive database of weather records to deliver detailed historical data, enabling users to analyze past weather patterns for research, planning, or other applications.",
+                "required parameters": [
+                    {
+                        "name": "location",
+                        "value": "Houston, Texas"
+                    },
+                    {
+                        "name": "startDateTime",
+                        "value": "2021-08-29T00:00:00"
+                    },
+                    {
+                        "name": "endDateTime",
+                        "value": "2021-08-29T23:59:59"
+                    },
+                    {
+                        "name": "aggregateHours",
+                        "value": 1
+                    },
+                    {
+                        "name": "unitGroup",
+                        "value": "us"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What were the hourly historical weather records for Houston, Texas, on August 29, 2021, using the US unit system?",
+        "query_hard_gemini-2.5-pro": "Can you give me an hourly weather report for Houston, Texas, for the entire day of August 29th, 2021?",
+        "query_simple_claude_v37": "What was the hourly weather in Houston, Texas on August 29, 2021?",
+        "query_hard_claude_v37": "What was the weather like hour by hour in Houston, Texas on August 29, 2021? I need the information in standard US units for a research project I'm working on."
+    },
+    {
+        "query": "I want to go fishing near the Golden Gate Bridge this weekend. Can you get me the tide predictions for that area, specifically the times for high and low tide? Also, provide the 7-day marine weather forecast, including wave details.",
+        "tool list": [
+            {
+                "tool name": "Stormglass Complete: Get Tide Extreme Data",
+                "tool description": "Retrieves high and low tide information for a specific coordinate, with values relative to Mean Sea Level (MSL) by default. This endpoint is part of the Stormglass API, which provides comprehensive weather, biological, tidal, astronomical, solar, and elevation data, leveraging advanced modeling and real-time oceanographic datasets to deliver precise tide forecasts for maritime navigation, coastal planning, and environmental monitoring.",
+                "required parameters": [
+                    {
+                        "name": "lat",
+                        "value": "37.8199"
+                    },
+                    {
+                        "name": "lng",
+                        "value": "-122.4783"
+                    },
+                    {
+                        "name": "apiKey",
+                        "value": "<your_api_key>"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "startDate",
+                        "value": "start_date_of_the_upcoming_weekend"
+                    },
+                    {
+                        "name": "endDate",
+                        "value": "end_date_of_the_upcoming_weekend"
+                    }
+                ]
+            },
+            {
+                "tool name": "World Weather Online API: Marine Weather API",
+                "tool description": "Generates a 7-day marine weather forecast and tide data for worldwide locations. This is part of the Free Weather API, which provides comprehensive weather and geo data including hourly, 14-day, historical weather, and specialized Marine and Ski weather APIs, designed for developers and businesses via XML and JSON formats.",
+                "required parameters": [
+                    {
+                        "name": "q",
+                        "value": "37.8199,-122.4783"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "num_of_days",
+                        "value": "7"
+                    },
+                    {
+                        "name": "tide",
+                        "value": "yes"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What are the high and low tides for the upcoming weekend at latitude 37.8199 and longitude -122.4783?",
+        "query_hard_gemini-2.5-pro": "I'm planning some activities near the Golden Gate Bridge for the upcoming weekend. Can you tell me the exact times for high and low tide? Also, could you give me the full 7-day marine weather and tide forecast for that area?",
+        "query_simple_claude_v37": "I need to analyze tide and marine weather data for the San Francisco Bay area (coordinates 37.8199, -122.4783) for the upcoming weekend. First, retrieve the high and low tide extremes using the Stormglass Complete API, making sure to specify the start and end dates for the upcoming weekend. Then, get a comprehensive 7-day marine weather forecast including tide information using the World Weather Online Marine Weather API for the same location. I want to understand both the tide patterns and overall marine conditions for planning a weekend boating activity.",
+        "query_hard_claude_v37": "I'm planning to go sailing near the Golden Gate Bridge this weekend. Can you tell me the tide schedule and marine weather forecast for that area? I need to know both the high and low tide times as well as the general marine conditions."
+    },
+    {
+        "query": "I want to do some stargazing tonight from my location in East Lansing, Michigan. First, can you tell me which planets will be visible in the sky after 10 PM? Also, I need the astronomical forecast, specifically the 'seeing' and 'transparency' scores for the next few hours to know if the conditions will be good.",
+        "tool list": [
+            {
+                "tool name": "Ouranos: Planet currently visible",
+                "tool description": "Returns real-time data on which planets are visible from a given location, requiring geographic coordinates and a timestamp. This endpoint is part of the most complete astronomy API, leveraging advanced celestial computation models and a database of planetary orbits to deliver precise visibility insights, complementing features like 7-day forecasts, moon phase tracking, and atmospheric transparency analysis for both professional and amateur astronomical observations.",
+                "required parameters": [
+                    {
+                        "name": "long",
+                        "value": "-84.4839"
+                    },
+                    {
+                        "name": "lat",
+                        "value": "42.7370"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Ouranos: 48 Hour Forecast",
+                "tool description": "Provides an hourly forecast with seeing values in arc seconds and transparency scores on a scale of 1 for the next 48 hours. This is part of a comprehensive astronomy API offering 7-day and 48-hour forecasts, predictive features, and real-time data on planetary visibility, moon phases, and illumination, leveraging astronomical databases to deliver precise insights for observational planning.",
+                "required parameters": [
+                    {
+                        "name": "long",
+                        "value": "-84.4839"
+                    },
+                    {
+                        "name": "lat",
+                        "value": "42.7370"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Which planets are currently visible from latitude 42.7370 and longitude -84.4839, and what is the 48-hour forecast for seeing and transparency at this location?",
+        "query_hard_gemini-2.5-pro": "I'm hoping to do some stargazing from Lansing, Michigan. Could you tell me which planets are out right now and what the viewing forecast looks like for the next couple of days?",
+        "query_simple_claude_v37": "What planets are currently visible from Jackson, Michigan (coordinates: 42.7370, -84.4839) and what are the astronomical viewing conditions for the next 48 hours at this location?",
+        "query_hard_claude_v37": "I'm planning to do some stargazing tonight in Jackson, Michigan (42.7370, -84.4839). Can you tell me which planets I might be able to see right now and what the viewing conditions will be like over the next couple of days?"
+    },
+    {
+        "query": "I'm thinking of heading to Aspen Snowmass for a ski trip this weekend. Can you tell me what the current snow conditions are, including the base depth? I also need the 5-day snow forecast to see if more snow is expected.",
+        "tool list": [
+            {
+                "tool name": "Ski Resort Forecast: Current Snow Conditions",
+                "tool description": "Returns the current snow conditions for a given resort name, utilizing a comprehensive database of nearly every ski resort and tolerating typos in the input. This endpoint is part of a service that provides both forecast and current snow conditions, ensuring reliable information even when resort names are misspelled, making it ideal for users seeking up-to-date, accurate data without requiring precise spelling.",
+                "required parameters": [
+                    {
+                        "name": "resort",
+                        "value": "Aspen Snowmass"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "units",
+                        "value": "i"
+                    }
+                ]
+            },
+            {
+                "tool name": "Ski Resort Forecast: 5 Day Forecast",
+                "tool description": "Returns a 5-day snow forecast for a specified resort, utilizing a service that provides forecast and current snow conditions for nearly every ski resort. The tool is designed to handle approximate resort names, ensuring accurate data even with minor spelling variations.",
+                "required parameters": [
+                    {
+                        "name": "resort",
+                        "value": "Aspen Snowmass"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "units",
+                        "value": "i"
+                    },
+                    {
+                        "name": "el",
+                        "value": "top"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What are the current snow conditions and the 5-day forecast for Aspen Snowmass?",
+        "query_hard_gemini-2.5-pro": "I'm heading to Aspen Snowmass. Can you tell me what the current snow depth is in inches, and also what the 5-day forecast looks like for the summit?",
+        "query_simple_claude_v37": "What are the current snow conditions and 5-day forecast for Aspen Snowmass ski resort?",
+        "query_hard_claude_v37": "What's the current snow situation at Aspen Snowmass and what can I expect there for the next 5 days? I prefer measurements in inches."
+    }
+]

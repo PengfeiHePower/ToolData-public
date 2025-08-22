@@ -1,0 +1,308 @@
+[
+    {
+        "query": "My coffee shop chain wants to open a new location in Chicago. I'm considering an address at '444 N Michigan Ave, Chicago, IL'. Before I proceed, I need to know:\n1.Is this location inside a census tract with a high population? Please return the GeoJson boundary for the census tract at that address.\n2.Are there any competing Starbucks locations within a 1-mile radius of that address?\n3.What other restaurants or food spots are nearby that might drive foot traffic?",
+        "tool list": [
+            {
+                "tool name": "Address From To Latitude Longitude: Address to Coordinates  (latitude longitude)",
+                "tool description": "Converts an address (including city, state, and street) into latitude and longitude coordinates. This endpoint is part of a free, open, and worldwide geocoding API that facilitates bidirectional address-to-coordinate and coordinate-to-address conversions. It leverages a comprehensive database to ensure accurate GPS calculations, enabling users to reliably obtain precise geographic positions for any given location.",
+                "required parameters": [
+                    {
+                        "name": "address",
+                        "value": "444 N Michigan Ave, Chicago, IL"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "boundaries-io: Get Census Tract By Location",
+                "tool description": "Retrieves a census tract based on a given location. This API provides geospatial data by leveraging US Census and geographic boundary datasets to deliver precise GeoJson results, enabling developers to integrate detailed administrative boundaries into applications efficiently. Designed for programmatic use, it ensures fast performance for querying zip codes, counties, cities, and states, making it ideal for location-based services and geographic information systems.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "latitude",
+                        "value": "<latitude_from_step_1>"
+                    },
+                    {
+                        "name": "longitude",
+                        "value": "<longitude_from_step_1>"
+                    }
+                ]
+            },
+            {
+                "tool name": "Places: Places list by radius (Nearby Search) ",
+                "tool description": "Returns objects near a selected point, filtered by parameters, with basic details like xid, name, and types, in either a simple array or GeoJSON format. This is part of a service providing access to over 10 million tourist attractions and facilities worldwide, leveraging a geospatial database to quickly retrieve location-based data for efficient querying of nearby points of interest.",
+                "required parameters": [
+                    {
+                        "name": "lat",
+                        "value": "<latitude_from_step_1>"
+                    },
+                    {
+                        "name": "lon",
+                        "value": "<longitude_from_step_1>"
+                    },
+                    {
+                        "name": "radius",
+                        "value": 1609
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "name",
+                        "value": "Starbucks"
+                    }
+                ]
+            },
+            {
+                "tool name": "Places: Places list by radius (Nearby Search) ",
+                "tool description": "Returns objects near a selected point, filtered by parameters, with basic details like xid, name, and types, in either a simple array or GeoJSON format. This is part of a service providing access to over 10 million tourist attractions and facilities worldwide, leveraging a geospatial database to quickly retrieve location-based data for efficient querying of nearby points of interest.",
+                "required parameters": [
+                    {
+                        "name": "lat",
+                        "value": "<latitude_from_step_1>"
+                    },
+                    {
+                        "name": "lon",
+                        "value": "<longitude_from_step_1>"
+                    },
+                    {
+                        "name": "radius",
+                        "value": 1609
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "kinds",
+                        "value": "foods"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Can you find any Starbucks locations that are within a 1609-meter radius of 444 N Michigan Ave, Chicago, IL?",
+        "query_hard_gemini-2.5-pro": "I'm planning a visit to 444 N Michigan Ave in Chicago and need some information about the neighborhood. Can you tell me which census tract this address falls into? Also, could you list all the Starbucks locations and all the different food options available within about a mile of there?",
+        "query_simple_claude_v37": "Find the coordinates of 444 N Michigan Ave in Chicago, IL, then identify the census tract for this location. Also, list any Starbucks locations within a 1-mile radius and provide information about food establishments within the same radius.",
+        "query_hard_claude_v37": "I'm staying at the Marriott on 444 N Michigan Ave in Chicago for a business trip. I need to know what neighborhood or district this is in, and I'm also looking for the closest Starbucks to grab coffee in the morning. While I'm at it, could you suggest some good food options within about a mile of the hotel? I prefer places I can walk to."
+    },
+    {
+        "query": "I'm a logistics planner for a trucking company. I need a route for an oversized truck from our warehouse in Los Angeles, CA to a distribution center in Phoenix, AZ. The route must avoid roads with specific height and weight restrictions. Please provide three different route options, prioritizing toll avoidance where possible.",
+        "tool list": [
+            {
+                "tool name": "Address From To Latitude Longitude: Address to Coordinates  (latitude longitude)",
+                "tool description": "Converts an address (including city, state, and street) into latitude and longitude coordinates. This endpoint is part of a free, open, and worldwide geocoding API that facilitates bidirectional address-to-coordinate and coordinate-to-address conversions. It leverages a comprehensive database to ensure accurate GPS calculations, enabling users to reliably obtain precise geographic positions for any given location.",
+                "required parameters": [
+                    {
+                        "name": "address",
+                        "value": "Los Angeles, CA"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Address From To Latitude Longitude: Address to Coordinates  (latitude longitude)",
+                "tool description": "Converts an address (including city, state, and street) into latitude and longitude coordinates. This endpoint is part of a free, open, and worldwide geocoding API that facilitates bidirectional address-to-coordinate and coordinate-to-address conversions. It leverages a comprehensive database to ensure accurate GPS calculations, enabling users to reliably obtain precise geographic positions for any given location.",
+                "required parameters": [
+                    {
+                        "name": "address",
+                        "value": "Phoenix, AZ"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "MapFanAPI - Route: multicalcroute",
+                "tool description": "Calculates three distinct routes simultaneously based on priority (standard, toll avoidance, distance priority) and tollway preferences. This endpoint leverages the MapFan API's advanced route search capabilities, which utilize comprehensive road data including highway restrictions, pedestrian paths, and detailed infrastructure information to deliver optimized navigation solutions. The service supports complex scenarios like truck-specific routing and provides critical road details such as street names, intersections, and signal locations, while returning route result IDs for subsequent guidance data retrieval via the calcroute API.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "start",
+                        "value": "<coordinates_from_step_1>"
+                    },
+                    {
+                        "name": "destination",
+                        "value": "<coordinates_from_step_2>"
+                    },
+                    {
+                        "name": "vehicletype",
+                        "value": 6
+                    },
+                    {
+                        "name": "tollroad",
+                        "value": 2
+                    },
+                    {
+                        "name": "height",
+                        "value": 410
+                    },
+                    {
+                        "name": "weight",
+                        "value": 20000
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please calculate three distinct routes from Los Angeles, CA, to Phoenix, AZ, for a vehicle with a height of 410 cm and a weight of 20000 kg. The route calculation should use vehicle type 6 and a toll road preference of 2.",
+        "query_hard_gemini-2.5-pro": "I'm planning a haul from Los Angeles, CA to Phoenix, AZ. My truck is a heavy one, weighing 20 tonnes, and it's pretty tall at 4.1 meters. Can you map out a route for me that completely avoids toll roads?",
+        "query_simple_claude_v37": "I need to plan a truck route from Los Angeles, CA to Phoenix, AZ. The truck is 410cm tall, weighs 20,000kg, and I'd like to see standard, toll-free, and shortest distance options. Can you provide the coordinates for both cities and calculate these route options?",
+        "query_hard_claude_v37": "I'm planning to drive my semi-truck from Los Angeles to Phoenix next week. The truck is about 13.5 feet tall and weighs around 20,000 pounds. Could you help me figure out the best route options? I'd like to know if there are any alternatives that avoid toll roads, since I'm trying to keep expenses down, but I'm also interested in seeing the shortest path regardless of tolls."
+    },
+    {
+        "query": "I have a list of potential new franchise locations. For the first one at '1600 Amphitheatre Parkway, Mountain View, CA':\n1.First, get its exact latitude and longitude.\n2.Then, find out which Nielsen DMA Region it belongs to.\n3.Finally, generate a static map image of the location with a pin on the address and get the precise elevation at that point.",
+        "tool list": [
+            {
+                "tool name": "ArcGIS Platform Geocoding: Search address",
+                "tool description": "Geocodes a single address per request, accepting either a combined input field or split parameters. This is part of the Geocoding service, which converts addresses to locations (forward geocoding) and vice versa (reverse geocoding) using a comprehensive database of global addresses, enabling accurate location mapping and supporting batch processing for multiple addresses.",
+                "required parameters": [
+                    {
+                        "name": "singleLine",
+                        "value": "1600 Amphitheatre Parkway, Mountain View, CA"
+                    },
+                    {
+                        "name": "f",
+                        "value": "json"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "outFields",
+                        "value": "*"
+                    }
+                ]
+            },
+            {
+                "tool name": "Just Geodata: point_to_elevation",
+                "tool description": "Returns elevation for given coordinates in meters. This endpoint is part of a broader API offering comprehensive geographical data, including timezone, country, and elevation information, designed to provide precise and reliable location-based insights.",
+                "required parameters": [
+                    {
+                        "name": "latitude",
+                        "value": "<latitude_from_step_1>"
+                    },
+                    {
+                        "name": "longitude",
+                        "value": "<longitude_from_step_1>"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "MapToolkit: Staticmaps",
+                "tool description": "Generates a static map image based on location and parameters. This uses the maps toolkit's capabilities, including map tiles and geocoding, to create a visual representation of a specific area, enhancing usability for applications requiring embedded maps.",
+                "required parameters": [
+                    {
+                        "name": "center",
+                        "value": "<latitude_from_step_1>,<longitude_from_step_1>"
+                    },
+                    {
+                        "name": "zoom",
+                        "value": 16
+                    },
+                    {
+                        "name": "size",
+                        "value": "600x400"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "marker",
+                        "value": "center:<latitude_from_step_1>,<longitude_from_step_1>|icon:https://maptoolkit.p.rapidapi.com/images/marker.png"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Show me a map of 1600 Amphitheatre Parkway, Mountain View, CA, and tell me its elevation.",
+        "query_hard_gemini-2.5-pro": "I'm curious about the elevation at 1600 Amphitheatre Parkway in Mountain View, CA. Could you also show me a detailed, standard-sized map of that location with a pin right on the address?",
+        "query_simple_claude_v37": "What is the elevation of Google's headquarters at 1600 Amphitheatre Parkway, Mountain View, CA? Also, please provide a map showing its location.",
+        "query_hard_claude_v37": "I'm planning to visit Google's headquarters in Mountain View. Can you tell me how high above sea level their main campus at 1600 Amphitheatre Parkway is? Also, I'd like to see what the area looks like - could you show me a detailed map of that location?"
+    },
+    {
+        "query": "We're setting up a new ambulance dispatch center at these coordinates: 47.6062\u00b0 N, 122.3321\u00b0 W in Seattle. I need you to calculate the area that our ambulances can reach within 3 minutes and 5 minutes during typical afternoon traffic. Please show me this as a map of the service area.",
+        "tool list": [
+            {
+                "tool name": "SpatialScale Route Engine: Get Isochrone",
+                "tool description": "Generates isochrone areas reachable within specified time or distance intervals from a location, returning contours as geojson polygons or linestrings. This endpoint leverages the SpatialScale Route Engine's turn-by-turn routing capabilities, utilizing auto, bicycle, pedestrian, and multimodal costing models to calculate travel times across North America. Users define parameters like time/distance thresholds, contour colors, and output geometry (polygons vs. lines), with options to generalize results for efficiency. The service provides critical spatial insights for logistics planning, urban mobility analysis, and location-based decision-making by visualizing accessible regions based on real-world transportation networks.",
+                "required parameters": [
+                    {
+                        "name": "payload",
+                        "value": "{\"locations\":[{\"lat\":47.6062,\"lon\":-122.3321}],\"costing\":\"auto\",\"contours\":[{\"time\":3,\"color\":\"00FF00\"},{\"time\":5,\"color\":\"FF0000\"}],\"polygons\":true}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "id",
+                        "value": "AmbulanceServiceArea"
+                    }
+                ]
+            },
+            {
+                "tool name": "MapToolkit: Staticmaps",
+                "tool description": "Generates a static map image based on location and parameters. This uses the maps toolkit's capabilities, including map tiles and geocoding, to create a visual representation of a specific area, enhancing usability for applications requiring embedded maps.",
+                "required parameters": [
+                    {
+                        "name": "center",
+                        "value": "47.6062,-122.3321"
+                    },
+                    {
+                        "name": "zoom",
+                        "value": 12
+                    },
+                    {
+                        "name": "size",
+                        "value": "800x600"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "geojson",
+                        "value": "<geojson_output_from_step_1>"
+                    },
+                    {
+                        "name": "marker",
+                        "value": "center:47.6062,-122.3321|icon:https://maptoolkit.p.rapidapi.com/images/marker_hospital.png"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Generate a map centered at latitude 47.6062 and longitude -122.3321, showing the areas reachable by car within 3 and 5 minutes from this point. Also, please add a hospital marker at the center of the map.",
+        "query_hard_gemini-2.5-pro": "For an ambulance service area analysis in Seattle, please create a map centered on the hospital at 47.6062, -122.3321. I need to see the zones they can reach by car. Highlight the 3-minute response zone in green and the 5-minute response zone in red.",
+        "query_simple_claude_v37": "Show me a map of the areas reachable within 3 and 5 minutes by car from Seattle's downtown (47.6062,-122.3321), with the 3-minute zone in green and the 5-minute zone in red. Mark the starting point with a hospital icon.",
+        "query_hard_claude_v37": "I'm planning emergency response coverage for a hospital in downtown Seattle. Could you show me how far an ambulance could travel in 3 and 5 minutes from the city center, and mark the hospital location on a map? I'd like to see this as a detailed map with different colors for the time zones, with the hospital clearly marked."
+    },
+    {
+        "query": "We need to verify the condition of a specific public asset, a fire hydrant, located near '100 Main St, Anytown, USA'. Can you search the Mapillary photo database for the most recent images at that location? I need you to find images that contain a 'fire hydrant' and return the IDs of those images so we can inspect them.",
+        "tool list": [
+            {
+                "tool name": "Address From To Latitude Longitude: Address to Coordinates  (latitude longitude)",
+                "tool description": "By using this geographic tool you can get the lat long coordinates from an address. Please type the address which would include the name of the city/town, state and street name to get more accurate lat long value. Also, the gps coordinates of the address will be calculated below.",
+                "required_parameters": [
+                    {
+                        "name": "address",
+                        "value": "100 Main St, Anytown, USA"
+                    }
+                ],
+                "optional_parameters": []
+            },
+            {
+                "tool name": "Mapillary: searchImages",
+                "tool description": "Search images",
+                "required_parameters": [
+                    {
+                        "name": "clientId",
+                        "value": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "closeToCoordinates",
+                        "value": "{{latitude from the previous step}},{{longitude from the previous step}}"
+                    },
+                    {
+                        "name": "detected_objects",
+                        "value": "fire hydrant"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Find images of a fire hydrant near 100 Main St, Anytown, USA.",
+        "query_hard_gemini-2.5-pro": "Can you find me any pictures that have a fire hydrant in them around 100 Main St, Anytown, USA?",
+        "query_simple_claude_v37": "Find street-level images that contain fire hydrants near 100 Main St, Anytown, USA",
+        "query_hard_claude_v37": "I'm working on a neighborhood safety project and need to check if there's a fire hydrant near 100 Main St in Anytown. Could you help me find some street-level images showing if there's one in that area? I need to verify its presence for our community emergency preparedness plan."
+    }
+]

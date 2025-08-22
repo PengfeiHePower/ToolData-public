@@ -1,0 +1,324 @@
+[
+    {
+        "query": "I need a new job. I'm a 'software engineer' looking for positions in 'Austin, Texas'. Please search for relevant jobs on Indeed. For the most interesting job you find, get me the full job details. Then, using my personal information, please generate a new resume and a cover letter tailored for that position.",
+        "tool list": [
+            {
+                "tool name": "Indeed Jobs API: SearchJobs",
+                "tool description": "Retrieves a list of job postings from Indeed's US database using a keyword, location, and offset parameter to enable pagination. This endpoint fetches up to 15 job listings per page, with the offset incremented by 10 to navigate through results, and returns detailed fields such as job title, company name, location, salary, and job URL. Part of the Indeed Jobs Search API, it leverages Indeed's extensive job data to provide structured job search results, enabling users to efficiently explore opportunities by refining queries with specific keywords and geographic filters.",
+                "required parameters": [
+                    {
+                        "name": "location",
+                        "value": "Austin, Texas"
+                    },
+                    {
+                        "name": "keyword",
+                        "value": "software engineer"
+                    },
+                    {
+                        "name": "offset",
+                        "value": "0"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "AI Resume Generator: Generate Document: Resume",
+                "tool description": "Generates a resume document using provided data including University Name, Degree, and a list of Skills. This endpoint leverages the Document Generation API's capability to harness OpenAI's language model, transforming structured user inputs into a polished, personalized resume. By integrating these specific details, it creates a tailored professional document that reflects the user's educational background and technical competencies, streamlining the job application process with AI-driven precision.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "degree",
+                        "value": "Information Systems"
+                    },
+                    {
+                        "name": "skills",
+                        "value": "Software Engineering, Python, Java, C++"
+                    },
+                    {
+                        "name": "university",
+                        "value": "University of Texas at Austin"
+                    }
+                ]
+            },
+            {
+                "tool name": "AI Resume Generator: Generate Document: Cover Letter",
+                "tool description": "Generates a cover letter document using provided information. This uses OpenAI's technology, leveraging a database of resume data including University Name, Degree, and Skills, to create personalized documents that align with user-provided details and professional standards.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "jobDescription",
+                        "value": "{{job_description from the previous step}}"
+                    },
+                    {
+                        "name": "degree",
+                        "value": "Information Systems"
+                    },
+                    {
+                        "name": "university",
+                        "value": "University of Texas at Austin"
+                    },
+                    {
+                        "name": "skills",
+                        "value": "Software Engineering, Python, Java, C++"
+                    },
+                    {
+                        "name": "jobTitle",
+                        "value": "{{position from the previous step}}"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Find software engineer jobs in Austin, Texas. For the first job found, generate a resume and a cover letter. I have a degree in Information Systems from the University of Texas at Austin, and my skills include Software Engineering, Python, Java, and C++.",
+        "query_hard_gemini-2.5-pro": "I'm starting my job hunt and need some help. I'm looking for software engineer roles in Austin, Texas. I have a degree in Information Systems from the University of Texas at Austin and I'm proficient in Software Engineering, Python, Java, and C++. Could you find a suitable opening and then prepare a resume and a tailored cover letter for me to apply with?",
+        "query_simple_claude_v37": "Search for software engineer jobs in Austin, Texas, then generate a resume for a University of Texas at Austin graduate with an Information Systems degree and skills in Software Engineering, Python, Java, and C++, followed by creating a tailored cover letter for one of the found job positions.",
+        "query_hard_claude_v37": "I'm a recent Information Systems graduate from UT Austin looking for software engineering jobs in Austin. Can you help me find some openings and create a resume and cover letter that highlights my skills in Python, Java, and C++?"
+    },
+    {
+        "query": "I need to hire a freelance 'mobile app developer' with expertise in 'Swift' for a short-term project. Please search for freelancers on Upwork who match this skill set and have an hourly rate between $75 and $100. For the top 3 matches, please retrieve their full profile information.",
+        "tool list": [
+            {
+                "tool name": "Upwork API: Search freelancers",
+                "tool description": "Searches for freelancers on the Upwork platform who match specified criteria. The search requires at least one of the following parameters: a general query (q), a freelancer's title (title), or a specific skill. Results can be filtered by the freelancer's hourly rate (accepting single values, comma-separated values, or a range like `[20 TO 40]`) and paginated using offset and count.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "q",
+                        "value": "mobile app developer"
+                    },
+                    {
+                        "name": "skills",
+                        "value": "Swift"
+                    },
+                    {
+                        "name": "rate",
+                        "value": "[75 TO 100]"
+                    },
+                    {
+                        "name": "count",
+                        "value": "3"
+                    }
+                ]
+            },
+            {
+                "tool name": "Upwork API: Get freelancer profile information",
+                "tool description": "Retrieves the complete and exhaustive list of profile attributes for a specific freelancer on the Upwork platform. A unique identifier for the freelancer is required to fetch their information.",
+                "required parameters": [
+                    {
+                        "name": "id",
+                        "value": "<The 'id' of the first freelancer from the 'Search freelancers' result>"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Upwork API: Get freelancer profile information",
+                "tool description": "Retrieves the complete and exhaustive list of profile attributes for a specific freelancer on the Upwork platform. A unique identifier for the freelancer is required to fetch their information.",
+                "required parameters": [
+                    {
+                        "name": "id",
+                        "value": "<The 'id' of the second freelancer from the 'Search freelancers' result>"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Upwork API: Get freelancer profile information",
+                "tool description": "Retrieves the complete and exhaustive list of profile attributes for a specific freelancer on the Upwork platform. A unique identifier for the freelancer is required to fetch their information.",
+                "required parameters": [
+                    {
+                        "name": "id",
+                        "value": "<The 'id' of the third freelancer from the 'Search freelancers' result>"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Retrieve the complete profile information for the top three mobile app developers with Swift skills who charge between $75 and $100 per hour.",
+        "query_hard_gemini-2.5-pro": "I'm looking for a mobile app developer who is skilled in Swift. My budget is in the $75 to $100 an hour range. Can you find the top three candidates and give me a complete rundown of their profiles?",
+        "query_simple_claude_v37": "Search for mobile app developers on Upwork who know Swift programming language with hourly rates between $75 and $100, limit to 3 results, and then retrieve the detailed profile information for each of these three freelancers",
+        "query_hard_claude_v37": "I need to find a few Swift mobile app developers on Upwork who charge between $75 and $100 per hour. Could you show me the detailed profiles of the top 3 matches?"
+    },
+    {
+        "query": "I'm a recruiter trying to fill a 'Data Scientist' position in California. Can you please search the Jobspider resume database and retrieve any relevant resumes for candidates in that state with that keyword?",
+        "tool list": [
+            {
+                "tool name": "Jobspider Resumes: Get",
+                "tool description": "Retrieves resumes based on a specified state and job keyword. This uses jobspider's database to fetch resumes, enabling efficient candidate sourcing by leveraging location and job-specific criteria.",
+                "required parameters": [
+                    {
+                        "name": "state",
+                        "value": "CA"
+                    },
+                    {
+                        "name": "keyword",
+                        "value": "Data Scientist"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please use Jobspider to get me resumes for the Data Scientist role in the state of CA.",
+        "query_hard_gemini-2.5-pro": "I'm looking to fill a Data Scientist role and I need to find some potential candidates based in California. Can you pull up their resumes for me?",
+        "query_simple_claude_v37": "Find resumes for Data Scientist positions in California using Jobspider",
+        "query_hard_claude_v37": "I'm looking for Data Scientist resumes in California. Can you help me find some candidates?"
+    },
+    {
+        "query": "I want you to set up a daily job alert for me. Every morning, please search for any new remote 'Python Developer' positions posted on LinkedIn in Europe. Also, check the general remote job boards for any new 'Senior Python Developer' roles and send me a summary of the new listings.",
+        "tool list": [
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "United Kingdom"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Switzerland"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Netherlands"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Norway"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Finland"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Sweden"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Belgium"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Denmark"
+                    }
+                ]
+            },
+            {
+                "tool name": "Linkedin Jobs: Python Developer: jobs",
+                "tool description": "Queries Python developer jobs based on user-specified parameters, such as location and job criteria. This tool leverages the 2023 LinkedIn Python Developer jobs database, providing access to recent postings from countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria. It focuses on 1-2 month-old job listings to ensure relevance, offering tailored insights into current opportunities within these regions.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Python Developer"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Austria"
+                    }
+                ]
+            },
+            {
+                "tool name": "Open To Work Remote API: Search Jobs",
+                "tool description": "Searches for remote jobs by title, tags, location, company, salary, and other filters, returning paginated results. This endpoint is part of the Open To Work Remote API, which provides developers with access to a curated list of remote job listings from accurate sources, enabling efficient and targeted job searches tailored to specific criteria.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "title",
+                        "value": "Senior Python Developer"
+                    },
+                    {
+                        "name": "location",
+                        "value": "remote"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Show me recent Python Developer job postings in both Austria and Belgium, and also list any available remote Senior Python Developer positions.",
+        "query_hard_gemini-2.5-pro": "I'm exploring my options for a new role as a Python Developer. Could you search for openings for me in the following countries: the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria? On top of that, please also find any remote opportunities for a Senior Python Developer.",
+        "query_simple_claude_v37": "Find Python Developer job opportunities across European countries including the United Kingdom, Switzerland, the Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria, as well as remote Senior Python Developer positions",
+        "query_hard_claude_v37": "I'm looking for Python developer positions in Europe. Could you check job opportunities in the UK, Switzerland, Netherlands, Norway, Finland, Sweden, Belgium, Denmark, and Austria? Also, I'd be interested in remote senior Python developer roles."
+    }
+]

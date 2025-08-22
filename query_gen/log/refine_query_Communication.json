@@ -1,0 +1,352 @@
+[
+    {
+        "query": "We have an urgent service update for our customer, John Doe. Please send him the following message: 'Your service appointment for tomorrow has been rescheduled to 3 PM.' Send it to him via SMS and also as a WhatsApp message to his phone number, +1-555-123-4567.",
+        "tool list": [
+            {
+                "tool name": "Send SMS through MSG91: Query parameters",
+                "tool description": "Fills required endpoints to send SMS to individual numbers or contact groups. This is part of the parent tool's capability to handle text message communication, enabling efficient and reliable delivery through a structured interface.",
+                "required parameters": [
+                    {
+                        "name": "mobiles",
+                        "value": "15551234567"
+                    },
+                    {
+                        "name": "country",
+                        "value": "1"
+                    },
+                    {
+                        "name": "route",
+                        "value": 4
+                    },
+                    {
+                        "name": "message",
+                        "value": "Your service appointment for tomorrow has been rescheduled to 3 PM."
+                    },
+                    {
+                        "name": "sender",
+                        "value": "SERVICE"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Whatsapp Private: SendMessage",
+                "tool description": "Responds to messages via a private, unofficial WhatsApp API. This uses a non-official implementation to interact with WhatsApp's services, enabling custom message handling and integration without official support, providing flexibility for developers to build tailored communication solutions.",
+                "required parameters": [
+                    {
+                        "name": "to_no",
+                        "value": "15551234567"
+                    },
+                    {
+                        "name": "text",
+                        "value": "Your service appointment for tomorrow has been rescheduled to 3 PM."
+                    },
+                    {
+                        "name": "file",
+                        "value": ""
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Send an SMS to the mobile number 15551234567 with country code 1, using route 4 and the sender ID 'SERVICE'. The message should say: 'Your service appointment for tomorrow has been rescheduled to 3 PM.'",
+        "query_hard_gemini-2.5-pro": "Can you send a message to 1-555-123-4567 letting them know that 'Your service appointment for tomorrow has been rescheduled to 3 PM.'? Please send it as both a standard text and a WhatsApp message. For the text, make sure it shows it's from 'SERVICE'.",
+        "query_simple_claude_v37": "Send a notification to phone number 15551234567 about a service appointment being rescheduled to 3 PM tomorrow, using both SMS through MSG91 and WhatsApp Private messaging",
+        "query_hard_claude_v37": "I need to notify my customer about their rescheduled appointment tomorrow. Can you send a message saying 'Your service appointment for tomorrow has been rescheduled to 3 PM.' to 15551234567 via both text message and WhatsApp? For the text, please use 'SERVICE' as the sender ID."
+    },
+    {
+        "query": "I want to set up a simple customer feedback line. First, allocate a new phone number for me in the US. Then, when a customer calls that number, I want it to play an audio message that says, 'Please leave your feedback after the beep.' After they speak, use a tool to convert their speech into text so I can review it later.",
+        "tool list": [
+            {
+                "tool name": "Melrose Labs Voice API: Convert text-to-speech",
+                "tool description": "This tool will convert the welcome message text into an audio file that can be played to the customer.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "voiceText",
+                        "value": "Please leave your feedback after the beep."
+                    }
+                ]
+            },
+            {
+                "tool name": "Melrose Labs Voice API: List available numbers for a country",
+                "tool description": "This tool will find available phone numbers in the United States.",
+                "required parameters": [
+                    {
+                        "name": "country",
+                        "value": "US"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Melrose Labs Voice API: Allocate number",
+                "tool description": "This tool allocates one of the available US phone numbers to your account to be used as the feedback line.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "telNo",
+                        "value": "{{An available number from the previous step}}"
+                    }
+                ]
+            },
+            {
+                "tool name": "Melrose Labs Voice API: Convert speech-to-text",
+                "tool description": "After a customer calls and leaves their feedback, this tool will be used to convert their recorded speech into text. Note: The recorded audio from the call must be sent in the body of this API request.",
+                "required parameters": [
+                    {
+                        "name": "Content-Type",
+                        "value": "audio/mp3"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Melrose Labs Voice API: Retrieve text",
+                "tool description": "This final tool retrieves the text transcription of the customer's feedback for you to review.",
+                "required parameters": [
+                    {
+                        "name": "transactionid",
+                        "value": "{{transactionid from the speech-to-text conversion step}}"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I need to set up a customer feedback phone line. First, convert the standard welcome message into an audio file. Then, find an available US phone number and allocate it for the feedback line. Once a customer has left their feedback, convert the recorded audio to text and then retrieve that text for me.",
+        "query_hard_gemini-2.5-pro": "I'd like to set up a system to gather customer feedback over the phone. Could you secure a new phone number for me in the US? For the greeting, I want callers to hear 'Please leave your feedback after the beep.' Once a customer leaves their message, I need the system to process their recording and provide me with a written transcript of their comments.",
+        "query_simple_claude_v37": "Set up a customer feedback phone line that plays a welcome message, records customer feedback, and converts it to text for review. The system should: 1) Create a text-to-speech welcome message saying 'Please leave your feedback after the beep', 2) Find available phone numbers in the US, 3) Allocate one of those numbers to use as the feedback line, 4) Convert recorded customer feedback from speech to text, and 5) Retrieve the text transcription of the feedback for review.",
+        "query_hard_claude_v37": "I need to set up a customer feedback phone line in the US. The greeting should say 'Please leave your feedback after the beep.' Once I get a number, I'll need a way to convert the voice messages to text so I can review them later."
+    },
+    {
+        "query": "Our main web server is down and I need to know who to contact. Can you please check which user from the DevOps team (ID: a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6) is currently on duty? I need their name and email address.",
+        "tool list": [
+            {
+                "tool name": "SIGNL4 \u2013 Critical Mobile Alerting: /teams/{teamId}/dutysummary",
+                "tool description": "Alerts staff during critical system failures by leveraging SIGNL4's integration with 100+ tools to ensure rapid response and minimize downtime. SIGNL4 helps to keep your mission-critical infrastructure and services running \u2013 from anywhere and anytime.",
+                "required parameters": [
+                    {
+                        "name": "teamId",
+                        "value": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "lastTwoDuties",
+                        "value": true
+                    }
+                ]
+            },
+            {
+                "tool name": "SIGNL4 \u2013 Critical Mobile Alerting: /users/{userId}",
+                "tool description": "Returns a user object with details such as his email address and duty information.",
+                "required parameters": [
+                    {
+                        "name": "userId",
+                        "value": "{{userId from the previous step}}"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "For the team with the ID a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6, can you first get the duty summary and then tell me the email address of the user on duty?",
+        "query_hard_gemini-2.5-pro": "I need to get in touch with whoever was on duty for team a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6. Could you please check the last two duty shifts and find their email address?",
+        "query_simple_claude_v37": "Retrieve the duty summary for the SIGNL4 team with ID a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6, including the last two duties, and then get the detailed user information for a specific user identified in the duty summary results.",
+        "query_hard_claude_v37": "Can you tell me who's currently on duty for our emergency response team with ID a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6? I need to know the last two duty assignments and the contact details of whoever is currently responsible."
+    },
+    {
+        "query": "We are expanding into the German market. I have a welcome message in English: 'Welcome to our service!'. Please translate this message into German. I also have a customer phone number from Germany, +491512345678. Before we contact them, please validate this phone number to make sure it's legitimate.",
+        "tool list": [
+            {
+                "tool name": "Translation Cloud: Create Project",
+                "tool description": "Create a new project",
+                "required parameters": [
+                    {
+                        "name": "src",
+                        "value": "en"
+                    },
+                    {
+                        "name": "dst",
+                        "value": "de"
+                    },
+                    {
+                        "name": "text",
+                        "value": "Welcome to our service!"
+                    },
+                    {
+                        "name": "translation_type",
+                        "value": "machine"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Validate Phone: Validate Phone",
+                "tool description": "\u201cValidate Phone\u201d API Validates single phone number or bulk phone  numbers.",
+                "required parameters": [
+                    {
+                        "name": "number",
+                        "value": "491512345678"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please use machine translation to translate the text 'Welcome to our service!' from English to German, and then validate the phone number 491512345678.",
+        "query_hard_gemini-2.5-pro": "I'm setting up a new account for a German client. Could you give me an automated translation of 'Welcome to our service!' into German? Also, please verify that the phone number they gave me, 491512345678, is valid.",
+        "query_simple_claude_v37": "Create an English to German translation project for the text 'Welcome to our service!' using machine translation, and validate the phone number 491512345678.",
+        "query_hard_claude_v37": "I need to send a welcome message saying 'Welcome to our service!' to a German customer. Can you translate it to German and also check if their phone number 491512345678 is valid before I send it?"
+    },
+    {
+        "query": "A new user just signed up with the phone number +1-555-123-4567. I need to verify them. Please send them an SMS with the a psudo random code and the message 'Your verification code is: xxx'.",
+        "tool list": [
+            {
+                "tool name": "2Factor Authentication - India: Send Transactional SMS",
+                "tool description": "Sends single or bulk transactional messages and schedules SMS. This is part of 2Factor.in's API suite, which provides simple 2Factor Authentication (phone verification) with a single API call. The service leverages fast, reliable, and economical infrastructure to handle message delivery, enhancing user verification processes while offering flexibility for diverse communication needs.",
+                "required parameters": [
+                    {
+                        "name": "To",
+                        "value": "15551234567"
+                    },
+                    {
+                        "name": "Msg",
+                        "value": "Your verification code is: 482910"
+                    },
+                    {
+                        "name": "From",
+                        "value": "TFCTOR"
+                    },
+                    {
+                        "name": "api_key",
+                        "value": "293832-67745-11e5-88de-5600000c6b13"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please send a transactional SMS to 15551234567 with the message 'Your verification code is: 482910' from the sender ID 'TFCTOR', using the API key '293832-67745-11e5-88de-5600000c6b13'.",
+        "query_hard_gemini-2.5-pro": "Could you send a quick verification message to 15551234567? Just let them know, 'Your verification code is: 482910'. Please have it sent from 'TFCTOR' and use my API key 293832-67745-11e5-88de-5600000c6b13 for authentication.",
+        "query_simple_claude_v37": "Send a transactional SMS to phone number 15551234567 with the verification code 482910 using the 2Factor Authentication service for India, with the sender ID TFCTOR",
+        "query_hard_claude_v37": "Can you send a verification code to my phone at 15551234567? I need it to come from TFCTOR so I know it's legitimate."
+    },
+    {
+        "query": "I'm organizing a book club meeting for next month. Can you please create a new WhatsApp group named 'August Book Club' and add my friends Jane (phone: +15551112222) and Bob (phone: +15553334444) to it? After you create it, please set the group profile picture using this image I'm providing.",
+        "tool list": [
+            {
+                "tool name": "GREEN-API: Creategroup",
+                "tool description": "Creates a group with a specified name and members. This leverages the Green-API's functionality to manage WhatsApp communications, enabling users to organize contacts into groups for efficient CRM and chatbot interactions, all through a free WhatsApp number.",
+                "required parameters": [
+                    {
+                        "name": "apiTokenInstance",
+                        "value": "apiTokenInstance"
+                    },
+                    {
+                        "name": "waInstanceidInstance",
+                        "value": "waInstanceidInstance"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "groupName",
+                        "value": "August Book Club"
+                    },
+                    {
+                        "name": "chatIds",
+                        "value": [
+                            "15551112222@c.us",
+                            "15553334444@c.us"
+                        ]
+                    }
+                ]
+            },
+            {
+                "tool name": "GREEN-API: Setgrouppicture",
+                "tool description": "Sets a group picture for a WhatsApp group using the provided group ID and image file. This endpoint leverages the parent tool's capability to manage WhatsApp communications, allowing users to customize group profiles directly through the API. Designed for CRM and chatbot integration, it simplifies group administration by enabling programmatic control over group aesthetics, enhancing user engagement and brand consistency within messaging workflows.",
+                "required parameters": [
+                    {
+                        "name": "file",
+                        "value": "<image file provided by the user>"
+                    },
+                    {
+                        "name": "groupId",
+                        "value": "<ID of the newly created 'August Book Club' group from the previous step>"
+                    },
+                    {
+                        "name": "apiTokenInstance",
+                        "value": "apiTokenInstance"
+                    },
+                    {
+                        "name": "waInstanceidInstance",
+                        "value": "waInstanceidInstance"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please create a new WhatsApp group named 'August Book Club' with the following members: 15551112222@c.us and 15553334444@c.us. After the group is created, set its profile picture using the attached image file.",
+        "query_hard_gemini-2.5-pro": "Hi there! I need to set up a new WhatsApp group for my 'August Book Club'. Could you please create it and add my friends at 15551112222 and 15553334444? Once that's done, please use the image I've attached as the group photo.",
+        "query_simple_claude_v37": "Create a WhatsApp group called 'August Book Club' with members having phone numbers 15551112222 and 15553334444, then set a custom group picture for this newly created group.",
+        "query_hard_claude_v37": "I need to create a new WhatsApp group called 'August Book Club' with my friends at 1-555-111-2222 and 1-555-333-4444, and set the group picture to this book cover image I just uploaded."
+    },
+    {
+        "query": "Can you check my email inbox for the flight confirmation from United Airlines that arrived last week? Once you find it, please take the flight details and create a new event on my calendar for the departure time.",
+        "tool list": [
+            {
+                "tool name": "Nylas Cloud: Threads",
+                "tool description": "Organizes emails into threads using advanced heuristics, grouping messages based on subject, sender, and conversation patterns to simplify email management. This endpoint leverages Nylas' unified email integration capabilities, employing Gmail/Exchange-native threading for compatible accounts and a custom JWZ-inspired algorithm for IMAP providers, ensuring consistent thread organization across 100+ email services. By centralizing email data into a single platform, it enables developers to build intelligent mail applications that reduce context-switching, while providing actionable insights through standardized thread structures for enhanced productivity and campaign tracking.",
+                "required parameters": [
+                    {
+                        "name": "Authorization",
+                        "value": "<user's access token>"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "view",
+                        "value": "expanded"
+                    }
+                ]
+            },
+            {
+                "tool name": "Nylas Cloud: Events",
+                "tool description": "Schedules events, sends meeting invitations, and manages RSVPs through the Nylas Calendar API. This endpoint leverages the Nylas Cloud API's integration with 100% of email services (IMAP, Exchange/ActiveSync, Outlook, Gmail, Yahoo, etc.), providing a unified calendar data source. By utilizing this capability, applications can streamline event management, reduce context-switching between tools, and ensure seamless synchronization across all connected accounts, enhancing team productivity and communication efficiency.",
+                "required parameters": [
+                    {
+                        "name": "Authorization",
+                        "value": "<user's access token>"
+                    },
+                    {
+                        "name": "Calendar id",
+                        "value": "primary"
+                    },
+                    {
+                        "name": "Title",
+                        "value": "Flight Departure: United Airlines"
+                    },
+                    {
+                        "name": "start_time",
+                        "value": "{{departure time from the previous step}}"
+                    },
+                    {
+                        "name": "end_time",
+                        "value": "{{arrival time from the previous step}}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "Description",
+                        "value": "Flight details from the confirmation email: {{Flight details from the previous step}}"
+                    },
+                    {
+                        "name": "Location",
+                        "value": "{{Departure airport from the previous step}}"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Please check my emails for the most recent flight confirmation and schedule an event in my primary calendar with the departure and arrival times.",
+        "query_hard_gemini-2.5-pro": "Find my United Airlines flight confirmation email, and then create an event on my primary calendar for the flight's departure. The event should start at the departure time and end upon arrival. Also, please set the departure airport as the event's location and copy all the flight details from the email into the description.",
+        "query_simple_claude_v37": "Find email threads containing flight confirmations from United Airlines, extract the flight details including departure time, arrival time, and departure airport, then create a calendar event for the flight in the user's primary calendar with all the extracted information.",
+        "query_hard_claude_v37": "I just got a flight confirmation email from United Airlines. Can you find that email in my inbox and create a calendar event with all the departure and arrival details so I don't forget about my trip?"
+    }
+]

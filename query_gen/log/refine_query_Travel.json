@@ -1,0 +1,774 @@
+[
+    {
+        "query": "I'm planning a trip to London from Oct 10 to Oct 17 in 2025. I need to find the best hotel deal. Can you search on both Booking.com and Hotels.com? I want a hotel with at least a 4-star rating and I need to see its cancellation policy and some recent photos before I decide.",
+        "tool list": [
+            {
+                "tool name": "Hotels com Provider: Regions Search",
+                "tool description": "Search region, locations, city or hotel by name",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "London"
+                    },
+                    {
+                        "name": "domain",
+                        "value": "GB"
+                    },
+                    {
+                        "name": "locale",
+                        "value": "en_GB"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Hotels com Provider: Hotels Search",
+                "tool description": "Get hotels by the filter. Set the `domain`, it is necessary for localization at the currency setting. (meta / Domains List). `accessibility` parameter, needed to get ONLY available hotels. Indicate the `region_id` -> use `Region Search`, check-in and check-out date, number of adults and children",
+                "required parameters": [
+                    {
+                        "name": "region_id",
+                        "value": "{{region_id from the previous step}}"
+                    },
+                    {
+                        "name": "checkin_date",
+                        "value": "2025-10-10"
+                    },
+                    {
+                        "name": "checkout_date",
+                        "value": "2025-10-17"
+                    },
+                    {
+                        "name": "adults_number",
+                        "value": 1
+                    },
+                    {
+                        "name": "domain",
+                        "value": "GB"
+                    },
+                    {
+                        "name": "locale",
+                        "value": "en_GB"
+                    },
+                    {
+                        "name": "sort_order",
+                        "value": "REVIEW"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "star_rating_ids",
+                        "value": "4,5"
+                    },
+                    {
+                        "name": "available_filter",
+                        "value": "SHOW_AVAILABLE_ONLY"
+                    }
+                ]
+            },
+            {
+                "tool name": "Hotels com Provider: Hotel Rooms (offers)",
+                "tool description": "Get available rooms at the hotel",
+                "required parameters": [
+                    {
+                        "name": "hotel_id",
+                        "value": "{{hotel_id from the previous step}}"
+                    },
+                    {
+                        "name": "checkin_date",
+                        "value": "2025-10-10"
+                    },
+                    {
+                        "name": "checkout_date",
+                        "value": "2025-10-17"
+                    },
+                    {
+                        "name": "adults_number",
+                        "value": 1
+                    },
+                    {
+                        "name": "domain",
+                        "value": "GB"
+                    },
+                    {
+                        "name": "locale",
+                        "value": "en_GB"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Hotels com Provider: Hotel photos",
+                "tool description": "This API returns a list of photos per hotel",
+                "required parameters": [
+                    {
+                        "name": "hotel_ids",
+                        "value": "{{hotel_id from the Hotels Search step}}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "image_size",
+                        "value": "large"
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Auto Suggest",
+                "tool description": "This API will provide a list of possible cities and hotels for a given search string",
+                "required parameters": [
+                    {
+                        "name": "string",
+                        "value": "London"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "get_cities",
+                        "value": true
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Search hotels",
+                "tool description": "Get available hotels by the filter. Indicate the `location_id` -> use `Search locations`, check-in and check-out date",
+                "required parameters": [
+                    {
+                        "name": "location_id",
+                        "value": "{{cityId from the previous step}}"
+                    },
+                    {
+                        "name": "date_checkin",
+                        "value": "2025-10-10"
+                    },
+                    {
+                        "name": "date_checkout",
+                        "value": "2025-10-17"
+                    },
+                    {
+                        "name": "sort_order",
+                        "value": "HDR"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "star_rating_ids",
+                        "value": "4.0,4.5,5.0"
+                    },
+                    {
+                        "name": "rooms_number",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Booking details of the hotel",
+                "tool description": "Get hotel descriptions, prices and available booking options. Indicate the hotel_id, check-in and check-out date",
+                "required parameters": [
+                    {
+                        "name": "hotel_id",
+                        "value": "{{hotel_id from the previous step}}"
+                    },
+                    {
+                        "name": "date_checkin",
+                        "value": "2025-10-10"
+                    },
+                    {
+                        "name": "date_checkout",
+                        "value": "2025-10-17"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "rooms_number",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Hotel photos",
+                "tool description": "This API returns a list of photos per hotel",
+                "required parameters": [
+                    {
+                        "name": "hotel_ids",
+                        "value": "{{hotel_id from the Priceline Search hotels step}}"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "image_size",
+                        "value": "large"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Find me a 4 or 5-star hotel in London, UK, for a single person checking in on October 10, 2025, and checking out on October 17, 2025. Please sort the options by review score, show only available hotels, and provide large photos for the top result.",
+        "query_hard_gemini-2.5-pro": "I'm planning a solo trip to London, UK, from October 10th to October 17th, 2025. I want to find a nice, high-end hotel, something with a 4 or 5-star rating. Could you please search on both Hotels.com and Priceline? On Hotels.com, please show me the options with the best reviews, and on Priceline, I'd like to see the best-recommended deals. For the top hotel you find on each site, please pull up the available room options and some large photos of the property.",
+        "query_simple_claude_v37": "I'm planning a trip to London from October 10-17, 2025. Can you help me find 4 or 5-star hotels with good reviews? I'd like to see available rooms, pricing options, and hotel photos from both Hotels.com and Priceline.com to compare. I'm traveling alone and need just one room.",
+        "query_hard_claude_v37": "I'm planning a week-long solo retreat to London next year, arriving October 10th, 2025 and staying until the 17th. I'm looking for a luxurious experience - only 4 or 5 star accommodations please. I want to see what's actually available to book right now, and I'd really like to browse through places with the best guest reviews first. Once I find something promising, I'd love to see detailed room options and some high-quality photos to help me decide. Could you help me find the perfect place?"
+    },
+    {
+        "query": "I'm flying to San Francisco tomorrow. Can you check the status of my flight, Flightera flight number AA123? Once I land, I'll be taking the BART. Are there any real-time service alerts or delays I should know about? Finally, can you help look up the top-10 restaurants in San Francisco.",
+        "tool list": [
+            {
+                "tool name": "Flightera Flight Data: flightInfo",
+                "tool description": "Retrieves flight information for a specified date or the current flight if no date is provided, returning a 400 error if the requested date exceeds the subscription's allowed range. This endpoint leverages Flightera's flight status, on-time performance, and statistics capabilities to deliver real-time updates and detailed analytics, ensuring accurate and timely data for users tracking flight details.",
+                "required parameters": [
+                    {
+                        "name": "flnr",
+                        "value": "AA123"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "date",
+                        "value": "2024-10-27"
+                    }
+                ]
+            },
+            {
+                "tool name": "BART: Advisory information",
+                "tool description": "Retrieves real-time service and station data. This uses the BART API's extensive dataset, including schedules, delays, and station details from the BART website, to provide accurate and up-to-date information for planning trips and navigating the Bay Area Rapid Transit system.",
+                "required parameters": [
+                    {
+                        "name": "cmd",
+                        "value": "bsa"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "orig",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "tool name": "Top rated restaurants by city name: get top 10 restaurants",
+                "tool description": "Fetches the top 10 restaurants in a specified city based on their Google Maps ratings. This is part of a service that helps users discover top-rated dining options by city, utilizing a database of real-time reviews to deliver accurate and personalized recommendations.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "city",
+                        "value": "San Francisco"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "Can you find the flight information for flight AA123 on October 27, 2024, check for any current BART advisories, and also list the top 10 restaurants in San Francisco?",
+        "query_hard_gemini-2.5-pro": "I'm flying on flight AA123 on October 27th, 2024, can you pull up the details for me? Also, once I land, I'll need to take the train, so could you check if there are any general service issues on the BART system? Lastly, I'd love a list of the top ten places to eat in San Francisco.",
+        "query_simple_claude_v37": "I need to check the status of American Airlines flight AA123 on October 27, 2024, get current BART service advisories, and find the top 10 restaurants in San Francisco.",
+        "query_hard_claude_v37": "I'm flying to San Francisco on American Airlines flight AA123 on October 27th and need to know if the flight is on time. Also, are there any BART service advisories I should be aware of for getting from the airport? And since I'll be hungry after landing, what are some of the best places to eat in San Francisco?"
+    },
+    {
+        "query": "I need to book a trip for our consultant flying from San Francisco (SFO) to Boston (BOS). They must arrive before noon on 7/16/2025 and depart after 5 PM on 7/14/2025. Please find a suitable round-trip flight. They need to stay near the Boston Convention Center, so find some candidate hotels there with good reviews. Also, book a rental car for them at the airport for the duration of their stay.",
+        "tool list": [
+            {
+                "tool name": "Priceline com Provider: Search flights",
+                "tool description": "Search flights. Set type: `ONE_WAY` or `ROUND_TRIP`. Set location_departure and location_arrival, use `/flights/locations` api point. You can filter out tickets by price, max duration and number of stops",
+                "required parameters": [
+                    {
+                        "name": "itinerary_type",
+                        "value": "ROUND_TRIP"
+                    },
+                    {
+                        "name": "location_departure",
+                        "value": "SFO"
+                    },
+                    {
+                        "name": "location_arrival",
+                        "value": "BOS"
+                    },
+                    {
+                        "name": "date_departure",
+                        "value": "2025-07-14"
+                    },
+                    {
+                        "name": "class_type",
+                        "value": "ECO"
+                    },
+                    {
+                        "name": "sort_order",
+                        "value": "PRICE"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "number_of_passengers",
+                        "value": 1
+                    },
+                    {
+                        "name": "date_departure_return",
+                        "value": "2025-07-16"
+                    }
+                ]
+            },
+            {
+                "tool name": "Hotels com Provider: Regions Search",
+                "tool description": "Search region, locations, city or hotel by name",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "Boston Convention Center"
+                    },
+                    {
+                        "name": "locale",
+                        "value": "en_GB"
+                    },
+                    {
+                        "name": "domain",
+                        "value": "AE"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Hotels com Provider: Hotels Search",
+                "tool description": "Get hotels by the filter. Set the `domain`, it is necessary for localization at the currency setting. (meta / Domains List). `accessibility` parameter, needed to get ONLY available hotels. Indicate the `region_id` -> use `Region Search`, check-in and check-out date, number of adults and children",
+                "required parameters": [
+                    {
+                        "name": "region_id",
+                        "value": "{{region_id from the previous step}}"
+                    },
+                    {
+                        "name": "checkin_date",
+                        "value": "2025-07-14"
+                    },
+                    {
+                        "name": "checkout_date",
+                        "value": "2025-07-16"
+                    },
+                    {
+                        "name": "adults_number",
+                        "value": 1
+                    },
+                    {
+                        "name": "sort_order",
+                        "value": "REVIEW"
+                    },
+                    {
+                        "name": "locale",
+                        "value": "en_GB"
+                    },
+                    {
+                        "name": "domain",
+                        "value": "AE"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "guest_rating_min",
+                        "value": 8
+                    },
+                    {
+                        "name": "available_filter",
+                        "value": "SHOW_AVAILABLE_ONLY"
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Search (results request)",
+                "tool description": "The getResultsRequest endpoint returns car availability based on the provided search criteria",
+                "required parameters": [
+                    {
+                        "name": "pickup_date",
+                        "value": "2025-07-14"
+                    },
+                    {
+                        "name": "pickup_time",
+                        "value": "23:30"
+                    },
+                    {
+                        "name": "dropoff_date",
+                        "value": "2025-07-16"
+                    },
+                    {
+                        "name": "dropoff_time",
+                        "value": "08:00"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "pickup_airport_code",
+                        "value": "BOS"
+                    },
+                    {
+                        "name": "dropoff_airport_code",
+                        "value": "BOS"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I need to plan a trip for myself to Boston from San Francisco, flying out on July 14, 2025, and returning on July 16, 2025. Please find me the cheapest, round-trip, economy class flight from SFO to BOS. Concurrently, book a hotel near the Boston Convention Center for one adult, ensuring it has a minimum guest rating of 8 and is sorted by review. Finally, I need to arrange a car rental from Boston's airport, with a pickup time of 11:30 PM on July 14th and a drop-off time of 8:00 AM on July 16th.",
+        "query_hard_gemini-2.5-pro": "I need to plan a solo trip from San Francisco to Boston, leaving on July 14th, 2025, and returning on the 16th. Can you find me the cheapest round-trip economy flight available? For the hotel, I'll need a room for myself near the Boston Convention Center for those dates; please show me available options with excellent reviews, sorted by the best rated. I'll also need a rental car from the Boston airport, picking it up around 11:30 PM on the 14th and dropping it off at 8 AM on the 16th.",
+        "query_simple_claude_v37": "I need to plan a business trip to Boston for a convention. Please find me a round-trip flight from San Francisco (SFO) to Boston (BOS) departing July 14, 2025 and returning July 16, 2025 in economy class, sorted by price. Also, find hotels near the Boston Convention Center with at least 8/10 guest rating for the same dates. Finally, I'll need a rental car from Boston airport from July 14 at 11:30 PM until July 16 at 8:00 AM.",
+        "query_hard_claude_v37": "I need to attend a conference at the Boston Convention Center next summer - looking at July 14-16, 2025. I'd like to fly economy from San Francisco, stay at a well-reviewed hotel nearby where I can definitely get a room, and I'll need a rental car from the airport for the whole trip. I'm traveling alone and want to keep flight costs down. Could you help me plan this trip?"
+    },
+    {
+        "query": "My train from Berlin was just canceled! I'm at the main station now. Can you check for the next available train to Munich in the next 2 hours? Also, as a backup, find the cheapest last-minute flight from Berlin (BER) to Munich (MUC) departing today. If none available, please find a hotel in Munich for the night.",
+        "tool list": [
+            {
+                "tool name": "Deutsche Bahn: Autocomplete",
+                "tool description": "Search for train and public transport stations in Germany and across Europe",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "Berlin Hauptbahnhof"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Deutsche Bahn: Autocomplete",
+                "tool description": "Search for train and public transport stations in Germany and across Europe",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "M\u00fcnchen Hauptbahnhof"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Deutsche Bahn: Search trips",
+                "tool description": "Find trips between two stations",
+                "required parameters": [
+                    {
+                        "name": "from_id",
+                        "value": "{{id from the first step}}"
+                    },
+                    {
+                        "name": "to_id",
+                        "value": "{{id from the second step}}"
+                    },
+                    {
+                        "name": "date",
+                        "value": "CURRENT_DATE"
+                    },
+                    {
+                        "name": "time",
+                        "value": "CURRENT_TIME"
+                    },
+                    {
+                        "name": "passenger0_age",
+                        "value": "30"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Flight Data_v2: Cheapest tickets",
+                "tool description": "Returns the cheapest non-stop tickets, as well as tickets with 1 or 2 stops, for the selected route with departure/return date filters. Important: Old dates may be specified in a query. No error will be generated, but no data will be returned.",
+                "required parameters": [
+                    {
+                        "name": "origin",
+                        "value": "BER"
+                    },
+                    {
+                        "name": "destination",
+                        "value": "MUC"
+                    },
+                    {
+                        "name": "currency",
+                        "value": "EUR"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "depart_date",
+                        "value": "CURRENT_DATE (in YYYY-MM-DD format)"
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Auto Suggest",
+                "tool description": "This API will provide a list of possible cities and hotels for a given search string",
+                "required parameters": [
+                    {
+                        "name": "string",
+                        "value": "Munich"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "get_hotels",
+                        "value": "false"
+                    }
+                ]
+            },
+            {
+                "tool name": "Priceline com Provider: Search hotels",
+                "tool description": "Get available hotels by the filter. Indicate the `location_id` -> use `Search locations`, check-in and check-out date",
+                "required parameters": [
+                    {
+                        "name": "location_id",
+                        "value": "{{cityID for Munich from the previous step}}"
+                    },
+                    {
+                        "name": "date_checkin",
+                        "value": "CURRENT_DATE (in YYYY-MM-DD format)"
+                    },
+                    {
+                        "name": "date_checkout",
+                        "value": "TOMORROW'S_DATE (in YYYY-MM-DD format)"
+                    },
+                    {
+                        "name": "sort_order",
+                        "value": "HDR"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "rooms_number",
+                        "value": "1"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I'm planning a trip from Berlin to Munich for today for a 30-year-old person. Could you find available train trips from Berlin Hauptbahnhof to M\u00fcnchen Hauptbahnhof? Also, what are the cheapest flights from Berlin (BER) to Munich (MUC)? Finally, please find me a highly-rated hotel in Munich for tonight.",
+        "query_hard_gemini-2.5-pro": "I need to travel from Berlin Hauptbahnhof to M\u00fcnchen Hauptbahnhof today, leaving as soon as possible. I'm 30 years old. Could you please check the train connections and also find me the cheapest available flights from Berlin to Munich for today? Additionally, please find me a well-regarded hotel in Munich for one person for tonight.",
+        "query_simple_claude_v37": "I need to travel from Berlin to Munich today. Please find me train options from Berlin Hauptbahnhof to M\u00fcnchen Hauptbahnhof, as well as flight options from Berlin (BER) to Munich (MUC). Also, I'll need a hotel in Munich for tonight. Can you compare all these transportation options and find me an affordable hotel?",
+        "query_hard_claude_v37": "I need to get from Berlin to Munich tomorrow for a business meeting. Can you compare the train and flight options for me? I'd like to leave in the morning if possible. Also, I'll need to stay overnight in Munich, so please find me a well-rated hotel near the city center. I'm traveling alone and just need a room for one night."
+    },
+    {
+        "query": "I am a Canadian citizen thinking about a long-term stay in Portugal. First, what are the visa requirements for me? Second, can you get me a cost of living report for Lisbon in Canadian Dollars? By the way, I would like to try local feasts in top rated restaurants there.",
+        "tool list": [
+            {
+                "tool name": "Visa Requirements: /visa-requirements",
+                "tool description": "Checks visa requirements for a specific country and traveler nationality. This service provides up-to-date and accurate visa information, leveraging a comprehensive database to enable efficient access for businesses, travel agencies, and individuals.",
+                "required parameters": [
+                    {
+                        "name": "passport",
+                        "value": "CA"
+                    },
+                    {
+                        "name": "destination",
+                        "value": "PT"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Cities Cost of Living: Get Cities Details by Name",
+                "tool description": "Retrieves detailed information about cities, including living expenses, in the specified currencies. This leverages a comprehensive database of 650+ cities worldwide to provide localized cost data, enabling users to compare expenses across different regions and currencies efficiently.",
+                "required parameters": [
+                    {
+                        "name": "cities",
+                        "value": [
+                            {
+                                "name": "Lisbon",
+                                "country": "Portugal"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "currencies",
+                        "value": [
+                            "CAD"
+                        ]
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Top rated restaurants by city name: get top 10 restaurants",
+                "tool description": "Fetches the top 10 restaurants in a specified city based on their Google Maps ratings. This is part of a service that helps users discover top-rated dining options by city, utilizing a database of real-time reviews to deliver accurate and personalized recommendations.",
+                "required parameters": [],
+                "optional parameters": [
+                    {
+                        "name": "city",
+                        "value": "Lisbon"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I am a Canadian citizen planning a trip to Lisbon, Portugal. Can you tell me if I need a visa, what the cost of living is in CAD, and list the top 10 restaurants in the city?",
+        "query_hard_gemini-2.5-pro": "I'm planning a trip to Lisbon, Portugal and I have a Canadian passport. Can you tell me what the visa requirements are? I'd also like to get an idea of the cost of living there in Canadian dollars, and find out what the best-rated restaurants in the city are.",
+        "query_simple_claude_v37": "I'm a Canadian citizen planning to visit Lisbon, Portugal. What are the visa requirements for me? Also, I'd like to know the cost of living in Lisbon in Canadian dollars and what are the top-rated restaurants there?",
+        "query_hard_claude_v37": "I'm a Canadian planning a solo trip to Lisbon, Portugal this summer and I'm wondering what I need to know before booking. Do I need a visa to visit? Also, I'd like to understand how expensive things are there compared to back home in Canada, and I'm a big foodie so I'd love to know about some amazing restaurants to try while I'm there."
+    },
+    {
+        "query": "I want to travel by train from Berlin to Zurich next Tuesday. Can you find the train schedule and route options on both the Deutsche Bahn and SBB networks? For the best option, I'd like to see the specific trip details, including all the stops.",
+        "tool list": [
+            {
+                "tool name": "SBB Suisse railway: Autocomplete",
+                "tool description": "Search for train and public transport stations in Switzerland and across Europe",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "Berlin"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "SBB Suisse railway: Autocomplete",
+                "tool description": "Search for train and public transport stations in Switzerland and across Europe",
+                "required parameters": [
+                    {
+                        "name": "query",
+                        "value": "Zurich"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "SBB Suisse railway: Search trips",
+                "tool description": "Find trips between two stations",
+                "required parameters": [
+                    {
+                        "name": "from_id",
+                        "value": "{{id for Berlin from the previous step}}"
+                    },
+                    {
+                        "name": "to_id",
+                        "value": "{{id for Zurich from the previous step}}"
+                    },
+                    {
+                        "name": "date",
+                        "value": "{{Next Tuesday's date in DD.MM.YYYY format}}"
+                    },
+                    {
+                        "name": "time",
+                        "value": "08:00"
+                    },
+                    {
+                        "name": "passenger0_age",
+                        "value": "30"
+                    }
+                ],
+                "optional parameters": []
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I want to find a train trip from Berlin to Zurich for a 30-year-old passenger, departing next Tuesday around 08:00.",
+        "query_hard_gemini-2.5-pro": "I need to find a train from Berlin to Zurich for this coming Tuesday. I'd like to leave around 8 in the morning, and the ticket is for a 30-year-old passenger.",
+        "query_simple_claude_v37": "Find train trips from Berlin to Zurich next Tuesday at 8:00 AM for a 30-year-old passenger.",
+        "query_hard_claude_v37": "I need to travel from Berlin to Zurich next Tuesday morning for a business meeting. I'd like to arrive by noon if possible, and I'm looking for a train that leaves after 8am since I'm not a morning person. I'm 30 years old and traveling alone. What are my options for getting there?"
+    },
+    {
+        "query": "I'm considering investing in a rental property in Miami, Florida. Can you tell me the total number of 2-bedroom Airbnb listings in that market? Also, what is the average price and availability percentage for those listings right now?",
+        "tool list": [
+            {
+                "tool name": "Airbnb listings: Count listings by market",
+                "tool description": "Retrieves the count of Airbnb listings in a specified market, filtered by bedrooms and maximum guest capacity. This endpoint is part of a comprehensive service providing real-time access to Airbnb data, including listing details, future prices, availability, and reviews. By leveraging a database of listings updated daily, it enables users to analyze accommodation trends and make data-driven decisions, supported by 24-hour response times for inquiries and scalability for detailed market insights.",
+                "required parameters": [
+                    {
+                        "name": "market",
+                        "value": "Miami"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "bedrooms",
+                        "value": 2
+                    }
+                ]
+            },
+            {
+                "tool name": "Airbnb listings: Prices and Availability by administrative divisions",
+                "tool description": "Retrieve average Price, average price of available properties only, availability percent and number of processed properties in an geographical administrative division. Geographic area names can be found from \"Get administrative divisions\" endpoint. admin* parameters are optional but to use admin2, admin1 is required, to use admin 3, admin2 and admin1 are required and so on. Not respecting this requirement could give you unwanted results (ie listings with cities with the same name but in different countries). Can be filtered on bedrooms and max guest capacity.",
+                "required parameters": [
+                    {
+                        "name": "month",
+                        "value": "5"
+                    },
+                    {
+                        "name": "country_code",
+                        "value": "US"
+                    },
+                    {
+                        "name": "year",
+                        "value": 2024
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "bedrooms",
+                        "value": "2"
+                    },
+                    {
+                        "name": "admin1",
+                        "value": "Florida"
+                    },
+                    {
+                        "name": "admin2",
+                        "value": "Miami-Dade County"
+                    },
+                    {
+                        "name": "place",
+                        "value": "Miami"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "What is the average price and availability percentage for 2-bedroom properties in Miami, Florida, during May 2024?",
+        "query_hard_gemini-2.5-pro": "I'm planning a trip to Miami, Florida, and I'm interested in places with two bedrooms. Could you first tell me how many such listings are available there? Then, for those two-bedroom places, what's the average price and availability for May 2024?",
+        "query_simple_claude_v37": "How many 2-bedroom Airbnb listings are available in Miami, and what is the average price and availability percentage for 2-bedroom properties in Miami, Florida for May 2024?",
+        "query_hard_claude_v37": "I'm planning a couples getaway to Miami this May and we need a place with two bedrooms. I'd like to know how many options we have in the area and what the typical prices are for that time of year. We're specifically looking at Miami-Dade County since we'll be visiting friends there. Can you help me understand what's available and what we should budget for?"
+    },
+    {
+        "query": "I have my trip organized in TripIt, but now I change my mind and I would like to travel by car. Please access my account, find the flight object with ID 'flt-12345', and delete it. Then, add a new car rental reservation using the details I'm providing: pick up location: BOS, drop off location: BOS, pick up date: 2025-07-14, drop off date: 2025-07-16, pick up time: 13:00",
+        "tool list": [
+            {
+                "tool name": "Tripit: Get",
+                "tool description": "Retrieves a specific TripIt object using its unique ID via an HTTP GET request. This endpoint is part of the TripIt API, which automates organizing travel plans into centralized itineraries by processing confirmation emails and structuring trip details (air, hotel, car, etc.). The API enables seamless access to travel data for itinerary management, calendar integration, and third-party application compatibility, allowing users to retrieve precise travel information efficiently while leveraging TripIt's email import technology and centralized data storage.",
+                "required parameters": [
+                    {
+                        "name": "object_type",
+                        "value": "air"
+                    },
+                    {
+                        "name": "tripit_object_id",
+                        "value": "flt-12345"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Tripit: Delete",
+                "tool description": "Deletes specified travel objects from a user's TripIt account. This functionality is part of the TripIt API, which organizes travel plans into centralized itineraries by automatically parsing confirmation emails. The deletion feature allows users to manage their travel data efficiently, ensuring accurate and up-to-date itineraries accessible via web or mobile. By leveraging the TripIt API, developers can integrate seamless travel data management, including removal of entries, into third-party applications, enhancing user control over their trip details.",
+                "required parameters": [
+                    {
+                        "name": "object_type",
+                        "value": "air"
+                    },
+                    {
+                        "name": "tripit_object_id",
+                        "value": "flt-12345"
+                    }
+                ],
+                "optional parameters": []
+            },
+            {
+                "tool name": "Priceline com Provider: Search (results request)",
+                "tool description": "The getResultsRequest endpoint checks car availability using provided search criteria such as pickup location, dates, and vehicle type. This is part of Priceline.com's travel platform, which enables users to search hotels, cars, and flights. It leverages a database of car rental options to streamline the booking process by quickly retrieving available vehicles that match user specifications.",
+                "required parameters": [
+                    {
+                        "name": "dropoff_time",
+                        "value": "15:00"
+                    },
+                    {
+                        "name": "pickup_date",
+                        "default": "2025-07-14"
+                    },
+                    {
+                        "name": "dropoff_date",
+                        "value": "2025-07-16"
+                    },
+                    {
+                        "name": "pickup_time",
+                        "value": "13:00"
+                    }
+                ],
+                "optional parameters": [
+                    {
+                        "name": "pickup_airport_code",
+                        "value": "BOS"
+                    }
+                ]
+            }
+        ],
+        "query_simple_gemini-2.5-pro": "I am looking for a rental car at Boston Logan Airport. My pickup is on July 14, 2025, at 13:00, and I will drop it off on July 16, 2025, at 15:00.",
+        "query_hard_gemini-2.5-pro": "I've had a change of plans, can you please cancel my flight with confirmation flt-12345? I'll need to rent a car instead. Please find me one to pick up at Boston airport on July 14th, 2025 at 1 PM, and I'll drop it off on July 16th around 3 in the afternoon.",
+        "query_simple_claude_v37": "I need to check my flight details with ID flt-12345, then delete this flight from my TripIt account, and afterward search for a rental car at Boston airport (BOS) for pickup on July 14, 2025 at 1:00 PM and return on July 16, 2025 at 3:00 PM.",
+        "query_hard_claude_v37": "I need to check the details of my Boston flight (ID flt-12345) in my TripIt account, then remove it since my plans changed. I'm now thinking of renting a car at Boston airport instead - could you find options for picking up around 1pm on July 14th, 2025 and returning it on the 16th at 3pm?"
+    }
+]
