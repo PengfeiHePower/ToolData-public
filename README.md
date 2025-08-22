@@ -68,16 +68,16 @@ python evaluation/tool_evaluation_retrieve.py
 
 The benchmark covers 10 carefully selected domains that require external tools rather than internal model capabilities:
 
-- ✈️ **Travel**: Hotel booking, flight information, trip planning, transportation, providing real-time information on hotel prices, airline itineraries, and destination recommendations.
-- 🌤️ **Weather**: Forecasts, meteorological data, climate information, essential for planning daily activities, agricultural decisions, travel arrangements, and more.
-- 💰 **Finance**: Market data, trading platforms, cryptocurrency, banking, also enable remote access to bank accounts for transactions.
-- 🗺️ **Mapping**: Provide location services, finding routes, planning shipping routes and offering location-based recommendations.
-- 🎵 **Music**: Streaming, lyrics, artist information, music metadata like song details and artist information.
-- 📰 **News & Media**: Provide access to a wide range of news articles, multimedia content (such as images and videos), headlines, and related information from various sources.
-- 📚 **Education**: Provide access to educational resources, power online classes, enable instant access to grades and assignments, and enhance research capabilities.
-- 📧 **Email**: Enable users to access and utilize the functionalities of email service providers, facilitating tasks like generating and sending emails, automating invoice sending, and managing folders.
-- 🎮 **Gaming**: Game data, statistics, account management, also facilitating third-party applications for altering game elements and aggregating global gaming statistics.
-- 🛒 **eCommerce**: Online shopping, inventory, product information, allowing businesses to sell products and services online.
+- ✈️ **Travel**: Hotel booking, flight information, trip planning, transportation
+- 🌤️ **Weather**: Forecasts, meteorological data, climate information
+- 💰 **Finance**: Market data, trading platforms, cryptocurrency, banking
+- 🗺️ **Mapping**: Location services, routing, geographic data
+- 🎵 **Music**: Streaming, lyrics, artist information, music metadata
+- 📰 **News & Media**: News articles, multimedia content, current events
+- 📚 **Education**: Learning resources, academic data, research tools
+- 📧 **Email**: Communication, automation, folder management
+- 🎮 **Gaming**: Game data, statistics, account management
+- 🛒 **eCommerce**: Online shopping, inventory, product information
 
 ### 📁 Data Organization
 
