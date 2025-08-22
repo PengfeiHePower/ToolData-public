@@ -89,7 +89,7 @@ public_data/
 │       └── ...          # Other domains
 ```
 
-### 📊 Dataset at a Glance
+### 📊 Dataset at a Glance (for parallel, sequential on the way)
 
 - 🌍 **10 domains**: Education, Email, Finance, Gaming, Mapping, Music, News_Media, Travel, Weather, eCommerce
 - 🎯 **50 practical task types**: 5 representative user task types for each domain
