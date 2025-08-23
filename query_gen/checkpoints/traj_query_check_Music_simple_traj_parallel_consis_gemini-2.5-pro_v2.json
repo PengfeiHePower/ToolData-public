@@ -1,8 +1,0 @@
-{
-  "record_index": 200,
-  "total_processed": 200,
-  "timestamp": 1755523465.9475024,
-  "domain": "Music",
-  "traj_file": "simple_traj_parallel_consis_gemini-2.5-pro_v2",
-  "model": "claude_v37"
-}
