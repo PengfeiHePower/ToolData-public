@@ -8,9 +8,9 @@
 ✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks. Bring new insights to LLM-based agentic tool usage!
 
 ## 🆕 News
-[**2025/8/23**] We release the tool evaluation script for LLMs, supporting multiple query methods and tool selection modes.
+📢 [**2025/8/23**] We release the tool evaluation script for LLMs, supporting multiple query methods and tool selection modes.
 
-[**2025/8/21**] We release the first version of TRAJECT-Bench, including a high-quality executable production-style tool set and a novel tool-usage query dataset. The tool-calling trajectory is driven by real-world task types and invlove multiple tools from 3 to 10, enabling a scalable evaluation of tool-using capabilities. Queries consist of simple and hard versions, enabling deeper investigation on complexity.
+📢 [**2025/8/21**] We release the first version of TRAJECT-Bench, including a high-quality executable production-style tool set and a novel tool-usage query dataset. The tool-calling trajectory is driven by real-world task types and invlove multiple tools from 3 to 10, enabling a scalable evaluation of tool-using capabilities. Queries consist of simple and hard versions, enabling deeper investigation on complexity.
 
 ---
 
