@@ -14,14 +14,11 @@ git clone <repository-url>
 cd ToolData-public
 pip install -r requirements.txt
 
-# Simple query evaluation
-python evaluation/tool_evaluation_model.py
+# Tool evaluation on LLMs (not agentic evaluation)
+python evaluation/tool_evaluation.py 
 
-# Agentic evaluation (ReAct)
+# Agentic evaluation (ReAct, to release soon)
 python evaluation/tool_evaluation_react.py
-
-# Retrieval-based evaluation
-python evaluation/tool_evaluation_retrieve.py
 ```
 
 ✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks.

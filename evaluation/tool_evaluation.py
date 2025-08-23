@@ -149,6 +149,11 @@ parser.add_argument(
     help="embedding model for retrieval, necessary for retrieval",
     choices=["ToolBench_IR", "bge-large", "all-MiniLM"],
 )
+parser.add_argument(
+    "-emb_model_dir",
+    type=str,
+    help="embedding model directory, necessary for retrieval",
+)
 # trajectory and file settings
 parser.add_argument(
     "-traj_type",
@@ -162,18 +167,16 @@ parser.add_argument(
 )
 # log setting
 parser.add_argument(
-    "-log_dir", type=str, default="./log/simple_query/model", help="log directory"
+    "-log_dir", type=str, help="log directory"
 )
 parser.add_argument(
     "-chk_dir",
     type=str,
-    default="./chk/simple_query/model",
     help="checkpoint directory",
 )
 parser.add_argument(
     "-base_data_dir",
     type=str,
-    default="/home/ec2-user/mountS3/newToolData/public_data/v2",
     help="base data directory",
 )
 parser.add_argument(
@@ -390,10 +393,10 @@ for domain in domain_list:
     elif args.tool_select == "retrieval":
         # Load retriever model and embeddings for this domain
         logger.info(f"Loading retriever model: {args.emb_model}")
-        retriever_model = load_retriever_model(args.emb_model)
+        retriever_model = load_retriever_model(args.emb_model_dir, args.emb_model)
         logger.info(f"Loading embeddings for domain: {domain}")
         domain_tool, domain_embeddings = load_encoded_tools(
-            domain_tool, domain, args.emb_model
+            domain_tool, domain, args.emb_model, args.base_data_dir
         )
         tool_list = domain_tool  # This will be overridden per query
 

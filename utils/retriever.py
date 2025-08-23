@@ -16,7 +16,7 @@ try:
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
 
-def load_retriever_model(model_name: str = "all-MiniLM-L6-v2"):
+def load_retriever_model(emb_model_dir: str,model_name: str = "all-MiniLM-L6-v2"):
     """
     Load a sentence transformer model for tool retrieval
     
@@ -30,18 +30,18 @@ def load_retriever_model(model_name: str = "all-MiniLM-L6-v2"):
         raise ImportError("sentence-transformers package is required. Install with: pip install sentence-transformers")
     
     if model_name == "ToolBench_IR":
-        return SentenceTransformer("/home/ec2-user/mountS3/retriever/ToolBench_IR_bert_based_uncased")
+        return SentenceTransformer(os.path.join(emb_model_dir, "ToolBench_IR_bert_based_uncased"))
     elif model_name == "bge-large":
-        return SentenceTransformer("/home/ec2-user/mountS3/retriever/bge-large-en-v1.5")
+        return SentenceTransformer(os.path.join(emb_model_dir, "bge-large-en-v1.5"))
     elif model_name == "all-MiniLM":
-        return SentenceTransformer("/home/ec2-user/mountS3/retriever/all-MiniLM-L6-v2")
+        return SentenceTransformer(os.path.join(emb_model_dir, "all-MiniLM-L6-v2"))
     else:
         supported_models = ["ToolBench_IR", "bge-large", "all-MiniLM"]
         raise ValueError(f"Embedding model '{model_name}' is not supported. Supported models: {supported_models}")
 
 
 
-def load_encoded_tools(tools: List[Dict[str, Any]], domain_name: str, emb_model_name: str, base_data_dir: str = "/home/ec2-user/mountS3/newToolData/retrieval_emb", tool_args: List = ['tool description']) -> Tuple[List[Dict[str, Any]], any]:
+def load_encoded_tools(tools: List[Dict[str, Any]], domain_name: str, emb_model_name: str, base_data_dir: str, tool_args: List = ['tool description']) -> Tuple[List[Dict[str, Any]], any]:
     """
     Load embeddings for tools. If cached embeddings exist, load them. Otherwise encode and save.
     
