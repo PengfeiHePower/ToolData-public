@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 [![HF Dataset](https://img.shields.io/badge/HuggingFace-dataset-blue)](https://huggingface.co/datasets/bigboss24/tool_usage)
 
-> A comprehensive benchmark for evaluating tool-using language models with parallel and sequential tool-calling trajectories across practical domains.
+✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks.
 
 ## 🚀 Quickstart (TL;DR) (to finish soon)
 
@@ -29,8 +29,6 @@ python evaluation/tool_evaluation.py -model claude_v37 -tool_select retrieval -m
 # Agentic evaluation (ReAct, to release soon)
 python evaluation/tool_evaluation_react.py
 ```
-
-✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks.
 
 ## 🎯 Overview
 
