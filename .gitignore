@@ -18,3 +18,16 @@ tool_check_v1.py
 tool_check_v2.py
 tool_check_v3.py
 CLAUDE.md
+query_gen/__pycache__
+query_gen/checkpoints/
+query_gen/chk/
+query_gen/log
+query_gen/concurrent_traj_query_gen.py
+query_gen/sequential_traj_gen.py
+query_gen/simple_traj_gen_fix.py
+query_gen/simple_traj_gen.py
+query_gen/test_api.py
+query_gen/test_api.py
+query_gen/traj_query_check.py
+query_gen/traj_to_query_gen_consis_parallel_fix.py
+query_gen/traj_to_query_gen_selfplay_parallel.py
