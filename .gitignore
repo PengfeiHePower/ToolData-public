@@ -27,7 +27,6 @@ query_gen/sequential_traj_gen.py
 query_gen/simple_traj_gen_fix.py
 query_gen/simple_traj_gen.py
 query_gen/test_api.py
-query_gen/test_api.py
 query_gen/traj_query_check.py
 query_gen/traj_to_query_gen_consis_parallel_fix.py
 query_gen/traj_to_query_gen_selfplay_parallel.py
