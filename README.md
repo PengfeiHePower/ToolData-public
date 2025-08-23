@@ -15,7 +15,16 @@ cd ToolData-public
 pip install -r requirements.txt
 
 # Tool evaluation on LLMs (not agentic evaluation)
-python evaluation/tool_evaluation.py 
+python evaluation/tool_evaluation.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
+
+## default settings (direct prompting, domain mode, parallel trajectory, simple version, default model claude_v37)
+python evaluation/tool_evaluation.py -model claude_v37 -tool_select domain -method direct -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
+
+## CoT setting (default model claude_v37, prompts in evaluation/evaluation_prompt.json)
+python evaluation/tool_evaluation.py -model claude_v37 -tool_select domain -method cot -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
+
+## Retrieval tool pool setting (default model claude_v37, direct prompting, embedding model all-MiniLM, embedding model directory ./retriever, tool pool size 20)
+python evaluation/tool_evaluation.py -model claude_v37 -tool_select retrieval -method direct -k 20 -emb_model all-MiniLM -emb_model_dir ./retriever -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
 
 # Agentic evaluation (ReAct, to release soon)
 python evaluation/tool_evaluation_react.py
