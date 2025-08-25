@@ -16,7 +16,7 @@ try:
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
 
-def load_retriever_model(emb_model_dir: str,model_name: str = "all-MiniLM-L6-v2"):
+def load_retriever_model(emb_model_dir: str, model_name: str = "all-MiniLM-L6-v2"):
     """
     Load a sentence transformer model for tool retrieval
     
@@ -41,13 +41,13 @@ def load_retriever_model(emb_model_dir: str,model_name: str = "all-MiniLM-L6-v2"
 
 
 
-def load_encoded_tools(tools: List[Dict[str, Any]], domain_name: str, emb_model_name: str, base_data_dir: str, tool_args: List = ['tool description']) -> Tuple[List[Dict[str, Any]], any]:
+def load_encoded_tools(tools: List[Dict[str, Any]], domain_name: str, emb_model_name: str, base_data_dir: str = "/home/ec2-user/mountS3/newToolData/retrieval_emb", tool_args: List = ['tool description']) -> Tuple[List[Dict[str, Any]], any]:
     """
     Load embeddings for tools. If cached embeddings exist, load them. Otherwise encode and save.
     
     Args:
         tools: List of tool dictionaries (loaded from JSON externally)
-        domain_name: Name of the domain (e.g., "Finance", "Travel") 
+        domain_name: Name of the domain (e.g., "Finance", "Travel"), or "All" for all tools
         emb_model_name: Name of the embedding model (e.g., "all-MiniLM")
         base_data_dir: Base directory for data
         

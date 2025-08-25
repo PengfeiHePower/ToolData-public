@@ -8,6 +8,8 @@
 ✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks. Bring new insights to LLM-based agentic tool usage!
 
 ## 🆕 News
+📢 [**2025/8/24**] We release the tool evaluation script for ReAct (agentic method), supporting both static and dynamic tool retrieval.
+
 📢 [**2025/8/23**] We release the tool evaluation script for LLMs, supporting multiple query methods and tool selection modes.
 
 📢 [**2025/8/21**] We release the first version of TRAJECT-Bench, including a high-quality executable production-style tool set and a novel tool-usage query dataset. The tool-calling trajectory is driven by real-world task types and invlove multiple tools from 3 to 10, enabling a scalable evaluation of tool-using capabilities. Queries consist of simple and hard versions, enabling deeper investigation on complexity.
@@ -33,8 +35,17 @@ python evaluation/tool_evaluation.py -model claude_v37 -tool_select domain -meth
 ## Retrieval tool pool setting (default model claude_v37, direct prompting, embedding model all-MiniLM, embedding model directory ./retriever, tool pool size 20)
 python evaluation/tool_evaluation.py -model claude_v37 -tool_select retrieval -method direct -k 20 -emb_model all-MiniLM -emb_model_dir ./retriever -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
 
-# Agentic evaluation (ReAct, to release soon)
-python evaluation/tool_evaluation_react.py
+# Agentic evaluation (ReAct)
+python evaluation/tool_evaluation_react.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -retrieve_mode [retrieve mode] -retrieve_pool [retrieve pool] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
+
+## default settings (ReAct, domain tool pool, no retrieval, parallel trajectory, simple version, default model claude_v37)
+python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select domain -method react -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+
+## Static retrieval (default model claude_v37, static retrieval from domain tool pool)
+python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode static -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+
+## Dynamic retrieval (default model claude_v37, dynamic retrieval from domain tool pool)
+python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode dynamic -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
 ```
 
 ## 🎯 Overview

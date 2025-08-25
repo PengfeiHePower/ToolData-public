@@ -44,16 +44,16 @@ def sanitize_input(text: str) -> str:
     text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]', '', text)  # Remove control chars
     return text
 
-def extract_json_from_markdown_fence(text: str, expect_dict=False):
+def extract_json_from_markdown_fence(text: str):
     """
     Extracts and parses JSON from a markdown fenced code block.
+    Automatically detects whether the content is a JSON array or object.
     
     Args:
         text (str): The input string containing a markdown block with JSON content.
-        expect_dict (bool): If True, expects a dict; if False, expects a list.
         
     Returns:
-        list[dict] or dict: Parsed JSON data.
+        list[dict] or dict: Parsed JSON data (automatically detected type).
         
     Raises:
         ValueError: If no valid JSON block is found or parsing fails.
@@ -64,19 +64,15 @@ def extract_json_from_markdown_fence(text: str, expect_dict=False):
     # Sanitize input
     text = sanitize_input(text)
     
-    # Match fenced code block with json - improved regex for both arrays and objects
-    if expect_dict:
-        patterns = [
-            r"```json\s*(\{.*?\})\s*```",  # json fence dict
-            r"```\s*(\{.*?\})\s*```",      # generic fence dict
-            r"(\{.*?\})",                   # bare JSON object
-        ]
-    else:
-        patterns = [
-            r"```json\s*(\[.*?\])\s*```",  # json fence array
-            r"```\s*(\[.*?\])\s*```",      # generic fence array
-            r"(\[.*?\])",                   # bare JSON array
-        ]
+    # Patterns to match both arrays and objects in markdown fences
+    patterns = [
+        r"```json\s*(\{.*?\})\s*```",  # json fence dict
+        r"```\s*(\{.*?\})\s*```",      # generic fence dict
+        r"```json\s*(\[.*?\])\s*```",  # json fence array
+        r"```\s*(\[.*?\])\s*```",      # generic fence array
+        r"(\{.*?\})",                   # bare JSON object
+        r"(\[.*?\])",                   # bare JSON array
+    ]
     
     for pattern in patterns:
         match = re.search(pattern, text, re.DOTALL)
@@ -84,15 +80,12 @@ def extract_json_from_markdown_fence(text: str, expect_dict=False):
             json_str = match.group(1)
             try:
                 result = json.loads(json_str)
-                if expect_dict and isinstance(result, dict):
-                    return result
-                elif not expect_dict and isinstance(result, list):
-                    return result
+                # Return the result regardless of type - let caller handle it
+                return result
             except json.JSONDecodeError:
                 continue
     
-    expected_type = "dict" if expect_dict else "list"
-    raise ValueError(f"No valid JSON {expected_type} found in text")
+    raise ValueError("No valid JSON found in text")
 
 # Custom exceptions for robust error handling
 class APIError(Exception):
