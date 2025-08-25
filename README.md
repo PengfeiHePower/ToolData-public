@@ -16,7 +16,7 @@
 
 ---
 
-## 🚀 Quickstart (TL;DR) (to finish soon)
+## 🚀 Quickstart (TL;DR)
 
 ```bash
 git clone <repository-url>
@@ -46,6 +46,8 @@ python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrie
 
 ## Dynamic retrieval (default model claude_v37, dynamic retrieval from domain tool pool)
 python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode dynamic -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+
+# other agentic evaluation to release soon
 ```
 
 ## 🎯 Overview
