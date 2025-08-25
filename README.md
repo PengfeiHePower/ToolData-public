@@ -236,14 +236,11 @@ pip install -r requirements.txt
 ### 🧪 Running Evaluations (to finish soon)
 
 ```bash
-# Simple query evaluation with direct prompting
-python evaluation/tool_evaluation_model.py
+# Simple query evaluation with direct prompting, CoT, etc. Support multiple tool selection modes and trajectory types.
+python evaluation/tool_evaluation.py
 
-# Agentic evaluation (ReAct)
+# Agentic evaluation (ReAct) Support both static and dynamic tool retrieval.
 python evaluation/tool_evaluation_react.py
-
-# Retrieval-based evaluation
-python evaluation/tool_evaluation_retrieve.py
 ```
 
 ### 📁 Data Access
@@ -258,7 +255,7 @@ The benchmark data is publicly available in the `public_data/` directory:
 
 Primary dataset hosting:
 
-- 🤗 Hugging Face dataset: [`bigboss24/tool_usage`](https://huggingface.co/datasets/bigboss24/tool_usage)
+- 🤗 Hugging Face dataset: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
 
 <!-- ## Benchmark Design Principles
 
