@@ -1,0 +1,1582 @@
+[
+  {
+    "name": "Geographic Search \u2192 Hotel Search \u2192 Hotel Details",
+    "description": "This chain starts with a broad geographic search and progressively narrows down to a single hotel, with each step providing a necessary ID for the next.",
+    "tool sequence": [
+      {
+        "tool name": "Priceline com Provider: Download cities",
+        "use description": "A user starts by getting a list of all available cities. The output is a list of city objects, each with a unique 'cityid_ppn'.",
+        "param for next tool": "cityid_ppn"
+      },
+      {
+        "tool name": "Priceline com Provider: Downalods hotels",
+        "use description": "The user selects a city from the first step. This tool is then called with its 'cityid_ppn' parameter populated by the chosen city's ID. The output is a list of hotels in that city, each with a unique 'hotelid_ppn'",
+        "param for next tool": "hotelid_ppn"
+      },
+      {
+        "tool name": "Priceline com Provider: Hotel details",
+        "use description": "Finally, this tool is called with its hotel_id parameter populated by the hotelid_ppn from the second step, retrieving the details for that specific hotel.",
+        "param for next tool": ""
+      }
+    ],
+    "tool number": 3
+  },
+  {
+  "name": "Airport Search by Geolocation → Airport Flights → Flight Weather (METAR)",
+  "description": "This sequence identifies a nearby airport based on geographic coordinates, lists the flights at that airport, and then retrieves the critical, real-time weather report for one of those flights.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "A user provides a latitude and longitude. The output is a list of nearby locations, including airports with their 'iata' codes.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportInfo",
+      "use description": "This tool takes the 'iata' code from the previous step to get the airport's unique 'ident' identifier.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportMetar",
+      "use description": "This tool is then called with its 'ident' parameter populated by the airport's ID from the second step to get the current METAR weather report.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 3
+  },
+  {
+  "name": "List Countries → List Airlines by Country → Get Airline Statistics",
+  "description": "This sequence allows a user to discover which airlines operate in a specific country and then retrieve detailed operational statistics for one of those airlines.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download countries",
+      "use description": "The user gets a complete list of countries, each with a unique 'country_code_ppn'.",
+      "param for next tool": "country_code_ppn"
+    },
+    {
+      "tool name": "Airport Guide - Aviation Info: Airline by Country",
+      "use description": "This tool takes the 'country_code_ppn' from the first step as its 'country' parameter to list all airlines in that country, each with an 'IATA ID' and 'ICAO ID'.",
+      "param for next tool": "IATA ID, ICAO ID"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineStatistics",
+      "use description": "Finally, this tool is called with its 'iata' or 'icao' parameter populated from the previous step to get detailed flight statistics for that specific airline.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 3
+  },
+  {
+  "name": "Bus City Discovery → Station Schedule → Nearby Hotel Search",
+  "description": "This sequence identifies a bus station within a city, retrieves its schedule, and then uses the station's geographic coordinates to find nearby hotels.",
+  "tool sequence": [
+    {
+      "tool name": "Flixbus: cities",
+      "use description": "A user gets a list of all cities served by Flixbus. The output for each city includes a list of unique station IDs ('stations').",
+      "param for next tool": "station_id"
+    },
+    {
+      "tool name": "Flixbus: schedule",
+      "use description": "This tool takes a 'station_id' from the first step to get the schedule and detailed location of a specific bus station, including its latitude and longitude.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "Finally, this tool uses the 'latitude' and 'longitude' from the bus station to search for hotels in the immediate vicinity.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 3
+},
+{
+  "name": "Airport List → Flight Identification → Flight Performance Statistics",
+  "description": "This is a data-intensive sequence that starts with a global airport directory, identifies a specific flight from one airport, and then drills down into its historical performance data.",
+  "tool sequence": [
+    {
+      "tool name": "Flight Data_v2: Airport data in json format",
+      "use description": "A user gets a comprehensive list of all airports, which includes the IATA code for each one (e.g., 'LHR').",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The user provides an 'iata' code (used as the 'ident' parameter) and a time to list all flights. The output includes a specific flight number ('flnr') and the departure/arrival airports ('aptFrom', 'aptTo').",
+      "param for next tool": "flnr, aptFrom, aptTo"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "This tool takes the 'flnr', 'aptFrom', and 'aptTo' from a specific flight in the previous step to retrieve its detailed on-time performance and cancellation statistics.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 3
+},
+{
+    "name": "Location Search → ID Conversion → Hotel Details → Hotel Reviews",
+    "description": "This sequence simulates a user finding a hotel, converting its identifier, getting detailed information, and then retrieving user reviews for that specific hotel.",
+    "tool sequence": [
+        {
+            "tool name": "Hotels com Provider: Regions Search",
+            "use description": "A user searches for a location (e.g., 'Prag') and gets a list of hotels, each with a unique 'slug' identifier.",
+            "param for next tool": "slug"
+        },
+        {
+            "tool name": "Hotels com Provider: Hotel Slug convert",
+            "use description": "This tool takes the 'slug' from the first step to convert it into a universal numeric 'hotel_id'.",
+            "param for next tool": "hotel_id"
+        },
+        {
+            "tool name": "Priceline com Provider: Hotel details",
+            "use description": "This tool takes the numeric 'hotel_id' from the second step to retrieve the hotel's complete profile, including its name, address, and amenities.",
+            "param for next tool": "hotel_id"
+        },
+        {
+            "tool name": "Priceline com Provider: Hotel reviews",
+            "use description": "Finally, the same 'hotel_id' is used to fetch all user-submitted reviews for that specific property.",
+            "param for next tool": ""
+        }
+    ],
+    "tool number": 4
+},
+{
+    "name": "Geolocation → Airport Info → Flight List → Ground Transport Advisory",
+    "description": "This sequence starts with geographic coordinates to find a nearby airport, identifies a flight from that airport, and then checks local transit advisories for the arrival city.",
+    "tool sequence": [
+        {
+            "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+            "use description": "A user provides a latitude and longitude to find nearby locations, including airports with their 'iata' codes.",
+            "param for next tool": "iata"
+        },
+        {
+            "tool name": "Flightera Flight Data: airportInfo",
+            "use description": "This tool takes the 'iata' code from the first step to get the airport's full details, including its unique 'ident' and location in the Bay Area.",
+            "param for next tool": "ident"
+        },
+        {
+            "tool name": "Flightera Flight Data: airportFlights",
+            "use description": "This tool is called with the 'ident' of the airport to get a list of departing or arriving flights.",
+            "param for next tool": "arrival city information"
+        },
+        {
+            "tool name": "BART: Advisory information",
+            "use description": "Based on the flight's arrival in the Bay Area (e.g., SFO), this tool is used to check for any real-time service advisories on the local BART transit system.",
+            "param for next tool": ""
+        }
+    ],
+    "tool number": 4
+},
+{
+  "name": "Flight Search → Flight Details → Itinerary Planning → Real-Time Status",
+  "description": "This sequence represents a complete flight planning process, from initial search to getting detailed flight data, creating a multi-day itinerary, and finally checking the flight's live status.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search flights locations",
+      "use description": "A user searches for a destination (e.g., 'London') to get a list of relevant airports, each with a 'cityID' and 'airportCode'.",
+      "param for next tool": "airportCode"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The user provides an 'airportCode' (as 'ident') and a time to list all flights. The output includes a specific flight number ('flnr') and destination details.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "This tool takes the 'destination' city from the flight information to generate a multi-day trip plan with activities and schedules.",
+      "param for next tool": "flnr, CarrierCode, DepartureAirport, ArrivalAirport"
+    },
+    {
+      "tool name": "Flight Info API: status",
+      "use description": "Finally, this tool takes the specific identifiers for the flight ('flnr', carrier codes, and airport codes) to get the most up-to-date, real-time status of the flight.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 4
+},
+{
+  "name": "City Discovery → Cost of Living Analysis → Hotel Search → Hotel Details",
+  "description": "This chain simulates a budget-conscious user who first identifies a city, checks its general cost of living, then searches for available hotels, and finally retrieves details for a specific one.",
+  "tool sequence": [
+    {
+      "tool name": "Cities Cost of Living: Get Cities List",
+      "use description": "A user gets a list of all available cities and their corresponding countries to choose from.",
+      "param for next tool": "city_name, country_name"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "This tool takes the 'city_name' and 'country_name' from the first step to get a detailed breakdown of the cost of goods and services in that city.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "Based on the cost of living, the user proceeds to search for hotels using the 'name' of the city to get a list of hotel locations and IDs.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "Finally, the user takes a hotel 'id' from the list to get the complete details for that specific hotel.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 4
+},
+{
+  "name": "Train Station Search → Trip Details → Nearby Hotel Search → Hotel ID Conversion",
+  "description": "This sequence models a user planning a train trip. They find a station, get trip details, search for nearby hotels, and then convert the hotel identifier for more details.",
+  "tool sequence": [
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "A user searches for a destination train station (e.g., 'bern') to get its precise station 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Search trips",
+      "use description": "This tool takes the station 'id' as the 'to_id' to find train trips arriving at that station, confirming a valid route.",
+      "param for next tool": "station name"
+    },
+    {
+      "tool name": "Hotels com Provider: Regions Search",
+      "use description": "The user then takes the 'station name' from the trip details and uses it as a 'query' to find a list of nearby hotels, each with a 'slug'.",
+      "param for next tool": "slug"
+    },
+    {
+      "tool name": "Hotels com Provider: Hotel Slug convert",
+      "use description": "Finally, the user takes the 'slug' of a chosen hotel and converts it into a numeric 'hotel_id' for final booking or detail retrieval.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 4
+},
+{
+  "name": "Itinerary Planning → Hotel Search → Cost Analysis → Hotel Details → Transit Check",
+  "description": "This sequence models a user who generates a trip plan, finds hotels in the destination, checks the local cost of living, gets details for a specific hotel, and finally checks local transit advisories.",
+  "tool sequence": [
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "A user provides a destination (e.g., 'San Francisco') to get a multi-day itinerary. The output contains the city name and country.",
+      "param for next tool": "destination_city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'destination_city_name' is used as the 'name' parameter to get a list of hotel locations and their IDs in that city.",
+      "param for next tool": "city_name, country_name"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "The 'city_name' and 'country_name' are used to retrieve a detailed breakdown of the cost of living, helping the user budget for their trip.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' from the earlier search is used to get the full details of a chosen hotel.",
+      "param for next tool": "BART_station_abbreviation"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "Since the destination is in the Bay Area, the 'orig' parameter is used with a relevant station code (e.g., 'SFO') to check for any local transit advisories for the trip.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 5
+},
+{
+  "name": "Airport Info → Flight List → Flight Details → Nearby Hotel Search → Hotel Details",
+  "description": "This sequence models a user checking their flight upon arrival, then immediately finding and getting details for a hotel near the airport using geolocation.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airportInfo",
+      "use description": "A user provides an IATA code (e.g., 'SFO') to get detailed airport information, including its unique 'ident' and geographic 'latitude' and 'longitude'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The 'ident' of the airport is used to list all recent flights, providing a specific flight number ('flnr') and 'date' for the user's flight.",
+      "param for next tool": "flnr, date"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The 'flnr' and 'date' are used to confirm the final details and status of the user's specific flight.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "Using the 'latitude' and 'longitude' from the initial airport search, this tool finds a list of nearby hotels, each with a unique 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "Finally, a hotel 'id' from the geolocation search is used to get the complete details of a specific hotel for booking.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 5
+},
+{
+  "name": "Origin Station Search → Destination Station Search → Train Trip Search → Hotel Search → Hotel Details",
+  "description": "This chain models a user planning an international train journey. It involves finding the correct stations in two different cities, searching for a trip between them, and then finding and getting details for a hotel at the destination.",
+  "tool sequence": [
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "A user searches for their departure city (e.g., 'berlin') to get the precise station 'id' for the German railway network.",
+      "param for next tool": "from_id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Autocomplete",
+      "use description": "The user then searches for their arrival city (e.g., 'zurich') to get the precise station 'id' for the Swiss railway network.",
+      "param for next tool": "to_id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Search trips",
+      "use description": "The 'from_id' and 'to_id' are used to find available train trips between the two stations, confirming the route and providing the destination name.",
+      "param for next tool": "destination_name"
+    },
+    {
+      "tool name": "Hotels com Provider: Regions Search",
+      "use description": "The 'destination_name' from the trip search is then used as the 'query' to find a list of hotels in that city, each with a unique 'slug'.",
+      "param for next tool": "slug"
+    },
+    {
+      "tool name": "Hotels com Provider: Hotel Slug convert",
+      "use description": "Finally, the 'slug' of a chosen hotel is used to get its universal numeric 'hotel_id' for booking or further queries.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 5
+},
+{
+  "name": "Airport Search → Flight List → Flight Details → Car Rental Search → Company Details",
+  "description": "This sequence models a user planning a trip that requires both a flight and a car rental. It finds a flight, gets its details, then finds car rental locations near the arrival airport, and finally gets details for a specific company.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search flights locations",
+      "use description": "A user searches for a destination airport (e.g., 'LAX') to get its specific location details and city name.",
+      "param for next tool": "ident, time"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "Using the airport 'ident' and a 'time', this tool lists available flights, providing a specific 'flnr' (flight number) for the desired flight.",
+      "param for next tool": "flnr, date"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The 'flnr' and 'date' are used to get complete details for the specific flight, confirming arrival times and location.",
+      "param for next tool": "arrival_city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'arrival_city_name' is used as the 'name' parameter to find all car rental locations in that city, returning a list of companies.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "A specific 'company_name' from the list is used as the 'string' to get more detailed information or complete the booking process for that company.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 5
+},
+{
+  "name": "City Discovery → Airbnb Search → Airbnb Count → Hotel Details → Hotel Reviews",
+  "description": "This sequence models a user comparing accommodation options. They find a city, search for Airbnbs, get a count of listings, and then get the details and reviews for a traditional hotel as a comparison.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download cities",
+      "use description": "The user gets a list of available cities, selecting one to get its 'cityid_ppn' and 'city' name.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "The 'city_name' is used as the 'market' parameter to get a list of available Airbnb listings and their IDs in that city.",
+      "param for next tool": "market"
+    },
+    {
+      "tool name": "Airbnb listings: Count listings by market",
+      "use description": "The same 'market' name is used to get a total count of all available Airbnb listings, providing a sense of market size.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "For comparison, the user now takes a 'hotel_id' (perhaps from a previous search not shown) for the same city to get the full details of a traditional hotel.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Finally, the same 'hotel_id' is used to retrieve user reviews for the traditional hotel, completing the comparison.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 5
+},
+{
+  "name": "Country Discovery → Airport Search → Flight Search → Hotel Search → Hotel ID Conversion → Hotel Details",
+  "description": "This sequence models a complete user journey for planning an international trip, starting with a country, finding an airport, identifying a flight, then finding and getting details for a hotel.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download countries",
+      "use description": "The user starts by getting a list of countries to decide on a destination, which provides a 'country_code_ppn'.",
+      "param for next tool": "country_code_ppn"
+    },
+    {
+      "tool name": "Airport Guide - Aviation Info: Airline by Country",
+      "use description": "Using the 'country_code_ppn' as the 'country', the user gets a list of airlines and airports (with IATA codes) for that country.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The 'iata' code for a specific airport is used as the 'ident' to find a list of flights, providing a destination 'city_name'.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Hotels com Provider: Regions Search",
+      "use description": "The 'city_name' from the flight's destination is used as the 'query' to find a list of hotels, each with a 'slug'.",
+      "param for next tool": "slug"
+    },
+    {
+      "tool name": "Hotels com Provider: Hotel Slug convert",
+      "use description": "The 'slug' for a chosen hotel is used to convert it into a universal, numeric 'hotel_id'.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "Finally, the numeric 'hotel_id' is used to retrieve the complete details for the chosen hotel.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 6
+},
+{
+  "name": "Airport Search → Flight List → Flight Details → Flight Statistics → Arrival Weather → Ground Transit Check",
+  "description": "This chain simulates a user performing a deep analysis of a specific flight, including its performance and weather, and then checking ground transit options upon arrival.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airportSearch",
+      "use description": "A user searches for a specific airport (e.g., by name) to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The airport 'ident' is used to list all flights, providing a specific flight number ('flnr') and 'date'.",
+      "param for next tool": "flnr, date"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The 'flnr' and 'date' are used to get the specific details of the flight, including the arrival airport's 'ident'.",
+      "param for next tool": "flnr, aptFrom, aptTo"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "The flight's 'flnr' and route ('aptFrom', 'aptTo') are used to get its historical on-time performance statistics.",
+      "param for next tool": "arrival_airport_ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportMetar",
+      "use description": "The 'arrival_airport_ident' is used as the 'ident' to retrieve the current, real-time METAR weather report at the destination.",
+      "param for next tool": "arrival_airport_iata"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "If the arrival airport ('arrival_airport_iata') is SFO or OAK, this tool is used to check for local transit advisories.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 6
+},
+{
+  "name": "City Discovery → Hotel Search → Airbnb Count → Trip Plan → Hotel Details → Hotel Reviews",
+  "description": "This sequence models a user comparing accommodation options in a city, creating a plan, and then circling back to get full details and reviews for a chosen hotel.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download cities",
+      "use description": "A user gets a list of cities to choose from, providing a 'city' name.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city' name is used to search for traditional hotel locations, providing a list of hotels with IDs.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Airbnb listings: Count listings by market",
+      "use description": "The same 'city' name is used as the 'market' to get a total count of available Airbnb listings for comparison.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "With an idea of accommodation options, the user generates a multi-day 'destination' itinerary for the city.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user now uses a specific 'hotel_id' from the earlier hotel search to get its full details.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Finally, the same 'hotel_id' is used to read user reviews to make a final decision.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 6
+},
+{
+  "name": "Bus City Search → Station Schedule → Nearby Hotels → Hotel Details → Car Rental Search → Company Details",
+  "description": "This sequence focuses on ground travel, starting with finding a bus station, its schedule, nearby hotels, and then arranging for a local car rental.",
+  "tool sequence": [
+    {
+      "tool name": "Flixbus: cities",
+      "use description": "The user finds a destination city, which provides a list of 'station_id's.",
+      "param for next tool": "station_id"
+    },
+    {
+      "tool name": "Flixbus: schedule",
+      "use description": "A specific 'station_id' is used to get the schedule and the station's 'city' name.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city_name' from the station is used as the 'name' to find nearby hotels and their IDs.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' is used to get details for a chosen hotel, confirming the location and 'city_name'.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The confirmed 'city_name' is used as the 'name' to find all car rental companies in the area.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "A specific 'company_name' is used as the 'string' to get more details or initiate a booking.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 6
+},
+{
+  "name": "Airline Search → Airline Details → Airline Stats → Airline Fleet → Aircraft Details → Flight Stats",
+  "description": "This is a data-intensive sequence for a deep dive into an airline, its performance, its fleet, a specific aircraft, and the statistics for a flight that might use it.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airlineSearch",
+      "use description": "A user searches for an airline by name (e.g., 'United') to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineInfo",
+      "use description": "The 'ident' is used to get the airline's full details, including its IATA and ICAO codes.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineStatistics",
+      "use description": "The 'iata' code is used to get the airline's overall on-time performance and flight volume statistics.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineAircrafts",
+      "use description": "The airline's 'ident' is used again to get a list of all the active aircraft in its fleet, each with a unique registration number ('reg').",
+      "param for next tool": "reg"
+    },
+    {
+      "tool name": "Flightera Flight Data: aircraftInfo",
+      "use description": "A specific 'reg' number is used to get the detailed information for a single airplane, including its model.",
+      "param for next tool": "flnr, aptFrom, aptTo"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "Finally, the user provides a flight number ('flnr') and route ('aptFrom', 'aptTo') to check the specific on-time performance for that route.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 6
+},
+{
+  "name": "Country Discovery → Airport Search → Flight List → Flight Details → Hotel Search → Hotel Details → Transit Check",
+  "description": "This sequence models a comprehensive international trip plan, from selecting a country to finding an airport, identifying a flight, securing a hotel, and checking local ground transportation.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download countries",
+      "use description": "The user gets a list of all available countries to choose a destination, providing a 'country_code_ppn'.",
+      "param for next tool": "country_code_ppn"
+    },
+    {
+      "tool name": "Airport Guide - Aviation Info: Airline by Country",
+      "use description": "The 'country_code_ppn' is used as the 'country' to get a list of airports in that country, providing an 'IATA ID'.",
+      "param for next tool": "IATA ID"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The airport 'IATA ID' is used as the 'ident' to list all flights from that airport, providing a specific flight number 'flnr' and 'date'.",
+      "param for next tool": "flnr, date"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The 'flnr' and 'date' are used to get details for the specific flight, which includes the destination airport's geographic 'latitude' and 'longitude'.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "The arrival airport's 'latitude' and 'longitude' are used to find a list of nearby hotels, each with a unique 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific hotel 'id' is used to retrieve the full details of that hotel, confirming its location in the Bay Area.",
+      "param for next tool": "BART_station_abbreviation"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "Finally, since the destination is in the Bay Area, the 'orig' parameter is used with 'SFO' to check for local transit advisories.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 7
+},
+{
+  "name": "Airline Search → Airline Fleet → Aircraft Details → Flight Search → Flight Stats → Car Rental Search → Company Details",
+  "description": "This chain simulates a detailed investigation into an airline's fleet and a specific flight's performance before arranging for ground transportation.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airlineSearch",
+      "use description": "A user searches for an airline (e.g., 'United') to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineAircrafts",
+      "use description": "The airline 'ident' is used to list all aircraft in its fleet, providing a unique registration number ('reg') for each plane.",
+      "param for next tool": "reg"
+    },
+    {
+      "tool name": "Flightera Flight Data: aircraftInfo",
+      "use description": "A specific 'reg' is used to get details of a single aircraft, including its model and airline.",
+      "param for next tool": "flnr"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightSearch",
+      "use description": "The user provides a flight number ('flnr') to get a list of matching flights and their routes.",
+      "param for next tool": "flnr, aptFrom, aptTo"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "The 'flnr' and route details ('aptFrom', 'aptTo') are used to get the historical on-time performance for that specific flight.",
+      "param for next tool": "arrival_city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'arrival_city_name' from the flight info is used as the 'name' to find car rental locations.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "A specific 'company_name' is used as the 'string' to get more details about that rental company.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 7
+},
+{
+  "name": "City List → Cost of Living 1 → Cost of Living 2 → Hotel Search → Hotel Details → Hotel Reviews → Trip Plan",
+  "description": "This sequence simulates a budget-conscious user comparing the cost of living in two cities, then choosing one to find a hotel, check its reviews, and generate an itinerary.",
+  "tool sequence": [
+    {
+      "tool name": "Cities Cost of Living: Get Cities List",
+      "use description": "The user gets a list of cities to choose from, providing the 'city_name' and 'country_name' for two potential destinations.",
+      "param for next tool": "city_name_1, country_name_1"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "The first city ('city_name_1', 'country_name_1') is used to get its cost of living data.",
+      "param for next tool": "city_name_2, country_name_2"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "The second city ('city_name_2', 'country_name_2') is used to get its cost of living data for comparison.",
+      "param for next tool": "chosen_city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "Based on the comparison, the user uses the 'chosen_city_name' as the 'name' to search for hotels, getting a list with IDs.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' is used to get the full details of a chosen hotel.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The same 'hotel_id' is used to get user reviews for the hotel to confirm the choice.",
+      "param for next tool": "chosen_city_name"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with the hotel selected, the 'chosen_city_name' is used as the 'destination' to create a full trip itinerary.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 7
+},
+{
+  "name": "Geolocation → Airport Info → Hotel Search → Airbnb Search → Hotel Details → Car Search → Transit Check",
+  "description": "This models a user starting from their current location, finding the nearest airport, exploring both hotels and Airbnbs, getting details on one, and then checking both car rental and public transit.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "A user provides their 'latitude' and 'longitude' to get a list of nearby locations, including the local airport's 'iata' code.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportInfo",
+      "use description": "The 'iata' code is used to get the airport's full details, including the 'city' name.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city' name is used as the 'name' to find a list of traditional hotels and their IDs.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "The same 'city' name is used as the 'market' to get a list of Airbnb options for comparison.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user chooses a traditional hotel and uses its 'hotel_id' to get the full details.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'city' name is used again as the 'name' to find all available car rental locations.",
+      "param for next tool": "BART_station_abbreviation"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "Finally, the user checks local 'BART' advisories as an alternative to car rental.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 7
+},
+{
+  "name": "Country List → Origin Station Search → Destination Station Search → Train Trip → Itinerary Plan → Hotel Search → Hotel Details",
+  "description": "This chain simulates planning a complex, multi-country train trip, from finding the countries and stations to planning an itinerary and finding a hotel at the final destination.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download countries",
+      "use description": "The user gets a list of countries, from which they can identify country codes for their start ('DE') and end ('CH') points.",
+      "param for next tool": "start_city_name"
+    },
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "The user searches for their departure city (e.g., 'berlin') to get the precise 'from_id' for the German railway network.",
+      "param for next tool": "end_city_name"
+    },
+    {
+      "tool name": "SBB Suisse railway: Autocomplete",
+      "use description": "The user searches for their arrival city (e.g., 'zurich') to get the precise 'to_id' for the Swiss railway network.",
+      "param for next tool": "from_id, to_id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Search trips",
+      "use description": "The 'from_id' and 'to_id' are used to find available train trips, confirming the route and providing the 'destination' name.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "The 'destination' city from the train trip is used to generate a multi-day itinerary.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The same 'destination' is used as the 'name' to search for a list of hotels, each with a unique 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "Finally, a hotel 'id' is used to get complete details for a specific hotel at the trip's destination.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 7
+},
+{
+  "name": "Airline Deep Dive → Aircraft Investigation → Flight Status and Weather Check",
+  "description": "This is a data-intensive sequence for a user who wants to know everything about their flight, including the airline's performance, the specific aircraft's details, the flight's historical stats, and the current weather.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airlineSearch",
+      "use description": "A user searches for their airline (e.g., 'United') to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineInfo",
+      "use description": "The 'ident' is used to get the airline's full details, like its IATA code.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineStatistics",
+      "use description": "The 'iata' code is used to retrieve the airline's overall on-time performance stats.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineAircrafts",
+      "use description": "The user then uses the airline's 'ident' again to get a list of all aircraft in its fleet, each with a unique 'reg' number.",
+      "param for next tool": "reg"
+    },
+    {
+      "tool name": "Flightera Flight Data: aircraftInfo",
+      "use description": "A specific 'reg' number is used to get the details of a single airplane in the fleet.",
+      "param for next tool": "flnr, date"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The user provides their flight number ('flnr') and 'date' to get the specific details of their upcoming flight, including the arrival airport 'ident'.",
+      "param for next tool": "flnr, aptFrom, aptTo"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "The user re-uses this tool with the specific flight route ('flnr', 'aptFrom', 'aptTo') to get its historical on-time performance.",
+      "param for next tool": "arrival_airport_ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportMetar",
+      "use description": "Finally, the 'arrival_airport_ident' is used to get the real-time METAR weather report at the destination.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 8
+},
+{
+  "name": "Europe Gas Prices → Train Station Search → Trip Search → Cost of Living → Hotel Search → Hotel Details → Hotel Reviews → Itinerary Plan",
+  "description": "This models a budget traveler planning a European tour. They check regional gas prices, plan a train route, check the destination's cost of living, then find and vet a specific hotel before creating a final itinerary.",
+  "tool sequence": [
+    {
+      "tool name": "Gas Price: europeanCountries",
+      "use description": "The user first gets an overview of gas prices in Europe to decide on a destination country, for example, Germany.",
+      "param for next tool": "country_name"
+    },
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "Having chosen Germany, the user searches for a destination city like 'Berlin' to get its precise station 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Search trips",
+      "use description": "The station 'id' is used as the 'to_id' to confirm train routes and get the official 'destination_name'.",
+      "param for next tool": "destination_name, country_name"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "The user then checks the 'destination_name' (Berlin) and 'country_name' (Germany) to get a detailed cost of living report.",
+      "param for next tool": "query"
+    },
+    {
+      "tool name": "Hotels com Provider: Regions Search",
+      "use description": "Based on the budget, the user uses the destination name as a 'query' to find hotels, each with a 'slug'.",
+      "param for next tool": "slug"
+    },
+    {
+      "tool name": "Hotels com Provider: Hotel Slug convert",
+      "use description": "A chosen hotel's 'slug' is converted into a numeric 'hotel_id'.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The 'hotel_id' is used to read reviews and make a final decision on the accommodation.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with accommodation settled, the user generates a full 'destination' itinerary.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 8
+},
+{
+  "name": "Flight Search → Car Rental → Hotel Search → Airbnb Search → Hotel Details → Itinerary Plan → Hotel Reviews → Final Confirmation",
+  "description": "This sequence simulates a full vacation booking: finding a flight, securing a car rental, comparing hotels and Airbnbs, getting details on a chosen hotel, planning the trip, and then checking reviews before finalizing.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search flights locations",
+      "use description": "A user searches for a flight to a destination (e.g., 'Orlando'), which returns the 'city' name and 'latitude'/'longitude'.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'city' name is used to find all car rental companies in the area.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The user then searches for hotels in the same 'city' to get a list of options and their IDs.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "For comparison, the 'city' name is used as the 'market' to find available Airbnb listings.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user decides on a hotel and uses its 'hotel_id' to get the full details.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "With the flight and hotel location known, the 'destination' is used to generate a full trip itinerary.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Before booking, the user checks the 'hotel_id' reviews to make a final decision.",
+      "param for next tool": "hotel_id, check_in, check_out"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user re-uses the hotel details tool, this time providing the 'hotel_id' along with 'check_in' and 'check_out' dates to get final pricing and confirm availability.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 8
+},
+{
+  "name": "City Discovery → Gas Prices → Airbnb Price/Availability → Hotel Search → Amenity List → Hotel Details → Hotel Reviews → Final Itinerary",
+  "description": "This models a long-term traveler or digital nomad setting up in a new city. They check fuel costs, analyze the Airbnb market, find hotels with good amenities, and then plan their stay.",
+  "tool sequence": [
+    {
+      "tool name": "Gas Price: usaCitiesList",
+      "use description": "The user gets a list of all US cities to choose a potential destination, providing a 'state' and 'city' name.",
+      "param for next tool": "state"
+    },
+    {
+      "tool name": "Gas Price: stateUsaPrice",
+      "use description": "They use the 'state' name to get detailed gas prices for that state to budget for a car.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "The user provides geographic coordinates ('latitude', 'longitude') for the city to get a precise location.",
+      "param for next tool": "lat, lng, range"
+    },
+    {
+      "tool name": "Airbnb listings: Prices and Availability by lat lng",
+      "use description": "Using the same coordinates ('lat', 'lng'), they analyze the local Airbnb market's average price and availability.",
+      "param for next tool": ""
+    },
+    {
+      "tool name": "Priceline com Provider: Download filter amenities",
+      "use description": "The user decides on a hotel and first gets a list of all possible hotel amenities to know what to look for (e.g., 'Wi-Fi').",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' is chosen (perhaps from a prior search) to check its specific list of amenities.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The 'hotel_id' is used again to read reviews, paying close attention to comments about Wi-Fi and workspace quality.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with all research complete, the user generates a 'destination' itinerary for their stay.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 8
+},
+{
+  "name": "City Discovery → Hotel Search → Detailed Vetting → Itinerary and Transit Planning",
+  "description": "This sequence models a user finding a hotel in a specific city, getting its details, photos, and reviews, then creating a trip plan and finally arranging car rental and checking local transit.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download cities",
+      "use description": "A user gets a list of cities and selects one, providing a 'cityid_ppn' and 'city' name.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city' name is used to search for hotels, returning a list of hotels, each with a unique 'id'.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user selects a hotel 'id' to get its full details, including its name and amenities.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel photos",
+      "use description": "Using the same hotel 'id', the user retrieves photos of the property to visually inspect it.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Using the hotel 'id' again, the user reads the reviews to assess guest satisfaction.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "After vetting the hotel, the user provides the city name as the 'destination' to generate a full trip itinerary.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The user provides the 'city' name again to find all available car rental companies at their destination.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "Finally, the user selects a 'company_name' to get more specific details or begin the booking process.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 8
+},
+{
+  "name": "Airport Search → Flight Identification → Aircraft Details → Hotel Search → Hotel Details → Hotel Reviews → Train Station Search → Trip Search → Final Itinerary",
+  "description": "This sequence models a meticulous traveler who researches their flight and aircraft, thoroughly vets their hotel with details and reviews, plans their train connections, and then generates a final itinerary.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airportSearch",
+      "use description": "A user starts by searching for their departure airport (e.g., 'SFO') to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The airport 'ident' is used to list flights, from which the user selects one to get its flight number ('flnr'), 'date', and aircraft 'reg' (registration).",
+      "param for next tool": "reg"
+    },
+    {
+      "tool name": "Flightera Flight Data: aircraftInfo",
+      "use description": "The aircraft 'reg' is used to get specific details about the plane for their flight.",
+      "param for next tool": "destination_city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'destination_city' from the flight info is used to get a list of hotels and their IDs.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' is used to get the full details of a potential hotel.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The same 'hotel_id' is used to read guest reviews to ensure the quality of the hotel.",
+      "param for next tool": "destination_city"
+    },
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "The user searches for the 'destination_city' to find the main train station and get its precise 'id'.",
+      "param for next tool": "to_id"
+    },
+    {
+      "tool name": "SBB Suisse railway: Search trips",
+      "use description": "The station 'id' is used as the 'to_id' to check for train schedules and connections from the airport.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with all details confirmed, the user generates a full trip itinerary for the 'destination'.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 9
+},
+{
+  "name": "City List → Cost of Living → Gas Prices → Airbnb Search → Airbnb Pricing → Hotel Search → Hotel Details → Car Rental Search → Final Itinerary",
+  "description": "This chain simulates a budget-conscious traveler who researches the costs of a city, compares accommodation prices, and then plans the rest of their trip.",
+  "tool sequence": [
+    {
+      "tool name": "Cities Cost of Living: Get Cities List",
+      "use description": "The user gets a list of cities to find a potential destination, providing a 'city_name' and 'country_name'.",
+      "param for next tool": "city_name, country_name"
+    },
+    {
+      "tool name": "Cost of living and prices: Prices",
+      "use description": "The 'city_name' and 'country_name' are used to get a detailed cost of living report to evaluate affordability.",
+      "param for next tool": "state"
+    },
+    {
+      "tool name": "Gas Price: stateUsaPrice",
+      "use description": "If the city is in the US, the 'state' name is used to check local gas prices for budgeting ground travel.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "The user uses the 'city_name' as the 'market' to see the available Airbnb options.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The user searches for the same city to get a hotel list, which includes 'latitude' and 'longitude' for the city center.",
+      "param for next tool": "lat, lng"
+    },
+    {
+      "tool name": "Airbnb listings: Prices and Availability by lat lng",
+      "use description": "The 'lat' and 'lng' from the city center are used to get the average price and availability of Airbnbs in the area for comparison.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "After comparing costs, the user chooses a hotel and uses its 'hotel_id' to get the final details.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'city_name' is used to find available car rental options.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with all budget research done, an itinerary is generated for the 'destination'.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 9
+},
+{
+  "name": "Flight Search → Airport Info → Flight List → Bus Station Search → Bus Schedule → Hotel Search → Details → Local Transit Check",
+  "description": "This sequence simulates planning a multi-modal trip, starting with a flight, then planning a connecting bus journey, finding a hotel near the bus station, and checking local transit.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search flights locations",
+      "use description": "A user searches for their destination city (e.g., 'Berlin') to get the 'airportCode'.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportInfo",
+      "use description": "The 'airportCode' is used as the 'iata' to get the airport's 'name' and 'city'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The airport 'ident' is used to list flights, confirming travel dates.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Flixbus: cities",
+      "use description": "The 'city_name' of the destination is used to find all Flixbus stations in that city, providing a list of 'station_id's.",
+      "param for next tool": "station_id"
+    },
+    {
+      "tool name": "Flixbus: schedule",
+      "use description": "A specific 'station_id' is used to get the bus schedule and the station's precise 'latitude' and 'longitude'.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations by geolocation",
+      "use description": "The bus station's 'latitude' and 'longitude' are used to find a list of nearby hotels and their IDs.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user selects a hotel 'id' to get its full details.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The same 'hotel_id' is used to read reviews of the hotel near the bus station.",
+      "param for next tool": "BART_station_abbreviation"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "If applicable, the user checks local 'BART' advisories for transit from the hotel.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 9
+},
+{
+  "name": "Quick Flight Search → Quick Hotel Search → Quick Car Search → Itinerary Generation",
+  "description": "This models a user planning a trip in a hurry. They find a flight, a hotel, and a car, then generate an itinerary and circle back to confirm details.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Search flights locations",
+      "use description": "The user quickly searches for a destination city, getting its 'cityID'.",
+      "param for next tool": "cityID"
+    },
+    {
+      "tool name": "Priceline com Provider: Downalods hotels",
+      "use description": "The 'cityID' is used to immediately get a list of available hotels, providing a 'hotelid_ppn'.",
+      "param for next tool": "hotelid_ppn"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user picks the first 'hotelid_ppn' from the list to get its details, including the city 'name'.",
+      "param for next tool": "name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The city 'name' is immediately used to find car rental locations.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "The user picks the first 'company_name' to get its details.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "With flight, hotel, and car locations found, the user generates a 'destination' itinerary.",
+      "param for next tool": "hotelid_ppn"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Now with a plan, the user goes back to check reviews for the hotel ('hotelid_ppn').",
+      "param for next tool": "hotelid_ppn"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel photos",
+      "use description": "They also check the photos for the hotel ('hotelid_ppn').",
+      "param for next tool": "hotel_id, check_in, check_out"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "Finally, they re-check the hotel details, this time with check-in/out dates, to confirm the booking.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 9
+},
+{
+  "name": "Market Discovery → Airbnb Search → Price Analysis → Amenity Check → Final Itinerary",
+  "description": "This sequence simulates a user who prefers alternative accommodations. They find a market, search for listings, analyze pricing and availability, check for specific amenities, and then plan their trip.",
+  "tool sequence": [
+    {
+      "tool name": "Airbnb listings: Markets",
+      "use description": "The user starts by getting a list of all available 'market' names.",
+      "param for next tool": "market"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "They choose a 'market' to get a list of Airbnb listings and their IDs.",
+      "param for next tool": "market"
+    },
+    {
+      "tool name": "Airbnb listings: Count listings by market",
+      "use description": "The user gets a total count of listings in that 'market' to understand its size.",
+      "param for next tool": "latitude, longitude"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "To get geographic coordinates for the market, they search for the same location, which provides 'latitude' and 'longitude'.",
+      "param for next tool": "lat, lng"
+    },
+    {
+      "tool name": "Airbnb listings: Prices and Availability by lat lng",
+      "use description": "The 'lat' and 'lng' are used to get the average price and availability percentage for Airbnbs in that area.",
+      "param for next tool": ""
+    },
+    {
+      "tool name": "Airbnb listings: Amenities",
+      "use description": "The user gets a list of all possible 'amenity' types to decide what they need.",
+      "param for next tool": "market, bedrooms, maxGuestCapacity"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "The user re-runs the search for the 'market', this time filtering by 'bedrooms' and 'maxGuestCapacity' based on the amenities they want.",
+      "param for next tool": "id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "As a final check, they get details for a comparable hotel ('id') in the same area.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Having finalized their accommodation choice, they generate an itinerary for the 'destination'.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 9
+},
+{
+  "name": "Country Discovery → Multi-Modal Transit → Accommodation Vetting → Final Itinerary",
+  "description": "This sequence models a user's deep dive into planning a trip. They start by selecting a country, then compare flight and bus options, find a hotel, check its reviews and photos, plan an itinerary, and finally check local transit.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download countries",
+      "use description": "A user gets a list of countries to select a destination, providing a 'country_code_ppn'.",
+      "param for next tool": "country_code_ppn"
+    },
+    {
+      "tool name": "Airport Guide - Aviation Info: Airline by Country",
+      "use description": "The 'country_code_ppn' is used as the 'country' to find airports, providing an 'IATA ID'.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportInfo",
+      "use description": "The 'IATA ID' is used to get the airport's 'city' name and geographic coordinates.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Flixbus: cities",
+      "use description": "The 'city' name is used to see if Flixbus operates there and to get a 'station_id'.",
+      "param for next tool": "station_id"
+    },
+    {
+      "tool name": "Flixbus: schedule",
+      "use description": "The bus 'station_id' is used to check local bus schedules.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city_name' from the airport info is used to search for hotels, returning a list with unique IDs.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A specific 'hotel_id' is used to get the full details of a chosen hotel.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The same 'hotel_id' is used to read guest reviews for the hotel.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel photos",
+      "use description": "The user also checks the 'hotel_id' to see photos of the property.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with all research done, the user generates a full itinerary for their 'destination'.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 10
+},
+{
+  "name": "Airline & Flight Analysis → Weather Check → Hotel Vetting → Transit & Itinerary",
+  "description": "This models a business traveler's meticulous planning process, involving deep analysis of flight details, weather, hotel amenities, and local transit before creating a final plan.",
+  "tool sequence": [
+    {
+      "tool name": "Flightera Flight Data: airlineSearch",
+      "use description": "A user searches for their preferred airline to get its unique 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineStatistics",
+      "use description": "The airline 'ident' is used to get its on-time performance statistics.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The user provides an airport 'ident' to list flights and select one, providing a 'flnr' and arrival airport 'ident'.",
+      "param for next tool": "arrival_airport_ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportMetar",
+      "use description": "The 'arrival_airport_ident' is used to get a real-time weather report for the destination.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "A 'hotel_id' for a preferred business hotel is used to get its details, including the 'city' name.",
+      "param for next tool": ""
+    },
+    {
+      "tool name": "Priceline com Provider: Download filter amenities",
+      "use description": "The user downloads a list of all possible amenities to check for business-critical ones like 'Wi-Fi' or 'Business Center'.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The user checks the 'hotel_id' reviews, specifically looking for comments on business facilities.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'city' from the hotel details is used to find nearby car rental options.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "A preliminary 'destination' itinerary is created to plan the business meetings.",
+      "param for next tool": "BART_station_abbreviation"
+    },
+    {
+      "tool name": "BART: Advisory information",
+      "use description": "Finally, the user checks 'BART' advisories as an alternative to a rental car for getting to meetings.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 10
+},
+{
+  "name": "City Discovery → Hotel vs. Airbnb Analysis → Final Booking Plan",
+  "description": "This sequence models a user performing a deep comparative analysis between hotels and Airbnbs in a city, checking prices, locations, and amenities before settling on a final plan.",
+  "tool sequence": [
+    {
+      "tool name": "Priceline com Provider: Download cities",
+      "use description": "The user gets a list of cities and selects one, providing its 'city' name and geographic coordinates.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The 'city' name is used to get a list of traditional hotels and their IDs.",
+      "param for next tool": "city"
+    },
+    {
+      "tool name": "Airbnb listings: Listings by market",
+      "use description": "The same 'city' name is used as a 'market' to get a list of competing Airbnb listings.",
+      "param for next tool": "lat, lng"
+    },
+    {
+      "tool name": "Airbnb listings: Prices and Availability by lat lng",
+      "use description": "The city's 'lat' and 'lng' are used to get the average price and availability of Airbnbs for a budget comparison.",
+      "param for next tool": ""
+    },
+    {
+      "tool name": "Priceline com Provider: Download amenities",
+      "use description": "The user gets a master list of all possible hotel 'amenity' codes to know what to filter for.",
+      "param for next tool": ""
+    },
+    {
+      "tool name": "Priceline com Provider: Download filter amenities",
+      "use description": "The user then gets a list showing which hotels have which specific amenities.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The user chooses a hotel with the right amenities and uses its 'hotel_id' to get the full details.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "The user reads the 'hotel_id' reviews to confirm their choice.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel photos",
+      "use description": "The user looks at the 'hotel_id' photos to visually inspect the property.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "Finally, with the accommodation thoroughly vetted, the user creates an itinerary for the 'destination'.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 10
+},
+{
+  "name": "Airline & Aircraft Deep Dive → Flight Comparison",
+  "description": "This sequence models an aviation enthusiast's detailed investigation into an airline, its fleet, a specific aircraft, and a comparison of different flights.",
+  "tool sequence": [
+    {
+      "tool name": "Flight Data_v2: Airline data in json format",
+      "use description": "The user gets a list of all airlines and their codes to start.",
+      "param for next tool": "iata"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineInfo",
+      "use description": "An 'iata' code is used to get detailed information about a specific airline, including its 'ident'.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineStatistics",
+      "use description": "The airline 'ident' is used to get its overall on-time performance statistics.",
+      "param for next tool": "ident"
+    },
+    {
+      "tool name": "Flightera Flight Data: airlineAircrafts",
+      "use description": "The airline 'ident' is used again to get a list of all aircraft in its fleet, each with a unique 'reg' number.",
+      "param for next tool": "reg"
+    },
+    {
+      "tool name": "Flightera Flight Data: aircraftInfo",
+      "use description": "A specific 'reg' number is used to get the detailed information for a single airplane.",
+      "param for next tool": "ident, time"
+    },
+    {
+      "tool name": "Flightera Flight Data: airportFlights",
+      "use description": "The user provides an airport 'ident' and 'time' to list flights, selecting two different flights (Flight A and Flight B) for comparison.",
+      "param for next tool": "flnr_A, date_A"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The user gets the full details for the first flight (Flight A) using its 'flnr_A' and 'date_A'.",
+      "param for next tool": "flnr_B, date_B"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightInfo",
+      "use description": "The user then gets the full details for the second flight (Flight B) using its 'flnr_B' and 'date_B'.",
+      "param for next tool": "flnr_A, aptFrom_A, aptTo_A"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "The user checks the historical on-time performance for the first flight's route.",
+      "param for next tool": "flnr_B, aptFrom_B, aptTo_B"
+    },
+    {
+      "tool name": "Flightera Flight Data: flightStatistics",
+      "use description": "Finally, the user checks the historical on-time performance for the second flight's route to complete the comparison.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 10
+},
+{
+  "name": "Multi-State Road Trip Planning",
+  "description": "This chain simulates a user planning a road trip. It involves checking gas prices, finding cities and hotels along the route, and arranging car rentals.",
+  "tool sequence": [
+    {
+      "tool name": "Gas Price: allUsaPrice",
+      "use description": "The user gets a list of average gas prices for all US states to plan a budget-friendly route.",
+      "param for next tool": "state_code"
+    },
+    {
+      "tool name": "Priceline com Provider: Download states",
+      "use description": "The user gets a list of all states and their 'state_code's to choose a starting point.",
+      "param for next tool": "state_code"
+    },
+    {
+      "tool name": "Gas Price: stateUsaPrice",
+      "use description": "The user provides a specific 'state_code' to get a detailed price breakdown for their starting state.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search hotels locations",
+      "use description": "The user searches for a 'city_name' in that state to find hotels for the first night, getting a hotel 'id'.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel details",
+      "use description": "The 'hotel_id' is used to get the details and exact address of the first hotel.",
+      "param for next tool": "city_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Search cars locations",
+      "use description": "The 'city_name' is used to find all car rental locations in the starting city.",
+      "param for next tool": "company_name"
+    },
+    {
+      "tool name": "Priceline com Provider: Auto complete",
+      "use description": "The user selects a 'company_name' to get more details about a specific car rental agency.",
+      "param for next tool": "destination_city"
+    },
+    {
+      "tool name": "Deutsche Bahn: Autocomplete",
+      "use description": "The user searches for a 'destination_city' for the next leg of the trip to see if there are train options.",
+      "param for next tool": "destination"
+    },
+    {
+      "tool name": "AI Trip Planner: Get Trip Plan",
+      "use description": "The user generates an itinerary for the starting city 'destination' to plan activities.",
+      "param for next tool": "hotel_id"
+    },
+    {
+      "tool name": "Priceline com Provider: Hotel reviews",
+      "use description": "Finally, the user checks the 'hotel_id' reviews for their first night's stay before finalizing.",
+      "param for next tool": ""
+    }
+  ],
+  "tool number": 10
+}
+]
