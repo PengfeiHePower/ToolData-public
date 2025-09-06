@@ -31,4 +31,3 @@ query_gen/traj_query_check.py
 query_gen/traj_to_query_gen_consis_parallel_fix.py
 query_gen/traj_to_query_gen_selfplay_parallel.py
 evaluation/tool_evaluation_react.py
-public_data/v1/
