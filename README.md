@@ -8,6 +8,8 @@
 ✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks. Bring new insights to LLM-based agentic tool usage!
 
 ## 🆕 News
+📢 [**2025/9/24**] We release all parallel and sequential data. We will release paper and results soon.
+
 📢 [**2025/8/24**] We release the tool evaluation script for ReAct (agentic method), supporting both static and dynamic tool retrieval.
 
 📢 [**2025/8/23**] We release the tool evaluation script for LLMs, supporting multiple query methods and tool selection modes.
