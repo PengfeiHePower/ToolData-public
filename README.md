@@ -147,7 +147,7 @@ We take a trajectory->query strategy
 
 ### 📋 Query JSON Structure
 
-Each entry in `public_data/v2/parallel/<Domain>/*.json` follows this structure:
+Each entry in `public_data/parallel/<Domain>/*.json` follows this structure:
 
 - **query**: Natural language instruction
 - **tool_list**: Tool-calling trajectory for solving the query
