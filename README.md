@@ -3,7 +3,7 @@
 [![Name](https://img.shields.io/badge/Benchmark-TRAJECT--Bench-7c3aed)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)
-[![HF Dataset](https://img.shields.io/badge/HuggingFace-dataset-blue)](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
+<!-- [![HF Dataset](https://img.shields.io/badge/HuggingFace-dataset-blue)](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench) -->
 
 ✨ A comprehensive benchmark for evaluating tool-using language models across multiple practical domains, designed to test models' ability to effectively utilize external tools for real-world tasks. Bring new insights to LLM-based agentic tool usage!
 
@@ -87,10 +87,9 @@ python evaluation/claude_tool_evaluation.py -model claude_v37 -tool_select domai
 
 ### 🔗 Quick Links
 
-- 📊 Dataset on Hugging Face: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
-- 📁 Public data folder: `public_data/v2/`
-- 🧪 Evaluation scripts: `evaluation/tool_evaluation_model.py`, `evaluation/tool_evaluation_react.py`, `evaluation/tool_evaluation_retrieve.py` (to finish soon)
-
+<!-- - 📊 Dataset on Hugging Face: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench) -->
+- 📁 Public data folder: `public_data/`
+- 🧪 Evaluation scripts: `evaluation/tool_evaluation_model.py`, `evaluation/tool_evaluation_agent.py`
 ## 🏗️ Benchmark Structure
 
 ### 🌍 Domains Covered
