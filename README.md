@@ -111,15 +111,20 @@ The benchmark covers 10 carefully selected domains that require external tools r
 
 ```
 public_data/
-├── v2/
-│   ├── tools/           # Tool definitions and APIs for each domain
-│   └── parallel/        # Parallel trajectory sets
-│       ├── Education/   # Education domain
-│           ├──hard_ver.json   # Hard queries
-│           └──simple_ver.json # Simple queries
-│       ├── Finance/     # Domain-specific test cases
-│       ├── Travel/      # Multi-tool scenarios
-│       └── ...          # Other domains
+├── tools/           # Tool definitions and APIs for each domain
+└── parallel/        # Parallel trajectory sets
+│   ├── Education/   # Education domain
+│       ├──hard_ver.json   # Hard queries
+│       └──simple_ver.json # Simple queries
+│   ├── Finance/     # Domain-specific test cases
+│   ├── Travel/      # Multi-tool scenarios
+│   └── ...          # Other domains
+└── sequential/        # Sequential trajectory sets
+│   ├── Education/   # Education domain
+│       └──traj_query.json # Trajectory and query data
+│   ├── Finance/     # Domain-specific test cases
+│   ├── Travel/      # Multi-tool scenarios
+│   └── ...          # Other domains
 ```
 
 ### 📊 Dataset at a Glance (for parallel, sequential on the way)
