@@ -129,7 +129,7 @@ public_data/
 - 🛤️ **2,000 total parallel trajectories** with different depth: 5 trajectory per number of tools (from 3-10) for each task
 - 📝 **2,000 queries per difficulty**: one simple and one hard for each trajectory
 - 🔢 **4,000 total parallel trajectories**: simple (2,000) + hard (2,000)
-- 🛠️ Tool metadata: `public_data/v2/tools/*.json`
+- 🛠️ Tool metadata: `public_data/tools/*.json`
 
 ### 🔄 Query/Trajectories Types
 
@@ -226,7 +226,7 @@ The benchmark evaluates models on:
 
 ### 📋 Prerequisites
 
-- 🐍 Python 3.10+
+- 🐍 Python 3.12+
 - 📦 Required packages (see requirements.txt)
 
 ### ⚙️ Installation
@@ -257,9 +257,9 @@ The benchmark data is publicly available in the `public_data/` directory:
 
 ### 📊 Data Source
 
-Primary dataset hosting:
+Primary dataset hosting: This repo
 
-- 🤗 Hugging Face dataset: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench)
+<!-- - 🤗 Hugging Face dataset: [`bigboss24/TRAJECT-Bench`](https://huggingface.co/datasets/bigboss24/TRAJECT-Bench) -->
 
 <!-- ## Benchmark Design Principles
 
