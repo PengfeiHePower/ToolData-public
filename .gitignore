@@ -10,7 +10,6 @@ evaluation/tool_evaluation_model_abl.py
 evaluation/tool_evaluation_model_check.py
 retrieval_emb/
 simple_query/
-tools/
 category_description.json
 prompts.json
 category_tools.json
