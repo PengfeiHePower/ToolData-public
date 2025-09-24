@@ -25,10 +25,12 @@ except ImportError:
 # Validate API keys
 gemini_key = os.getenv('GEMINI_API_KEY')
 openai_key = os.getenv('OPENAI_API_KEY')
+deepseek_key = os.getenv('DEEPSEEK_API')
+moonshot_key = os.getenv('MOONSHOT_API_KEY')
 
-if not gemini_key or not openai_key:
+if not gemini_key or not openai_key or not deepseek_key or not moonshot_key:
     print("❌ ERROR: API keys missing from .env file!")
-    print("Required: GEMINI_API_KEY, OPENAI_API_KEY")
+    print("Required: GEMINI_API_KEY, OPENAI_API_KEY, DEEPSEEK_API_KEY, MOONSHOT_API_KEY")
     import sys
     sys.exit(1)
 
@@ -46,45 +48,94 @@ def sanitize_input(text: str) -> str:
 
 def extract_json_from_markdown_fence(text: str):
     """
-    Extracts and parses JSON from a markdown fenced code block.
-    Automatically detects whether the content is a JSON array or object.
-    
-    Args:
-        text (str): The input string containing a markdown block with JSON content.
-        
-    Returns:
-        list[dict] or dict: Parsed JSON data (automatically detected type).
-        
-    Raises:
-        ValueError: If no valid JSON block is found or parsing fails.
+    Extract JSON object/array from a string that may include markdown fences
+    or noisy prefixes like "Response:" and timestamps. Uses a bracket-balancing
+    scan to avoid partial matches.
+
+    Returns the parsed JSON (dict or list) or raises ValueError if none found.
     """
     if not text or not isinstance(text, str):
         raise ValueError("Input text must be a non-empty string")
-    
-    # Sanitize input
+
     text = sanitize_input(text)
-    
-    # Patterns to match both arrays and objects in markdown fences
-    patterns = [
-        r"```json\s*(\{.*?\})\s*```",  # json fence dict
-        r"```\s*(\{.*?\})\s*```",      # generic fence dict
-        r"```json\s*(\[.*?\])\s*```",  # json fence array
-        r"```\s*(\[.*?\])\s*```",      # generic fence array
-        r"(\{.*?\})",                   # bare JSON object
-        r"(\[.*?\])",                   # bare JSON array
+
+    # Quick paths: try fenced code blocks first
+    fence_patterns = [
+        r"```json\s*([\s\S]*?)\s*```",
+        r"```\s*([\s\S]*?)\s*```",
     ]
-    
-    for pattern in patterns:
-        match = re.search(pattern, text, re.DOTALL)
-        if match:
-            json_str = match.group(1)
+    for pattern in fence_patterns:
+        m = re.search(pattern, text)
+        if m:
+            candidate = m.group(1).strip()
             try:
-                result = json.loads(json_str)
-                # Return the result regardless of type - let caller handle it
-                return result
+                return json.loads(candidate)
             except json.JSONDecodeError:
+                # fall through to robust scanner
+                pass
+
+    # Remove common noisy prefixes on lines (e.g., "Response:")
+    cleaned = re.sub(r"^\s*(Response:|Output:|Answer:)\s*", "", text.strip(), flags=re.IGNORECASE)
+
+    # Bracket-balanced scan from first '{' or '['
+    start_idx = None
+    for idx, ch in enumerate(cleaned):
+        if ch in '{[':
+            start_idx = idx
+            break
+    if start_idx is None:
+        raise ValueError("No valid JSON found in text")
+
+    stack = []
+    in_string = False
+    escape = False
+    for j in range(start_idx, len(cleaned)):
+        c = cleaned[j]
+        if in_string:
+            if escape:
+                escape = False
+            elif c == '\\':
+                escape = True
+            elif c == '"':
+                in_string = False
+            continue
+        else:
+            if c == '"':
+                in_string = True
                 continue
-    
+            if c in '{[':
+                stack.append(c)
+            elif c in '}]':
+                if not stack:
+                    # unmatched closing, ignore
+                    continue
+                opening = stack.pop()
+                if (opening == '{' and c != '}') or (opening == '[' and c != ']'):
+                    # mismatched, keep scanning
+                    continue
+                if not stack:
+                    # Found a balanced JSON substring
+                    candidate = cleaned[start_idx:j+1]
+                    try:
+                        return json.loads(candidate)
+                    except json.JSONDecodeError:
+                        # Try to continue in case there is another JSON later
+                        # Seek next '{' or '[' after start_idx+1
+                        next_start = None
+                        for k in range(start_idx + 1, len(cleaned)):
+                            if cleaned[k] in '{[':
+                                next_start = k
+                                break
+                        if next_start is None:
+                            break
+                        start_idx = next_start
+                        stack = []
+                        in_string = False
+                        escape = False
+                        # restart outer loop from new start
+                        j = start_idx
+                        continue
+
     raise ValueError("No valid JSON found in text")
 
 # Custom exceptions for robust error handling
@@ -149,6 +200,10 @@ vllm_api_meta = {
     "qwen-30b-A3B": {
         "model_name": "qwen-30b-A3B-8080",
         "api_url": "http://0.0.0.0:8080"
+    },
+    "qwen-235b-A22B": {
+        "model_name": "qwen-235b-a22b-fp8",
+        "api_url": "http://0.0.0.0:2507"
     }
 }
 
@@ -170,7 +225,19 @@ gemini_models = {
 openai_models = {
     "gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4", "gpt-4-32k",
     "gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-3.5-turbo-instruct",
-    "o1-preview", "o1-mini", "o4-mini"
+    "o1-preview", "o1-mini", "o4-mini", "gpt-5-mini"
+}
+
+deepseek_models = {
+    "deepseek-chat", "deepseek-reasoner"
+}
+
+ollama_models = {
+    "gpt-oss:20b", "gpt-oss:120b"
+}
+
+moonshot_models = {
+    "kimi-k2": "kimi-k2-0905-preview"
 }
 
 # Basic generation functions (without retry)
@@ -306,7 +373,7 @@ def generate_content_bedrock(model: str, prompt: str, max_tokens: int = 8000, te
         else:
             raise e
 
-def generate_content_openai(model: str, prompt: str, max_tokens: int = 8000, temperature: float = 0.7, stop: Optional[list] = None) -> str:
+def generate_content_openai(model: str, prompt: str, max_tokens: int = 8000, temperature: float = 1.0, stop: Optional[list] = None) -> str:
     """Generate content using OpenAI API."""
     try:
         from openai import OpenAI
@@ -316,7 +383,7 @@ def generate_content_openai(model: str, prompt: str, max_tokens: int = 8000, tem
         params = {
             "model": model,
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": max_tokens,
+            "max_completion_tokens": max_tokens,
             "temperature": temperature
         }
         
@@ -335,7 +402,7 @@ def generate_content_openai(model: str, prompt: str, max_tokens: int = 8000, tem
         else:
             raise e
 
-def generate_content_ollama(model: str, prompt: str, max_new_tokens: int = 1000, temperature: float = 0.7, stop: Optional[list] = None):
+def generate_content_ollama(model: str, prompt: str, max_tokens: int = 1000, temperature: float = 0.7, stop: Optional[list] = None):
     """Generate content using Ollama API."""
     try:
         from openai import OpenAI
@@ -349,7 +416,7 @@ def generate_content_ollama(model: str, prompt: str, max_new_tokens: int = 1000,
             "model": model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": temperature,
-            "max_tokens": max_new_tokens
+            "max_tokens": max_tokens
         }
         
         # Only add stop if provided and not empty
@@ -366,8 +433,74 @@ def generate_content_ollama(model: str, prompt: str, max_new_tokens: int = 1000,
             raise APIError(str(e))
         else:
             raise e
+        
+def generate_content_deepseek(model: str, prompt: str, max_tokens: int = 8000, temperature: float = 0.7, stop: Optional[list] = None):
+    """generate content with DeepSeek API"""
+    try:
+        from openai import OpenAI
+        
+        client = OpenAI(api_key=deepseek_key, base_url="https://api.deepseek.com")
+        
+        params = {
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stream": False
+        }
+        
+        # Only add stop if provided and not empty
+        if stop is not None and len(stop) > 0:
+            params["stop"] = stop
+        
+        response = client.chat.completions.create(**params)
+        return response.choices[0].message.content
+    except Exception as e:
+        # Convert to appropriate exception types for retry logic
+        if "rate_limit" in str(e).lower() or "429" in str(e):
+            raise RateLimitError(str(e))
+        elif "timeout" in str(e).lower() or "connection" in str(e).lower():
+            raise APIError(str(e))
+        else:
+            raise e
+
+def generate_content_moonshot(model: str, prompt: str, max_tokens: int = 8000, temperature: float = 0.6, stop: Optional[list] = None) -> str:
+    """Generate content using Moonshot API."""
+    try:
+        from openai import OpenAI
+        
+        client = OpenAI(api_key=moonshot_key, base_url="https://api.moonshot.ai/v1")
+        
+        params = {
+            "model": moonshot_models[model],
+            "messages": [{"role": "system", "content": "You are Kimi, an AI assistant created by Moonshot AI."},
+                {"role": "user", "content": prompt}],
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stream": False
+        }
+        
+        # Only add stop if provided and not empty
+        if stop is not None and len(stop) > 0:
+            params["stop"] = stop
+        
+        response = client.chat.completions.create(**params)
+        return response.choices[0].message.content
+    except Exception as e:
+        if "rate_limit" in str(e).lower() or "429" in str(e):
+            raise RateLimitError(str(e))
+        elif "timeout" in str(e).lower() or "connection" in str(e).lower():
+            raise APIError(str(e))
+        else:
+            raise e
+
 
 # Retry-enabled wrapper functions
+@retry_with_backoff(max_retries=3, base_delay=2.0)
+def generate_content_deepseek_with_retry(model, prompt, max_tokens=8000, temperature=0.7, stop=None):
+    """Wrapper with retry logic for DeepSeek generation."""
+    return generate_content_deepseek(model, prompt, max_tokens, temperature, stop)
+
 @retry_with_backoff(max_retries=3, base_delay=2.0)
 def generate_content_vllm_with_retry(model_meta, prompt, max_new_tokens=1000, temperature=0.7, stop=None):
     """Wrapper with retry logic for vLLM generation."""
@@ -392,6 +525,11 @@ def generate_content_openai_with_retry(model, prompt, max_tokens=8000, temperatu
 def generate_content_ollama_with_retry(model, prompt, max_new_tokens=1000, temperature=0.7, stop=None):
     """Wrapper with retry logic for Ollama generation."""
     return generate_content_ollama(model, prompt, max_new_tokens, temperature, stop)
+
+@retry_with_backoff(max_retries=3, base_delay=2.0)
+def generate_content_moonshot_with_retry(model, prompt, max_tokens=8000, temperature=0.6, stop=None):
+    """Wrapper with retry logic for Moonshot generation."""
+    return generate_content_moonshot(model, prompt, max_tokens, temperature, stop)
 
 def generate_content(model: str, prompt: str, temperature: Optional[float] = None) -> str:
     """
@@ -418,9 +556,15 @@ def generate_content(model: str, prompt: str, temperature: Optional[float] = Non
         return generate_content_bedrock(model, prompt, max_tokens=8000, temperature=temp)
     elif model in openai_models:
         return generate_content_openai(model, prompt)
-    elif model in gpt_oss:
+    elif model in deepseek_models:
+        temp = temperature if temperature is not None else 0.7
+        return generate_content_deepseek(model, prompt, max_tokens=8000, temperature=temp)
+    elif model in ollama_models:
         temp = temperature if temperature is not None else 0.7
         return generate_content_ollama(model, prompt, max_new_tokens=8000, temperature=temp)
+    elif model in moonshot_models:
+        temp = temperature if temperature is not None else 0.6
+        return generate_content_moonshot(model, prompt, max_tokens=8000, temperature=temp)
     else:
         raise ModelNotAvailableError(f"Model {model} is not supported")
 
@@ -452,10 +596,16 @@ def generate_content_with_retry(model: str, prompt: str, temperature: Optional[f
         return generate_content_bedrock_with_retry(model, prompt, max_tokens=8000, temperature=temp, stop=stop)
     elif model in openai_models:
         temp = temperature if temperature is not None else 0.7
-        return generate_content_openai_with_retry(model, prompt, max_tokens=8000, temperature=temp, stop=stop)
-    elif model in gpt_oss:
+        return generate_content_openai_with_retry(model, prompt, max_tokens=8000, temperature=1.0, stop=stop)
+    elif model in deepseek_models:
+        temp = temperature if temperature is not None else 0.7
+        return generate_content_deepseek_with_retry(model, prompt, max_tokens=8000, temperature=temp, stop=stop)
+    elif model in ollama_models:
         temp = temperature if temperature is not None else 0.7
         return generate_content_ollama_with_retry(model, prompt, max_new_tokens=8000, temperature=temp, stop=stop)
+    elif model in moonshot_models:
+        temp = temperature if temperature is not None else 0.6
+        return generate_content_moonshot_with_retry(model, prompt, max_tokens=8000, temperature=temp, stop=stop)
     else:
         raise ModelNotAvailableError(f"Model {model} is not supported")
 
@@ -465,7 +615,10 @@ def get_supported_models():
         "vllm": list(vllm_api_meta.keys()),
         "gemini": list(gemini_models),
         "bedrock": list(bedrock_meta.keys()),
-        "openai": list(openai_models)
+        "openai": list(openai_models),
+        "deepseek": list(deepseek_models),
+        "ollama": list(ollama_models),
+        "moonshot": list(moonshot_models)
     }
 
 # Export model configurations for files that need them
@@ -480,6 +633,8 @@ __all__ = [
     'generate_content_bedrock', 
     'generate_content_openai',
     'generate_content_ollama',
+    'generate_content_deepseek',
+    'generate_content_moonshot',
     
     # Individual provider functions (with retry)
     'generate_content_vllm_with_retry',
@@ -487,6 +642,8 @@ __all__ = [
     'generate_content_bedrock_with_retry',
     'generate_content_openai_with_retry',
     'generate_content_ollama_with_retry',
+    'generate_content_deepseek_with_retry',
+    'generate_content_moonshot_with_retry',
     
     # Utility functions
     'get_supported_models',
@@ -505,5 +662,7 @@ __all__ = [
     'bedrock_meta', 
     'gemini_models',
     'openai_models',
-    'gpt_oss'
+    'deepseek_models',
+    'ollama_models',
+    'moonshot_models'
 ]

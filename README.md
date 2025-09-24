@@ -24,30 +24,33 @@ cd ToolData-public
 pip install -r requirements.txt
 
 # Tool evaluation on LLMs (not agentic evaluation)
-python evaluation/tool_evaluation.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
+python evaluation/tool_evaluation_model.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
 
 ## default settings (direct prompting, domain mode, parallel trajectory, simple version, default model claude_v37)
-python evaluation/tool_evaluation.py -model claude_v37 -tool_select domain -method direct -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
+python evaluation/tool_evaluation_model.py -model claude_v37 -tool_select domain -method direct -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
 
 ## CoT setting (default model claude_v37, prompts in evaluation/evaluation_prompt.json)
-python evaluation/tool_evaluation.py -model claude_v37 -tool_select domain -method cot -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
+python evaluation/tool_evaluation_model.py -model claude_v37 -tool_select domain -method cot -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
 
 ## Retrieval tool pool setting (default model claude_v37, direct prompting, embedding model all-MiniLM, embedding model directory ./retriever, tool pool size 20)
-python evaluation/tool_evaluation.py -model claude_v37 -tool_select retrieval -method direct -k 20 -emb_model all-MiniLM -emb_model_dir ./retriever -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
+python evaluation/tool_evaluation_model.py -model claude_v37 -tool_select retrieval -method direct -k 20 -emb_model all-MiniLM -emb_model_dir ./retriever -traj_type parallel -traj_file simple_ver -log_dir ./log/model -chk_dir ./chk/model -base_data_dir ./
 
 # Agentic evaluation (ReAct)
-python evaluation/tool_evaluation_react.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -retrieve_mode [retrieve mode] -retrieve_pool [retrieve pool] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
+python evaluation/tool_evaluation_agent.py -model [model name] -tool_select [tool selection mode] -method [problem solving method] -k [tool pool size] -emb_model [embedding model] -emb_model_dir [embedding model directory] -retrieve_mode [retrieve mode] -retrieve_pool [retrieve pool] -traj_type [trajectory type] -traj_file [trajectory file name] -log_dir [log directory] -chk_dir [checkpoint directory] -base_data_dir [base data directory]
 
 ## default settings (ReAct, domain tool pool, no retrieval, parallel trajectory, simple version, default model claude_v37)
-python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select domain -method react -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+python evaluation/tool_evaluation_agent.py -model claude_v37 -tool_select domain -method react -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
 
 ## Static retrieval (default model claude_v37, static retrieval from domain tool pool)
-python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode static -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+python evaluation/tool_evaluation_agent.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode static -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
 
 ## Dynamic retrieval (default model claude_v37, dynamic retrieval from domain tool pool)
-python evaluation/tool_evaluation_react.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode dynamic -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
+python evaluation/tool_evaluation_agent.py -model claude_v37 -tool_select retrieval -method react -retrieve_mode dynamic -retrieve_pool domain -traj_type parallel -traj_file simple_ver -log_dir ./log/react -chk_dir ./chk/react -base_data_dir ./
 
-# other agentic evaluation to release soon
+# Claude agentic tool-use
+python evaluation/claude_tool_evaluation.py -model claude_v37 -tool_select domain -traj_type parallel -traj_file simple_ver -log_dir ./log/claude -chk_dir ./chk/claude -base_data_dir ./
+
+# Other model's agentic evaulation is the same.
 ```
 
 ## 🎯 Overview
